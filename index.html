@@ -15,10 +15,10 @@
                 <div class="nav-left">
                     <div class="nav-title-group">
                         <span class="nav-logo">📊</span>
-                        <span class="nav-title" id="nav-page-title">员工工作台</span>
+                        <span class="nav-title" id="nav-page-title">客户经理工作台</span>
                     </div>
                     <div class="workbench-tabs">
-                        <button type="button" class="workbench-tab active" data-tab="employee" onclick="switchWorkbenchTab('employee')">员工工作台</button>
+                        <button type="button" class="workbench-tab active" data-tab="employee" onclick="switchWorkbenchTab('employee')">客户经理工作台</button>
                         <button type="button" class="workbench-tab" data-tab="support" onclick="switchWorkbenchTab('support')">业务支持工作台</button>
                         <button type="button" class="workbench-tab" data-tab="org" onclick="switchWorkbenchTab('org')">组织协同管理工作台</button>
                     </div>
@@ -255,10 +255,22 @@
             <div class="input-section">
                 <div class="ai-mini-avatars" id="ai-mini-avatars" style="display: none;"></div>
                 <div class="input-container">
-                    <div class="user-avatar-small"></div>
+                    <button type="button" class="input-action-btn upload-btn" onclick="startMainFileUpload()" aria-label="上传文件" title="上传文件">
+                        <svg class="input-action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+                        </svg>
+                    </button>
+                    <input type="file" id="main-chat-file-input" class="main-chat-file-input" accept=".doc,.docx,.pdf,.txt,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg" hidden onchange="handleMainFileUpload(this)">
                     <input type="text" id="main-chat-input" class="chat-input" placeholder="开启我的一人团队工作台" onkeypress="handleMainInput(event)">
-                    <button class="voice-btn" onclick="startMainVoiceInput()">🎙</button>
-                    <button class="send-btn" onclick="sendMainMessage()">➤</button>
+                    <button type="button" class="input-action-btn voice-btn" onclick="startMainVoiceInput()" aria-label="语音输入" title="语音输入">
+                        <svg class="input-action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="9" y="2" width="6" height="12" rx="3"></rect>
+                            <path d="M5 10v2a7 7 0 0 0 14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="22"></line>
+                            <line x1="8" y1="22" x2="16" y2="22"></line>
+                        </svg>
+                    </button>
+                    <button type="button" class="send-btn" onclick="sendMainMessage()" aria-label="发送" title="发送">➤</button>
                 </div>
             </div>
         </section>
@@ -1553,7 +1565,7 @@
         const WORKBENCH_TAB_LABELS = {
             support: '业务支持工作台',
             org: '组织协同管理工作台',
-            employee: '员工工作台'
+            employee: '客户经理工作台'
         };
 
         const workbenchPanelState = {
@@ -2877,6 +2889,15 @@
             });
         }
 
+        function getEmployeeAssistant(index) {
+            return aiAssistants[index] || aiAssistants[0];
+        }
+
+        function buildEmployeeChatAvatarHtml(index) {
+            const assistant = getEmployeeAssistant(index);
+            return `<div class="chat-avatar employee-chat-avatar ${assistant.avatarClass}" title="${assistant.name}"><span>${assistant.emoji}</span></div>`;
+        }
+
         function appendAssistantConversation(index, panel) {
             const p = panel || getActiveWorkbenchPanel();
             const assistant = aiAssistants[index];
@@ -2900,7 +2921,7 @@
                 ? getSolutionSelectHtml(blockId)
                 : markdownToHtml(assistant.welcomeText);
             aiMsg.innerHTML = `
-                <div class="chat-avatar">A</div>
+                ${buildEmployeeChatAvatarHtml(index)}
                 <div class="chat-bubble chat-bubble-assistant">${contentHtml}</div>
             `;
             block.appendChild(aiMsg);
@@ -2920,8 +2941,9 @@
             if (role === 'user') {
                 row.innerHTML = `<div class="chat-bubble chat-bubble-user">${escapeHtml(text)}</div>`;
             } else {
+                const index = getPanelState(p).currentCardIndex ?? 0;
                 row.innerHTML = `
-                    <div class="chat-avatar">A</div>
+                    ${buildEmployeeChatAvatarHtml(index)}
                     <div class="chat-bubble chat-bubble-assistant">${markdownToHtml(text)}</div>
                 `;
             }
@@ -3124,7 +3146,59 @@
         }
         
         // 语音识别输入
+        function getInputContainer(panel) {
+            const p = panel || getActiveWorkbenchPanel();
+            return p?.querySelector('.input-container');
+        }
+
+        function startMainFileUpload() {
+            const panel = getActiveWorkbenchPanel();
+            const fileInput = getPanelEl('main-chat-file-input', panel);
+            fileInput?.click();
+        }
+
+        function handleMainFileUpload(input) {
+            const file = input.files?.[0];
+            if (!file) return;
+            input.value = '';
+
+            const panel = getActiveWorkbenchPanel();
+            const message = `📎 ${file.name}`;
+            const key = getPanelKey(panel);
+
+            if (key === 'org') {
+                appendOrgChatMessage(message, 'user', panel);
+                setTimeout(() => {
+                    const agentId = getPanelState(panel).currentOrgAgent;
+                    const reply = agentId
+                        ? `已收到文件「${file.name}」，我将结合${getOrgAgent(agentId).name}能力为您提取关键信息并协助处理。`
+                        : `已收到文件「${file.name}」，我将为您提取关键信息并协助后续处理。`;
+                    appendOrgChatMessage(reply, 'assistant', panel);
+                }, 400);
+                return;
+            }
+
+            if (key === 'support') {
+                appendSupportChatMessage(message, 'user', panel);
+                setTimeout(() => {
+                    appendSupportAssistantReply(`已收到文件「${file.name}」，我将结合当前任务为您解析内容。`, getPanelState(panel).currentSupportAgent, panel);
+                }, 400);
+                return;
+            }
+
+            if (getPanelState(panel).chatModeActive) {
+                appendChatMessage(message, 'user');
+                setTimeout(() => {
+                    appendChatMessage(`已收到文件「${file.name}」，我将为您提取关键信息并协助处理。`, 'assistant');
+                }, 400);
+                return;
+            }
+
+            showRecognitionToast('文件助手', `已选择文件：${file.name}`);
+        }
+
         function startMainVoiceInput() {
+            const panel = getActiveWorkbenchPanel();
             if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 const recognition = new SpeechRecognition();
@@ -3134,13 +3208,14 @@
                 recognition.interimResults = false;
                 
                 recognition.onstart = function() {
-                    const input = getPanelEl('main-chat-input');
+                    getInputContainer(panel)?.classList.add('is-recording');
+                    const input = getPanelEl('main-chat-input', panel);
                     input.placeholder = '正在聆听...';
                 };
                 
                 recognition.onresult = function(event) {
                     const transcript = event.results[0][0].transcript;
-                    const input = getPanelEl('main-chat-input');
+                    const input = getPanelEl('main-chat-input', panel);
                     input.value = transcript;
                     input.placeholder = '开启我的一人团队工作台';
                     
@@ -3150,15 +3225,17 @@
                     }, 500);
                 };
                 
-                recognition.onerror = function(event) {
-                    const input = getPanelEl('main-chat-input');
-                    input.placeholder = '开启我的一人团队工作台';
+                recognition.onerror = function() {
+                    getInputContainer(panel)?.classList.remove('is-recording');
+                    const input = getPanelEl('main-chat-input', panel);
+                    if (input) input.placeholder = '开启我的一人团队工作台';
                     alert('语音识别出错，请手动输入');
                 };
                 
                 recognition.onend = function() {
-                    const input = getPanelEl('main-chat-input');
-                    input.placeholder = '开启我的一人团队工作台';
+                    getInputContainer(panel)?.classList.remove('is-recording');
+                    const input = getPanelEl('main-chat-input', panel);
+                    if (input) input.placeholder = '开启我的一人团队工作台';
                 };
                 
                 recognition.start();
