@@ -15,12 +15,12 @@
                 <div class="nav-left">
                     <div class="nav-title-group">
                         <span class="nav-logo">📊</span>
-                        <span class="nav-title" id="nav-page-title">客户经理工作台</span>
+                        <span class="nav-title" id="nav-page-title">员工工作台</span>
                     </div>
                     <div class="workbench-tabs">
-                        <button type="button" class="workbench-tab active" data-tab="employee" onclick="switchWorkbenchTab('employee')">客户经理工作台</button>
-                        <button type="button" class="workbench-tab" data-tab="support" onclick="switchWorkbenchTab('support')">业务支持工作台</button>
-                        <button type="button" class="workbench-tab" data-tab="org" onclick="switchWorkbenchTab('org')">组织协同管理工作台</button>
+                        <button type="button" class="workbench-tab active" data-tab="employee" onclick="switchWorkbenchTab('employee')">客户经理</button>
+                        <button type="button" class="workbench-tab" data-tab="support" onclick="switchWorkbenchTab('support')">业务支持</button>
+                        <button type="button" class="workbench-tab" data-tab="org" onclick="switchWorkbenchTab('org')">组织协同管理</button>
                     </div>
                 </div>
                 <!-- 竖线分隔 -->
@@ -1562,12 +1562,6 @@
         }
         
         // ========== 工作台 Tab 切换 ==========
-        const WORKBENCH_TAB_LABELS = {
-            support: '业务支持工作台',
-            org: '组织协同管理工作台',
-            employee: '客户经理工作台'
-        };
-
         const workbenchPanelState = {
             support: { chatModeActive: true, currentCardIndex: 0, miniAvatarsInitialized: false, currentSupportAgent: null, currentTask: null, currentTodoStep: null, supportWelcomeShown: false },
             org: { chatModeActive: true, currentCardIndex: 0, miniAvatarsInitialized: false, currentOrgAgent: null },
@@ -2654,8 +2648,6 @@
             document.body.classList.toggle('org-tab-active', tabKey === 'org');
             document.body.classList.toggle('support-tab-active', tabKey === 'support');
             syncEmployeeChatModeLayout();
-            const titleEl = document.getElementById('nav-page-title');
-            if (titleEl) titleEl.textContent = WORKBENCH_TAB_LABELS[tabKey];
 
             if (tabKey === 'org') {
                 const orgPanel = document.getElementById('workbench-panel-org');

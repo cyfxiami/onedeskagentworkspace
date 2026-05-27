@@ -76,8 +76,9 @@ body {
 .workbench-tabs {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 6px;
+    width: 100%;
 }
 
 .workbench-tab {
@@ -3407,7 +3408,7 @@ body.employee-chat-mode .workbench-panel[data-panel="employee"] .input-section.c
     }
 
     .workbench-tabs {
-        align-items: stretch;
+        align-items: center;
         width: 100%;
         gap: 4px;
     }
@@ -3415,7 +3416,7 @@ body.employee-chat-mode .workbench-panel[data-panel="employee"] .input-section.c
     .workbench-tab {
         font-size: 11px;
         padding: 4px 10px;
-        width: 100%;
+        width: auto;
         text-align: center;
     }
 
