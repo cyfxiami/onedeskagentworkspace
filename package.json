@@ -1,0 +1,28 @@
+{
+  "name": "ai-advisor-proxy",
+  "version": "1.0.0",
+  "description": "AI参谋分析代理服务器 - 解决前端跨域问题",
+  "main": "proxy-server.js",
+  "scripts": {
+    "start": "node proxy-server.js",
+    "dev": "nodemon proxy-server.js"
+  },
+  "keywords": [
+    "AI",
+    "proxy",
+    "doubao",
+    "financial-analysis"
+  ],
+  "author": "One-Person Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
