@@ -1563,7 +1563,7 @@
         
         // ========== 工作台 Tab 切换 ==========
         const workbenchPanelState = {
-            support: { chatModeActive: true, currentCardIndex: 0, miniAvatarsInitialized: false, currentSupportAgent: null, currentTask: null, currentTodoStep: null, supportWelcomeShown: false },
+            support: { chatModeActive: true, currentCardIndex: 0, miniAvatarsInitialized: false, currentSupportAgent: null, currentTaskAgentId: null, currentTask: null, currentTodoStep: null, supportWelcomeShown: false },
             org: { chatModeActive: true, currentCardIndex: 0, miniAvatarsInitialized: false, currentOrgAgent: null },
             employee: { chatModeActive: false, currentCardIndex: 0, miniAvatarsInitialized: false }
         };
@@ -1983,11 +1983,86 @@
                 agentBtn.style.display = 'none';
                 jumpBar.appendChild(agentBtn);
                 workbench.insertBefore(jumpBar, workbench.firstChild);
+
+                if (chatView && !panel.querySelector('.support-daily-task-panel')) {
+                    const dailyPanel = document.createElement('section');
+                    dailyPanel.className = 'support-daily-task-panel';
+                    dailyPanel.innerHTML = `
+                        <div class="support-daily-task-header">
+                            ${getSupportDailyTaskRobotAvatarHtml()}
+                            <div class="support-daily-task-title-wrap">
+                                <span class="support-daily-task-title">今日任务助手</span>
+                                <button type="button" class="support-daily-task-toggle" aria-expanded="true" aria-label="收起">
+                                    ${getSupportDailyTaskChevronHtml()}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="support-daily-task-body"></div>
+                    `;
+                    dailyPanel.querySelector('.support-daily-task-toggle')?.addEventListener('click', () => {
+                        toggleSupportDailyTaskPanel(panel);
+                    });
+                    workbench.insertBefore(dailyPanel, workbench.firstChild);
+                }
             }
 
             if (workTips) workTips.remove();
 
             panel.dataset.supportCustomized = 'true';
+        }
+
+        const SUPPORT_DAILY_TASK_AVATAR_SRC = 'images/daily-task-assistant-avatar.png';
+
+        function getSupportDailyTaskRobotAvatarHtml() {
+            return `<div class="support-daily-task-robot-avatar" title="今日任务助手">
+                <img src="${SUPPORT_DAILY_TASK_AVATAR_SRC}" alt="今日任务助手" class="support-daily-task-robot-avatar-img">
+            </div>`;
+        }
+
+        function getSupportDailyTaskChevronHtml() {
+            return `<svg class="support-daily-task-chevron" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`;
+        }
+
+        function syncSupportDailyTaskToggle(panel) {
+            const dailyPanel = getSupportDailyTaskPanel(panel);
+            if (!dailyPanel) return;
+            const toggle = dailyPanel.querySelector('.support-daily-task-toggle');
+            if (!toggle) return;
+            const collapsed = dailyPanel.classList.contains('is-collapsed');
+            toggle.setAttribute('aria-expanded', String(!collapsed));
+            toggle.setAttribute('aria-label', collapsed ? '展开' : '收起');
+        }
+
+        function getSupportDailyTaskPanel(panel) {
+            const p = panel || document.getElementById('workbench-panel-support');
+            return p?.querySelector('.support-daily-task-panel') || null;
+        }
+
+        function renderSupportDailyTaskContent(html, panel) {
+            const dailyPanel = getSupportDailyTaskPanel(panel);
+            const body = dailyPanel?.querySelector('.support-daily-task-body');
+            if (!body) return;
+            body.innerHTML = html;
+        }
+
+        function toggleSupportDailyTaskPanel(panel) {
+            const dailyPanel = getSupportDailyTaskPanel(panel);
+            if (!dailyPanel) return;
+            dailyPanel.classList.toggle('is-collapsed');
+            syncSupportDailyTaskToggle(panel);
+        }
+
+        function updateSupportDailyTaskPanelState(panel, hasChat) {
+            const dailyPanel = getSupportDailyTaskPanel(panel);
+            if (!dailyPanel) return;
+            if (hasChat) {
+                dailyPanel.classList.add('is-collapsed');
+            } else {
+                dailyPanel.classList.remove('is-collapsed');
+            }
+            syncSupportDailyTaskToggle(panel);
         }
 
         function getSupportAgent(agentId) {
@@ -2045,7 +2120,7 @@
         }
 
         function buildSupportDailyTasksSummaryHtml() {
-            let html = '<p>您好！我是<strong>今日任务</strong>助手。以下是有待办事项的业务助理任务汇总：</p>';
+            let html = '<p>以下是有待办事项的业务助理任务汇总：</p>';
             supportBadgeAgentIds.forEach(agentId => {
                 const agent = getSupportAgent(agentId);
                 html += `<p><strong>${escapeHtmlText(agent.name)}</strong>（${agent.tasks.length}项待办）</p>`;
@@ -2081,35 +2156,31 @@
             if (!message) return;
 
             const state = getPanelState(panel);
-            state.currentSupportAgent = agentId;
+            state.currentTaskAgentId = agentId;
             state.currentTask = task;
             state.currentTodoStep = stepText || task?.nextSteps?.[0] || message;
-
-            updateSupportAgentButton(panel, agentId);
-            updateTopAvatarActive(agentId);
 
             appendSupportChatMessage(message, 'user', panel);
             setTimeout(() => {
                 if (!task) {
-                    appendSupportChatMessage(getSupportAgentReply(message, agentId), 'assistant', panel);
+                    appendSupportChatMessage(getSupportAgentReply(message, agentId), 'assistant', panel, { agentId });
                     return;
                 }
                 if (replyMode === 'step') {
-                    appendSupportChatMessage(buildSupportStepReplyHtml(task, agentId, stepText || message), 'assistant', panel, { html: true });
+                    appendSupportChatMessage(buildSupportStepReplyHtml(task, agentId, stepText || message), 'assistant', panel, { html: true, agentId });
                 } else if (replyMode === 'exec') {
-                    appendSupportChatMessage(buildSupportExecStepReplyHtml(task, agentId, stepText || state.currentTodoStep, message), 'assistant', panel, { html: true });
+                    appendSupportChatMessage(buildSupportExecStepReplyHtml(task, agentId, stepText || state.currentTodoStep, message), 'assistant', panel, { html: true, agentId });
                 } else {
-                    appendSupportChatMessage(buildSupportTaskReplyHtml(task, agentId), 'assistant', panel, { html: true });
+                    appendSupportChatMessage(buildSupportTaskReplyHtml(task, agentId), 'assistant', panel, { html: true, agentId });
                 }
             }, 400);
         }
 
         function initSupportChatTodoActions(panel) {
             const p = panel || document.getElementById('workbench-panel-support');
-            const messagesEl = getPanelEl('ai-chat-messages', p);
-            if (!messagesEl || messagesEl.dataset.todoActionsBound === 'true') return;
+            if (!p || p.dataset.todoActionsBound === 'true') return;
 
-            messagesEl.addEventListener('click', (event) => {
+            p.addEventListener('click', (event) => {
                 const trigger = event.target.closest('.support-chat-todo-trigger');
                 if (!trigger) return;
                 event.preventDefault();
@@ -2121,30 +2192,16 @@
                     trigger.dataset.replyMode || 'task'
                 );
             });
-            messagesEl.dataset.todoActionsBound = 'true';
+            p.dataset.todoActionsBound = 'true';
         }
 
         function showSupportWelcomeMessage(panel) {
             const p = panel || document.getElementById('workbench-panel-support');
             const state = getPanelState(p);
             if (state.supportWelcomeShown) return;
-            appendSupportDailyTaskMessage(buildSupportDailyTasksSummaryHtml(), p);
+            renderSupportDailyTaskContent(buildSupportDailyTasksSummaryHtml(), p);
+            updateSupportDailyTaskPanelState(p, false);
             state.supportWelcomeShown = true;
-        }
-
-        function appendSupportDailyTaskMessage(html, panel) {
-            const p = panel || document.getElementById('workbench-panel-support');
-            const messagesEl = getPanelEl('ai-chat-messages', p);
-            if (!messagesEl) return;
-
-            const row = document.createElement('div');
-            row.className = 'chat-row chat-row-assistant support-assistant-row support-daily-task-row';
-            row.innerHTML = `
-                <div class="chat-avatar support-chat-avatar support-daily-task-avatar" title="今日任务">📋</div>
-                <div class="chat-bubble chat-bubble-assistant">${html}</div>
-            `;
-            messagesEl.appendChild(row);
-            updateSupportChatLayout(p);
         }
 
         function resetSupportChatView(panel) {
@@ -2156,8 +2213,11 @@
             if (input) input.value = '';
 
             const state = getPanelState(p);
+            state.currentTaskAgentId = null;
             state.currentTask = null;
             state.currentTodoStep = null;
+            renderSupportDailyTaskContent(buildSupportDailyTasksSummaryHtml(), p);
+            updateSupportDailyTaskPanelState(p, false);
             updateSupportChatLayout(p);
         }
 
@@ -2200,24 +2260,11 @@
             }
 
             const agent = getSupportAgent(agentId);
-
-            // 无红色角标的助理：仅弹窗提示跳转，不在对话框追加内容
-            if (!supportBadgeAgentIds.includes(agentId)) {
-                const state = getPanelState(panel);
-                state.currentSupportAgent = null;
-                updateSupportAgentButton(panel, null);
-                updateTopAvatarActive(null);
-                showOrgAgentJumpToast(agent.name);
-                return;
-            }
-
             const state = getPanelState(panel);
-            if (state.currentSupportAgent === agentId) return;
-
-            state.currentSupportAgent = agentId;
-            appendSupportAgentTaskGuide(agentId, panel);
-            updateSupportAgentButton(panel, agentId);
-            updateTopAvatarActive(agentId);
+            state.currentSupportAgent = null;
+            updateSupportAgentButton(panel, null);
+            updateTopAvatarActive(null);
+            showOrgAgentJumpToast(agent.name);
         }
 
         function appendSupportChatMessage(text, role, panel, options = {}) {
@@ -2225,7 +2272,8 @@
             const messagesEl = getPanelEl('ai-chat-messages', p);
             if (!messagesEl) return;
 
-            const agentId = getPanelState(p).currentSupportAgent;
+            const state = getPanelState(p);
+            const agentId = options.agentId || state.currentSupportAgent || state.currentTaskAgentId;
             const agent = agentId ? getSupportAgent(agentId) : null;
             const row = document.createElement('div');
             row.className = role === 'user' ? 'chat-row chat-row-user' : 'chat-row chat-row-assistant support-assistant-row';
@@ -2241,7 +2289,7 @@
                 `;
             } else {
                 row.innerHTML = `
-                    <div class="chat-avatar support-chat-avatar support-daily-task-avatar" title="今日任务">📋</div>
+                    <div class="chat-avatar support-chat-avatar support-daily-task-chat-avatar">${getSupportDailyTaskRobotAvatarHtml()}</div>
                     <div class="chat-bubble chat-bubble-assistant">${assistantBody}</div>
                 `;
             }
@@ -2331,8 +2379,10 @@
             const workbench = p?.querySelector('.ai-workbench-section');
             const messagesEl = getPanelEl('ai-chat-messages', p);
             if (!workbench || !messagesEl) return;
-            workbench.classList.toggle('support-has-chat', messagesEl.children.length > 0);
-            if (messagesEl.children.length > 0) {
+            const hasChat = messagesEl.children.length > 0;
+            workbench.classList.toggle('support-has-chat', hasChat);
+            updateSupportDailyTaskPanelState(p, hasChat);
+            if (hasChat) {
                 scrollWorkbenchChatToBottom(p);
             }
         }
@@ -2348,13 +2398,14 @@
         function appendSupportAssistantReply(message, agentId, panel) {
             const p = panel || document.getElementById('workbench-panel-support');
             const state = getPanelState(p);
-            const task = state.currentTask || (agentId ? findSupportTaskByMessage(message, agentId) : null);
-            if (task && agentId) {
+            const resolvedAgentId = agentId || state.currentSupportAgent || state.currentTaskAgentId;
+            const task = state.currentTask || (resolvedAgentId ? findSupportTaskByMessage(message, resolvedAgentId) : null);
+            if (task && resolvedAgentId) {
                 state.currentTask = task;
-                appendSupportChatMessage(buildSupportTaskReplyHtml(task, agentId), 'assistant', p, { html: true });
+                appendSupportChatMessage(buildSupportTaskReplyHtml(task, resolvedAgentId), 'assistant', p, { html: true, agentId: resolvedAgentId });
                 return;
             }
-            appendSupportChatMessage(getSupportAgentReply(message, agentId), 'assistant', p);
+            appendSupportChatMessage(getSupportAgentReply(message, resolvedAgentId), 'assistant', p, { agentId: resolvedAgentId });
         }
 
         function getSupportTaskReply(task, agentId) {
@@ -2381,11 +2432,12 @@
                 }).join('、');
                 return `您好，我已收到您的消息。您可在上方点击${badgeHint}选择对应助理；也可直接在对话框输入具体待办内容，我将协助您跟进处理。`;
             }
-            const agent = getSupportAgent(agentId);
-            const task = getPanelState(document.getElementById('workbench-panel-support'))?.currentTask;
+            const supportState = getPanelState(document.getElementById('workbench-panel-support'));
+            const task = supportState?.currentTask;
             if (task && (message.includes(task.title) || task.nextSteps.some(step => message.includes(step) || step.includes(message)))) {
-                return getSupportTaskReply(task, agentId);
+                return getSupportTaskReply(task, agentId || supportState.currentTaskAgentId);
             }
+            const agent = getSupportAgent(agentId);
             return `您好，我是${agent.name}。关于「${message}」，我将结合当前任务进展为您提供支持。请补充具体需求或相关材料。`;
         }
 
@@ -2525,23 +2577,15 @@
             const panel = document.getElementById('workbench-panel-org');
             if (!panel) return;
 
-            const state = getPanelState(panel);
-
-            if (state.currentOrgAgent === agentId) {
-                state.currentOrgAgent = null;
-                resetOrgChatView(panel);
-                renderOrgPrompts(panel, null);
-                updateTopAvatarActive(null);
-            } else {
-                state.currentOrgAgent = agentId;
-                resetOrgChatView(panel);
-                renderOrgPrompts(panel, agentId);
-                updateTopAvatarActive(agentId);
-            }
-
             if (getPanelKey() !== 'org') {
                 switchWorkbenchTab('org');
             }
+
+            const agent = getOrgAgent(agentId);
+            const state = getPanelState(panel);
+            state.currentOrgAgent = null;
+            updateTopAvatarActive(null);
+            showOrgAgentJumpToast(agent.name);
         }
 
         function resetOrgChatView(panel) {
@@ -3109,9 +3153,10 @@
             }
 
             if (getPanelKey(panel) === 'support') {
+                const supportState = getPanelState(panel);
                 appendSupportChatMessage(message, 'user', panel);
                 setTimeout(() => {
-                    appendSupportAssistantReply(message, getPanelState(panel).currentSupportAgent, panel);
+                    appendSupportAssistantReply(message, supportState.currentSupportAgent || supportState.currentTaskAgentId, panel);
                 }, 400);
                 return;
             }
@@ -3171,9 +3216,10 @@
             }
 
             if (key === 'support') {
+                const supportState = getPanelState(panel);
                 appendSupportChatMessage(message, 'user', panel);
                 setTimeout(() => {
-                    appendSupportAssistantReply(`已收到文件「${file.name}」，我将结合当前任务为您解析内容。`, getPanelState(panel).currentSupportAgent, panel);
+                    appendSupportAssistantReply(`已收到文件「${file.name}」，我将结合当前任务为您解析内容。`, supportState.currentSupportAgent || supportState.currentTaskAgentId, panel);
                 }, 400);
                 return;
             }
