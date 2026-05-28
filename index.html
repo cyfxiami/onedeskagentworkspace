@@ -20,7 +20,7 @@
                     <div class="workbench-tabs">
                         <button type="button" class="workbench-tab active" data-tab="employee" onclick="switchWorkbenchTab('employee')">客户经理</button>
                         <button type="button" class="workbench-tab" data-tab="support" onclick="switchWorkbenchTab('support')">业务支持</button>
-                        <button type="button" class="workbench-tab" data-tab="org" onclick="switchWorkbenchTab('org')">组织协同管理</button>
+                        <button type="button" class="workbench-tab" data-tab="org" onclick="switchWorkbenchTab('org')" style="display: none;">组织协同管理</button>
                     </div>
                 </div>
                 <!-- 竖线分隔 -->
@@ -261,7 +261,7 @@
                         </svg>
                     </button>
                     <input type="file" id="main-chat-file-input" class="main-chat-file-input" accept=".doc,.docx,.pdf,.txt,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg" hidden onchange="handleMainFileUpload(this)">
-                    <input type="text" id="main-chat-input" class="chat-input" placeholder="开启我的一人团队工作台" onkeypress="handleMainInput(event)">
+                    <input type="text" id="main-chat-input" class="chat-input" placeholder="开启我的工作" onkeypress="handleMainInput(event)">
                     <button type="button" class="input-action-btn voice-btn" onclick="startMainVoiceInput()" aria-label="语音输入" title="语音输入">
                         <svg class="input-action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <rect x="9" y="2" width="6" height="12" rx="3"></rect>
@@ -1991,7 +1991,7 @@
                         <div class="support-daily-task-header">
                             ${getSupportDailyTaskRobotAvatarHtml()}
                             <div class="support-daily-task-title-wrap">
-                                <span class="support-daily-task-title">今日任务助手</span>
+                                <span class="support-daily-task-title">今日任务</span>
                                 <button type="button" class="support-daily-task-toggle" aria-expanded="true" aria-label="收起">
                                     ${getSupportDailyTaskChevronHtml()}
                                 </button>
@@ -2014,8 +2014,8 @@
         const SUPPORT_DAILY_TASK_AVATAR_SRC = 'images/daily-task-assistant-avatar.png';
 
         function getSupportDailyTaskRobotAvatarHtml() {
-            return `<div class="support-daily-task-robot-avatar" title="今日任务助手">
-                <img src="${SUPPORT_DAILY_TASK_AVATAR_SRC}" alt="今日任务助手" class="support-daily-task-robot-avatar-img">
+            return `<div class="support-daily-task-robot-avatar" title="今日任务">
+                <img src="${SUPPORT_DAILY_TASK_AVATAR_SRC}" alt="今日任务" class="support-daily-task-robot-avatar-img">
             </div>`;
         }
 
@@ -3255,7 +3255,7 @@
                     const transcript = event.results[0][0].transcript;
                     const input = getPanelEl('main-chat-input', panel);
                     input.value = transcript;
-                    input.placeholder = '开启我的一人团队工作台';
+                    input.placeholder = '开启我的工作';
                     
                     // 自动发送
                     setTimeout(() => {
@@ -3266,14 +3266,14 @@
                 recognition.onerror = function() {
                     getInputContainer(panel)?.classList.remove('is-recording');
                     const input = getPanelEl('main-chat-input', panel);
-                    if (input) input.placeholder = '开启我的一人团队工作台';
+                    if (input) input.placeholder = '开启我的工作';
                     alert('语音识别出错，请手动输入');
                 };
                 
                 recognition.onend = function() {
                     getInputContainer(panel)?.classList.remove('is-recording');
                     const input = getPanelEl('main-chat-input', panel);
-                    if (input) input.placeholder = '开启我的一人团队工作台';
+                    if (input) input.placeholder = '开启我的工作';
                 };
                 
                 recognition.start();

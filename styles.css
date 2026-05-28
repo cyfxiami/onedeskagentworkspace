@@ -167,10 +167,12 @@ body.support-tab-active .workbench-panel[data-panel="support"] .ai-workbench-sec
     flex-direction: column;
     margin-bottom: 0;
     padding-top: 10px;
+    padding-bottom: var(--workbench-chat-input-reserve, 100px);
+    box-sizing: border-box;
     overflow: hidden;
 }
 
-/* 业务支持 - 今日任务助手面板（对话区上方） */
+/* 业务支持 - 今日任务面板（对话区上方） */
 .support-daily-task-panel {
     flex-shrink: 0;
     margin: 0 0 8px;
@@ -344,16 +346,14 @@ body.org-tab-active .workbench-panel[data-panel="org"] .input-section {
     box-shadow: none;
 }
 
-body.support-tab-active .workbench-panel[data-panel="support"] .ai-workbench-section.support-workbench-mode {
-    padding-bottom: 0;
-}
-
 body.org-tab-active .workbench-panel[data-panel="org"] .ai-workbench-section.org-workbench-mode {
-    padding-bottom: 0;
+    padding-bottom: var(--workbench-chat-input-reserve, 100px);
+    box-sizing: border-box;
 }
 
-body.support-tab-active .workbench-panel[data-panel="support"] .ai-chat-view {
-    padding-bottom: 88px;
+body.support-tab-active .workbench-panel[data-panel="support"] .ai-chat-view,
+body.org-tab-active .workbench-panel[data-panel="org"] .org-workbench-scroll {
+    padding-bottom: 0;
 }
 
 /* 业务支持 - 任务卡片横向滚动（隐藏滚动条，保留滑动） */
@@ -684,7 +684,6 @@ body.org-tab-active .workbench-panel[data-panel="org"] .ai-workbench-section.org
     flex-direction: column;
     margin-bottom: 0;
     overflow: hidden;
-    padding-bottom: 0;
 }
 
 .org-workbench-scroll {
@@ -692,7 +691,7 @@ body.org-tab-active .workbench-panel[data-panel="org"] .ai-workbench-section.org
     min-height: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 88px;
+    padding-bottom: 8px;
 }
 
 .org-prompts-center {
