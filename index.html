@@ -3,30 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>一人团队工作台</title>
+    <title>员工工作台</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- 登录页 -->
+    <div class="login-page" id="login-page">
+        <div class="login-page-bg" aria-hidden="true">
+            <div class="login-bg-watermark"></div>
+            <div class="login-visual-orb login-visual-orb--1"></div>
+            <div class="login-visual-orb login-visual-orb--2"></div>
+            <div class="login-visual-orb login-visual-orb--3"></div>
+        </div>
+        <div class="login-page-body">
+            <section class="login-panel">
+                <div class="login-card">
+                    <div class="login-welcome">
+                        <h1 class="login-welcome-sys">员工工作台</h1>
+                        <p class="login-welcome-desc">智能办公助手，让工作更高效</p>
+                    </div>
+                    <form class="login-form" id="login-form" onsubmit="handleLoginSubmit(event)">
+                        <label class="login-field">
+                            <span class="login-label" id="login-account-label">OA账号</span>
+                            <div class="login-input-wrap">
+                                <span class="login-input-icon login-input-icon--user" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="8" r="4" fill="#9B7FD4"/>
+                                        <path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="#9B7FD4" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </span>
+                                <input type="text" class="login-input" id="login-username" name="username" value="demo" placeholder="请输入OA账号" autocomplete="username" required>
+                            </div>
+                        </label>
+                        <label class="login-field">
+                            <span class="login-label">密码</span>
+                            <div class="login-input-wrap">
+                                <span class="login-input-icon login-input-icon--lock" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="6" y="10" width="12" height="10" rx="2" fill="#F5A623"/>
+                                        <path d="M8 10V8a4 4 0 1 1 8 0v2" stroke="#F5A623" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </span>
+                                <input type="password" class="login-input" id="login-password" name="password" value="123456" placeholder="请输入密码" autocomplete="current-password" required>
+                            </div>
+                        </label>
+                        <fieldset class="login-role-fieldset">
+                            <legend class="login-label">选择角色</legend>
+                            <div class="login-role-options">
+                                <label class="login-role-option">
+                                    <input type="radio" name="workbench-role" value="employee" class="login-role-input" checked>
+                                    <span class="login-role-card">
+                                        <span class="login-role-name">业务团队</span>
+                                    </span>
+                                </label>
+                                <label class="login-role-option">
+                                    <input type="radio" name="workbench-role" value="support" class="login-role-input">
+                                    <span class="login-role-card">
+                                        <span class="login-role-name">业务支持中心</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
+                        <p class="login-error" id="login-error" role="alert" hidden></p>
+                        <button type="submit" class="login-submit-btn">登录</button>
+                        <button type="button" class="login-username-link-btn" id="login-mode-toggle-btn" onclick="toggleLoginAccountMode()">使用用户名登录</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+
     <!-- 主内容区 -->
-    <main class="main-content">
+    <main class="main-content app-workbench" id="app-workbench" hidden>
         <!-- 顶部导航栏 -->
         <section class="top-nav-section">
             <div class="top-nav-content">
                 <div class="nav-left">
-                    <div class="nav-title-group">
+                    <div class="nav-brand">
                         <span class="nav-logo">📊</span>
-                        <span class="nav-title" id="nav-page-title">员工工作台</span>
-                    </div>
-                    <div class="workbench-tabs">
-                        <button type="button" class="workbench-tab active" data-tab="employee" onclick="switchWorkbenchTab('employee')">客户经理</button>
-                        <button type="button" class="workbench-tab" data-tab="support" onclick="switchWorkbenchTab('support')">业务支持</button>
-                        <button type="button" class="workbench-tab" data-tab="org" onclick="switchWorkbenchTab('org')" style="display: none;">组织协同管理</button>
+                        <div class="nav-brand-main">
+                            <span class="nav-title" id="nav-page-title">员工工作台</span>
+                            <div class="workbench-role-context" id="workbench-role-context">
+                                <div class="workbench-role-dropdown" id="workbench-role-dropdown">
+                                    <span class="workbench-role-switch-btn" id="workbench-role-switch-btn" tabindex="0" role="button" aria-haspopup="true">
+                                        <span class="workbench-role-switch-label" id="workbench-role-switch-label">业务团队</span>
+                                    </span>
+                                    <div class="workbench-role-dropdown-menu" id="workbench-role-dropdown-menu">
+                                        <button type="button" class="workbench-role-dropdown-item" onclick="logoutWorkbench()">退出登录</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- 竖线分隔 -->
                 <div class="nav-divider"></div>
-                <div class="nav-right">
-                    <!-- 数字人图标区域 - 可横向滑动 -->
+                <div class="nav-right top-nav-avatars-host" id="top-nav-avatars-host">
+                    <div class="support-top-nav-stack" id="support-top-nav-stack">
+                    <!-- 业务支持：一级分类 -->
+                    <div class="support-category-row" id="support-category-row" role="tablist" aria-label="业务支持分类"></div>
+                    <!-- 业务支持二级 / 其他 Tab：业务助理头像 -->
+                    <div class="support-secondary-avatars-wrap support-category-bar" id="support-secondary-avatars-wrap" role="region" aria-label="业务助理选择">
                     <div class="digital-avatars-scroll">
                         <div class="digital-avatars">
                             <div class="avatar-item" data-avatar-type="ib" onclick="handleTopAvatarClick('ib')">
@@ -72,6 +149,8 @@
                                 <span class="avatar-name">交叉验证助理</span>
                             </div>
                         </div>
+                    </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -1568,12 +1647,9 @@
             employee: { chatModeActive: false, currentCardIndex: 0, miniAvatarsInitialized: false }
         };
 
-        const supportAgents = [
-            {
-                id: 'ib',
-                name: '投行业务助理',
-                image: 'images/Avatar1.png',
-                tasks: [
+        const supportCategoryAgentTasks = {
+            organizer: {
+                ib: [
                     {
                         id: 'ib-1',
                         title: 'ST沐邦共益债方案推进',
@@ -1590,11 +1666,17 @@
                     }
                 ]
             },
-            {
-                id: 'asset',
-                name: '资管业务助理',
-                image: 'images/Avatar2.png',
-                tasks: [
+            investment_manager: {
+                ib: [
+                    {
+                        id: 'ib-im-1',
+                        title: '某上市公司定增发行方案',
+                        description: '非公开发行股票方案需结合投资策略与发行节奏，本周完成投资人意向摸排。',
+                        completedSteps: ['完成发行规模与定价区间测算', '梳理战略投资者名单', '与发行人法务初步沟通审批流程'],
+                        nextSteps: ['本周完成意向投资者路演', '汇总认购意向与分配预案', '提交内核委审议材料']
+                    }
+                ],
+                asset: [
                     {
                         id: 'asset-1',
                         title: '固收+产品方案设计',
@@ -1603,6 +1685,21 @@
                         nextSteps: ['完善产品说明书草案', '提交合规与风控审核', '安排产品立项评审会']
                     }
                 ]
+            }
+        };
+
+        const supportAgents = [
+            {
+                id: 'ib',
+                name: '投行业务助理',
+                image: 'images/Avatar1.png',
+                tasks: []
+            },
+            {
+                id: 'asset',
+                name: '资管业务助理',
+                image: 'images/Avatar2.png',
+                tasks: []
             },
             {
                 id: 'retail',
@@ -1748,6 +1845,25 @@
 
         const supportBadgeAgentIds = ['ib', 'asset'];
 
+        const supportAgentCategoryMap = {
+            ib: 'organizer',
+            asset: 'investment_manager',
+            retail: 'account_service',
+            invest: 'investment_manager',
+            sales: 'account_service',
+            institution: 'organizer',
+            verify: 'product_design'
+        };
+
+        const supportTopCategories = [
+            { id: 'organizer', name: '组织者助理', desc: '统筹项目资源与进度', icon: 'users', badgeAgentIds: ['ib'] },
+            { id: 'investment_manager', name: '投资经理助理', desc: '管理投资组合与收益', icon: 'trending-up', badgeAgentIds: ['ib', 'asset'] },
+            { id: 'account_service', name: '账户服务助理', desc: '处理账户相关事务', icon: 'shield', badgeAgentIds: [] },
+            { id: 'product_design', name: '产品设计助理', desc: '设计金融产品方案', icon: 'layers', badgeAgentIds: [] }
+        ];
+
+        let currentSupportCategoryId = null;
+
         const orgAgents = [
             {
                 id: 'ib',
@@ -1879,8 +1995,170 @@
             return document.querySelector('.workbench-panel.active');
         }
 
+        const WORKBENCH_ROLE_STORAGE_KEY = 'workbenchRole';
+        const WORKBENCH_LOGIN_STORAGE_KEY = 'workbenchLoggedIn';
+        let currentWorkbenchRole = null;
+        let loginAccountMode = 'oa';
+        let workbenchInitialized = false;
+
+        const loginAccountModeConfig = {
+            oa: {
+                label: 'OA账号',
+                placeholder: '请输入OA账号',
+                toggleText: '使用用户名登录',
+                emptyHint: '请输入OA账号和密码'
+            },
+            username: {
+                label: '用户名',
+                placeholder: '请输入用户名',
+                toggleText: '使用OA账号登录',
+                emptyHint: '请输入用户名和密码'
+            }
+        };
+
+        function applyLoginAccountMode(mode, options = {}) {
+            const config = loginAccountModeConfig[mode] || loginAccountModeConfig.oa;
+            loginAccountMode = mode;
+
+            const labelEl = document.getElementById('login-account-label');
+            const usernameInput = document.getElementById('login-username');
+            const passwordInput = document.getElementById('login-password');
+            const toggleBtn = document.getElementById('login-mode-toggle-btn');
+            const errorEl = document.getElementById('login-error');
+
+            if (labelEl) labelEl.textContent = config.label;
+            if (usernameInput) {
+                usernameInput.placeholder = config.placeholder;
+                if (options.clearInputs) {
+                    usernameInput.value = '';
+                } else if (mode === 'oa' && !usernameInput.value.trim()) {
+                    usernameInput.value = 'demo';
+                }
+            }
+            if (passwordInput && options.clearInputs) {
+                passwordInput.value = '';
+            } else if (passwordInput && mode === 'oa' && !passwordInput.value) {
+                passwordInput.value = '123456';
+            }
+            if (toggleBtn) toggleBtn.textContent = config.toggleText;
+            if (errorEl) errorEl.hidden = true;
+
+            if (options.focusInput && usernameInput) {
+                usernameInput.focus();
+            }
+        }
+
+        function toggleLoginAccountMode() {
+            const nextMode = loginAccountMode === 'oa' ? 'username' : 'oa';
+            applyLoginAccountMode(nextMode, { clearInputs: true, focusInput: true });
+            if (nextMode === 'oa') {
+                const usernameInput = document.getElementById('login-username');
+                const passwordInput = document.getElementById('login-password');
+                if (usernameInput) usernameInput.value = 'demo';
+                if (passwordInput) passwordInput.value = '123456';
+            }
+        }
+
+        function resetLoginFormState() {
+            applyLoginAccountMode('oa', { clearInputs: false });
+            const usernameInput = document.getElementById('login-username');
+            const passwordInput = document.getElementById('login-password');
+            if (usernameInput) usernameInput.value = 'demo';
+            if (passwordInput) passwordInput.value = '123456';
+        }
+
+        function getStoredWorkbenchRole() {
+            const role = sessionStorage.getItem(WORKBENCH_ROLE_STORAGE_KEY);
+            return role === 'support' ? 'support' : 'employee';
+        }
+
+        function isWorkbenchLoggedIn() {
+            return sessionStorage.getItem(WORKBENCH_LOGIN_STORAGE_KEY) === 'true';
+        }
+
+        function updateNavTitleForRole(role) {
+            const resolvedRole = role || currentWorkbenchRole || 'employee';
+            const titleEl = document.getElementById('nav-page-title');
+            const labelEl = document.getElementById('workbench-role-switch-label');
+            if (titleEl) titleEl.textContent = '员工工作台';
+            if (labelEl) {
+                labelEl.textContent = resolvedRole === 'support' ? '业务支持中心' : '业务团队';
+            }
+        }
+
+        function showLoginPage() {
+            document.getElementById('login-page')?.removeAttribute('hidden');
+            document.getElementById('app-workbench')?.setAttribute('hidden', '');
+            document.body.classList.remove('support-tab-active', 'org-tab-active');
+            resetLoginFormState();
+        }
+
+        function logoutWorkbench() {
+            sessionStorage.removeItem(WORKBENCH_LOGIN_STORAGE_KEY);
+            sessionStorage.removeItem(WORKBENCH_ROLE_STORAGE_KEY);
+            currentWorkbenchRole = null;
+            if (typeof clearSupportCategorySelection === 'function') {
+                clearSupportCategorySelection();
+            }
+            if (typeof restoreSupportSecondaryAvatarFullNames === 'function') {
+                restoreSupportSecondaryAvatarFullNames();
+            }
+            if (typeof setSupportSecondaryNavExpanded === 'function') {
+                setSupportSecondaryNavExpanded(false);
+            }
+            const loginError = document.getElementById('login-error');
+            if (loginError) loginError.hidden = true;
+            showLoginPage();
+        }
+
+        function enterWorkbench(role) {
+            const resolvedRole = role === 'support' ? 'support' : 'employee';
+            currentWorkbenchRole = resolvedRole;
+            sessionStorage.setItem(WORKBENCH_LOGIN_STORAGE_KEY, 'true');
+            sessionStorage.setItem(WORKBENCH_ROLE_STORAGE_KEY, resolvedRole);
+
+            document.getElementById('login-page')?.setAttribute('hidden', '');
+            document.getElementById('app-workbench')?.removeAttribute('hidden');
+            updateNavTitleForRole(resolvedRole);
+
+            if (!workbenchInitialized) {
+                initWorkbenchTabs();
+                workbenchInitialized = true;
+            }
+            switchWorkbenchTab(resolvedRole);
+        }
+
+        function handleLoginSubmit(event) {
+            event.preventDefault();
+            const errorEl = document.getElementById('login-error');
+            const username = document.getElementById('login-username')?.value.trim();
+            const password = document.getElementById('login-password')?.value.trim();
+            const roleInput = document.querySelector('input[name="workbench-role"]:checked');
+            const emptyHint = loginAccountModeConfig[loginAccountMode]?.emptyHint || '请输入账号和密码';
+
+            if (!username || !password) {
+                if (errorEl) {
+                    errorEl.textContent = emptyHint;
+                    errorEl.hidden = false;
+                }
+                return;
+            }
+            if (!roleInput) {
+                if (errorEl) {
+                    errorEl.textContent = '请选择登录角色';
+                    errorEl.hidden = false;
+                }
+                return;
+            }
+            if (errorEl) errorEl.hidden = true;
+            enterWorkbench(roleInput.value);
+        }
+
         function getPanelKey(panel) {
-            return (panel || getActiveWorkbenchPanel())?.dataset.panel || 'employee';
+            if (panel?.dataset?.panel) return panel.dataset.panel;
+            const activePanel = getActiveWorkbenchPanel();
+            if (activePanel?.dataset?.panel) return activePanel.dataset.panel;
+            return currentWorkbenchRole || getStoredWorkbenchRole();
         }
 
         function getPanelState(panel) {
@@ -2069,6 +2347,34 @@
             return supportAgents.find(a => a.id === agentId) || supportAgents[0];
         }
 
+        function getSupportCategoryAgentTasks(categoryId, agentId) {
+            return supportCategoryAgentTasks[categoryId]?.[agentId] || [];
+        }
+
+        function getSupportAgentAllTasks(agentId) {
+            const tasks = [];
+            Object.values(supportCategoryAgentTasks).forEach(categoryMap => {
+                const list = categoryMap[agentId];
+                if (list?.length) tasks.push(...list);
+            });
+            return tasks;
+        }
+
+        function getSupportAgentTasksWithCategory(agentId) {
+            const items = [];
+            supportTopCategories.forEach(cat => {
+                getSupportCategoryAgentTasks(cat.id, agentId).forEach(task => {
+                    items.push({ categoryId: cat.id, categoryName: cat.name, task });
+                });
+            });
+            return items;
+        }
+
+        function getSupportAgentTaskCount(agentId, categoryId) {
+            if (categoryId) return getSupportCategoryAgentTasks(categoryId, agentId).length;
+            return getSupportAgentAllTasks(agentId).length;
+        }
+
         function updateSupportAgentButton(panel, agentId) {
             const agentBtn = panel.querySelector('#support-current-agent-name-support');
             const jumpBar = panel.querySelector('.support-agent-jump-bar');
@@ -2106,9 +2412,10 @@
             return `<button type="button" class="support-chat-todo-trigger" data-agent-id="${escapeHtmlAttr(agentId)}" data-task-id="${escapeHtmlAttr(task.id)}" data-step-text="${escapeHtmlAttr(stepText)}" data-send-text="${escapeHtmlAttr(displayText)}" data-reply-mode="${escapeHtmlAttr(replyMode)}">${escapeHtmlText(displayText)}</button>`;
         }
 
-        function buildSupportTodoLineSummaryHtml(agentId, task, index) {
+        function buildSupportTodoLineSummaryHtml(agentId, task, index, categoryName) {
             const nextStep = task.nextSteps[0] || '请跟进推进';
-            const lineText = `${index + 1}. ${task.title}：${nextStep}`;
+            const categoryPrefix = categoryName ? `【${categoryName}】` : '';
+            const lineText = `${index + 1}. ${categoryPrefix}${task.title}：${nextStep}`;
             return `<p class="support-chat-todo-line">${buildSupportTodoTriggerHtml(agentId, task, lineText, nextStep)}</p>`;
         }
 
@@ -2119,23 +2426,72 @@
 <p class="support-chat-todo-line support-chat-todo-step">${buildSupportTodoTriggerHtml(agentId, task, stepText, nextStep)}</p>`;
         }
 
+        function getSupportCategoryById(categoryId) {
+            return supportTopCategories.find(cat => cat.id === categoryId) || null;
+        }
+
+        function getSupportAgentCategoryId(agentId) {
+            return supportAgentCategoryMap[agentId] || null;
+        }
+
+        function getSupportAgentDisplayLabel(agentId) {
+            return getSupportAgent(agentId)?.name || '';
+        }
+
+        function getSupportAgentIntroHtml(agentId) {
+            return `<strong>${escapeHtmlText(getSupportAgentDisplayLabel(agentId))}</strong>`;
+        }
+
+        function getSupportCategoryTaskCount(categoryId) {
+            const cat = getSupportCategoryById(categoryId);
+            if (!cat?.badgeAgentIds?.length) return 0;
+            return cat.badgeAgentIds.reduce((sum, agentId) => {
+                return sum + getSupportCategoryAgentTasks(categoryId, agentId).length;
+            }, 0);
+        }
+
+        function shouldShowSupportAgentBadge(agentId, categoryId) {
+            const cat = getSupportCategoryById(categoryId);
+            if (!cat?.badgeAgentIds?.includes(agentId)) return false;
+            return getSupportCategoryAgentTasks(categoryId, agentId).length > 0;
+        }
+
+        function updateSupportCategoryCardBadges() {
+            if (!document.body.classList.contains('support-tab-active')) return;
+            supportTopCategories.forEach(cat => {
+                const btn = document.querySelector(`.support-category-item[data-support-category="${cat.id}"]`);
+                if (!btn) return;
+                btn.querySelector('.support-category-task-badge')?.remove();
+                const count = getSupportCategoryTaskCount(cat.id);
+                if (count <= 0) return;
+                const badge = document.createElement('span');
+                badge.className = 'support-category-task-badge';
+                badge.textContent = String(count);
+                badge.setAttribute('aria-label', count + '项今日任务');
+                btn.appendChild(badge);
+            });
+        }
+
         function buildSupportDailyTasksSummaryHtml() {
             let html = '<p>以下是有待办事项的业务助理任务汇总：</p>';
             supportBadgeAgentIds.forEach(agentId => {
                 const agent = getSupportAgent(agentId);
-                html += `<p><strong>${escapeHtmlText(agent.name)}</strong>（${agent.tasks.length}项待办）</p>`;
-                agent.tasks.forEach((task, index) => {
-                    html += buildSupportTodoLineSummaryHtml(agentId, task, index);
+                const allTasks = getSupportAgentAllTasks(agentId);
+                if (!allTasks.length) return;
+                html += `<p><strong>${escapeHtmlText(agent.name)}</strong>（${allTasks.length}项待办）</p>`;
+                getSupportAgentTasksWithCategory(agentId).forEach((item, index) => {
+                    html += buildSupportTodoLineSummaryHtml(agentId, item.task, index, item.categoryName);
                 });
             });
-            html += '<p>请点击上方任务项，或顶部带角标的业务助理头像，快速发起对话。</p>';
+            html += '<p>请点击上方任务项，或展开一级分类后选择带角标的业务助理，快速发起对话。</p>';
             return html;
         }
 
         function buildSupportAgentTasksGuideHtml(agentId) {
             const agent = getSupportAgent(agentId);
-            let html = `<p>您好，我是<strong>${escapeHtmlText(agent.name)}</strong>。您有 <strong>${agent.tasks.length}</strong> 项今日待办，建议优先处理：</p>`;
-            agent.tasks.forEach((task, index) => {
+            const allTasks = getSupportAgentAllTasks(agentId);
+            let html = `<p>您好，我是${getSupportAgentIntroHtml(agentId)}。您有 <strong>${allTasks.length}</strong> 项今日待办，建议优先处理：</p>`;
+            allTasks.forEach((task, index) => {
                 html += buildSupportTodoLineGuideHtml(agentId, task, index);
             });
             html += '<p>请在下方对话框输入具体待办内容，或<strong>直接点击</strong>上方待办文字快速发送，我将协助您推进处理。</p>';
@@ -2143,8 +2499,11 @@
         }
 
         function findSupportTask(agentId, taskId) {
-            const agent = getSupportAgent(agentId);
-            return agent?.tasks?.find(task => task.id === taskId) || null;
+            for (const categoryMap of Object.values(supportCategoryAgentTasks)) {
+                const task = categoryMap[agentId]?.find(item => item.id === taskId);
+                if (task) return task;
+            }
+            return null;
         }
 
         function sendSupportTodoQuick(agentId, taskId, sendText, stepText, replyMode = 'task') {
@@ -2244,7 +2603,7 @@
             row.className = 'chat-row chat-row-assistant support-assistant-row';
             row.dataset.supportAgentGuide = agentId;
             row.innerHTML = `
-                <div class="chat-avatar support-chat-avatar"><img src="${agent.image}" alt="${agent.name}"></div>
+                <div class="chat-avatar support-chat-avatar"><img src="${agent.image}" alt="${escapeHtmlText(getSupportAgentDisplayLabel(agentId))}"></div>
                 <div class="chat-bubble chat-bubble-assistant">${buildSupportAgentTasksGuideHtml(agentId)}</div>
             `;
             messagesEl.appendChild(row);
@@ -2284,7 +2643,7 @@
                 row.innerHTML = `<div class="chat-bubble chat-bubble-user">${escapeHtml(text)}</div>`;
             } else if (agent) {
                 row.innerHTML = `
-                    <div class="chat-avatar support-chat-avatar"><img src="${agent.image}" alt="${agent.name}"></div>
+                    <div class="chat-avatar support-chat-avatar"><img src="${agent.image}" alt="${escapeHtmlText(getSupportAgentDisplayLabel(agentId))}"></div>
                     <div class="chat-bubble chat-bubble-assistant">${assistantBody}</div>
                 `;
             } else {
@@ -2309,8 +2668,7 @@
         }
 
         function buildSupportExecStepReplyHtml(task, agentId, parentStepText, execStepText) {
-            const agent = getSupportAgent(agentId);
-            let html = `<p>收到，我是${escapeHtmlText(agent.name)}。正在协助您处理「${escapeHtmlText(task.title)}」—「${escapeHtmlText(parentStepText)}」中的：<strong>${escapeHtmlText(execStepText)}</strong>。</p>`;
+            let html = `<p>收到，我是${getSupportAgentIntroHtml(agentId)}。正在协助您处理「${escapeHtmlText(task.title)}」—「${escapeHtmlText(parentStepText)}」中的：<strong>${escapeHtmlText(execStepText)}</strong>。</p>`;
             html += getSupportExecProcessingHtml(task, parentStepText, execStepText);
             html += '<p>如需我继续帮您起草文档、整理清单或安排会议，请直接告诉我。</p>';
             return html;
@@ -2359,8 +2717,7 @@
         }
 
         function buildSupportTaskReplyHtml(task, agentId) {
-            const agent = getSupportAgent(agentId);
-            let html = `<p>您好，我是${escapeHtmlText(agent.name)}。已收到您关于「${escapeHtmlText(task.title)}」的跟进请求。</p>`;
+            let html = `<p>您好，我是${getSupportAgentIntroHtml(agentId)}。已收到您关于「${escapeHtmlText(task.title)}」的跟进请求。</p>`;
             html += `<p><strong>任务概况</strong><br>${escapeHtmlText(task.description)}</p>`;
             html += '<p><strong>已完成步骤</strong></p><ul class="chat-md-list support-task-steps-list">';
             task.completedSteps.forEach(step => {
@@ -2388,8 +2745,7 @@
         }
 
         function findSupportTaskByMessage(message, agentId) {
-            const agent = getSupportAgent(agentId);
-            return agent.tasks.find(task =>
+            return getSupportAgentAllTasks(agentId).find(task =>
                 message.includes(task.title) ||
                 task.nextSteps.some(step => message.includes(step) || step.includes(message))
             ) || null;
@@ -2409,26 +2765,24 @@
         }
 
         function getSupportTaskReply(task, agentId) {
-            const agent = getSupportAgent(agentId);
             const done = task.completedSteps.map(s => `• ${s}`).join('\n');
             const next = task.nextSteps.map(s => `• ${s}`).join('\n');
-            return `您好，我是${agent.name}。已收到您关于「${task.title}」的跟进请求。\n\n**任务概况**\n${task.description}\n\n**已完成步骤**\n${done}\n\n**建议下一步**\n${next}\n\n如需我协助撰写材料、安排会议或推进审批，请直接告诉我。`;
+            return `您好，我是${getSupportAgentDisplayLabel(agentId)}。已收到您关于「${task.title}」的跟进请求。\n\n**任务概况**\n${task.description}\n\n**已完成步骤**\n${done}\n\n**建议下一步**\n${next}\n\n如需我协助撰写材料、安排会议或推进审批，请直接告诉我。`;
         }
 
         function getSupportAgentReply(message, agentId) {
             if (!agentId) {
                 for (const id of supportBadgeAgentIds) {
                     const agent = getSupportAgent(id);
-                    for (const task of agent.tasks) {
+                    for (const task of getSupportAgentAllTasks(id)) {
                         const matchedStep = task.nextSteps.find(step => message.includes(step) || step.includes(message));
                         if (matchedStep || message.includes(task.title)) {
-                            return `您好，该待办属于**${agent.name}**。\n\n` + getSupportTaskReply(task, id).replace(/^您好[^\n]+\n\n/, '');
+                            return `您好，该待办属于**${getSupportAgentDisplayLabel(id)}**。\n\n` + getSupportTaskReply(task, id).replace(/^您好[^\n]+\n\n/, '');
                         }
                     }
                 }
                 const badgeHint = supportBadgeAgentIds.map(id => {
-                    const a = getSupportAgent(id);
-                    return `**${a.name}**（${a.tasks.length}）`;
+                    return `**${getSupportAgentDisplayLabel(id)}**（${getSupportAgentTaskCount(id)}）`;
                 }).join('、');
                 return `您好，我已收到您的消息。您可在上方点击${badgeHint}选择对应助理；也可直接在对话框输入具体待办内容，我将协助您跟进处理。`;
             }
@@ -2437,8 +2791,7 @@
             if (task && (message.includes(task.title) || task.nextSteps.some(step => message.includes(step) || step.includes(message)))) {
                 return getSupportTaskReply(task, agentId || supportState.currentTaskAgentId);
             }
-            const agent = getSupportAgent(agentId);
-            return `您好，我是${agent.name}。关于「${message}」，我将结合当前任务进展为您提供支持。请补充具体需求或相关材料。`;
+            return `您好，我是${getSupportAgentDisplayLabel(agentId)}。关于「${message}」，我将结合当前任务进展为您提供支持。请补充具体需求或相关材料。`;
         }
 
         function customizeOrgPanel(panel) {
@@ -2488,27 +2841,268 @@
             });
         }
 
-        function updateSupportAvatarPendingDots() {
+        function getSupportCategoryIconHtml(iconName) {
+            const icons = {
+                'users': {
+                    color: '#4A90E2',
+                    svg: '<circle cx="12" cy="7" r="4" fill="#4A90E2" opacity="0.2"/><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#4A90E2" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="#4A90E2" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="#4A90E2" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#4A90E2" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+                },
+                'trending-up': {
+                    color: '#E74C3C',
+                    svg: '<path d="M23 6L13.5 15.5L8.5 10.5L1 18" stroke="#E74C3C" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="17 6 23 6 23 12" stroke="#E74C3C" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="23" cy="6" r="3" fill="#E74C3C" opacity="0.2"/>'
+                },
+                'shield': {
+                    color: '#27AE60',
+                    svg: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#27AE60" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="#27AE60" opacity="0.15"/><path d="M9 12l2 2 4-4" stroke="#27AE60" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+                },
+                'layers': {
+                    color: '#F39C12',
+                    svg: '<polygon points="12 2 2 7 12 12 22 7 12 2" stroke="#F39C12" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polygon points="12 2 2 7 12 12 22 7 12 2" fill="#F39C12" opacity="0.15"/><polyline points="2 17 12 22 22 17" stroke="#F39C12" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="2 12 12 17 22 12" stroke="#F39C12" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+                }
+            };
+            const icon = icons[iconName] || icons['users'];
+            return `<svg class="support-category-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${icon.svg}</svg>`;
+        }
+
+        function initSupportCategoryRow() {
+            const row = document.getElementById('support-category-row');
+            if (!row || row.dataset.initialized === 'true') return;
+            row.innerHTML = supportTopCategories.map(cat => {
+                const hasDropdown = hasSupportCategoryDropdown(cat.id);
+                return `
+                <button type="button" class="support-category-item${hasDropdown ? '' : ' is-no-dropdown'}" role="tab" data-support-category="${cat.id}" data-has-dropdown="${hasDropdown ? 'true' : 'false'}" aria-selected="false" aria-expanded="false" onclick="toggleSupportCategory('${cat.id}', event)">
+                    <div class="support-category-item-left">
+                        ${getSupportCategoryIconHtml(cat.icon)}
+                    </div>
+                    <div class="support-category-item-center">
+                        <span class="support-category-item-title">${cat.name}</span>
+                    </div>
+                </button>
+            `;
+            }).join('');
+            row.dataset.initialized = 'true';
+            initSupportCategoryDropdownDismiss();
+            updateSupportCategoryCardBadges();
+        }
+
+        function toggleSupportCategory(categoryId, event) {
+            event?.stopPropagation();
+            if (!hasSupportCategoryDropdown(categoryId)) {
+                handleSupportCategoryDirectClick(categoryId);
+                return;
+            }
+            if (currentSupportCategoryId === categoryId) {
+                clearSupportCategorySelection();
+                return;
+            }
+            selectSupportCategory(categoryId);
+        }
+
+        function handleSupportCategoryDirectClick(categoryId) {
+            if (currentSupportCategoryId) {
+                clearSupportCategorySelection();
+            }
+            const cat = getSupportCategoryById(categoryId);
+            const agentIds = getSupportCategoryVisibleAgentIds(categoryId);
+            const toastMessage = cat?.directJumpToast
+                || (agentIds.length === 1 ? '点击跳转' + getSupportAgent(agentIds[0]).name : '点击跳转相应页面');
+            showOrgAgentJumpToast(toastMessage, { fullMessage: true });
+
+            if (agentIds.length === 1) {
+                const panel = document.getElementById('workbench-panel-support');
+                if (!panel) return;
+                const state = getPanelState(panel);
+                state.currentSupportAgent = null;
+                updateSupportAgentButton(panel, null);
+                updateTopAvatarActive(null);
+            }
+        }
+
+        function initSupportCategoryDropdownDismiss() {
+            if (document.body.dataset.supportDropdownDismissBound === 'true') return;
+
+            document.addEventListener('click', () => {
+                if (!document.body.classList.contains('support-tab-active')) return;
+                if (!currentSupportCategoryId) return;
+                clearSupportCategorySelection();
+            });
+
+            document.getElementById('support-category-row')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+
+            document.getElementById('support-secondary-avatars-wrap')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+
+            document.getElementById('support-top-nav-stack')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+
+            document.body.dataset.supportDropdownDismissBound = 'true';
+        }
+
+        const allSupportAgentIds = ['ib', 'asset', 'retail', 'invest', 'sales', 'institution', 'verify'];
+
+        function getSupportCategoryExcludedAgentIds(categoryId) {
+            return supportTopCategories.find(cat => cat.id === categoryId)?.excludeAgentIds || [];
+        }
+
+        function getSupportCategoryVisibleAgentIds(categoryId) {
+            const excluded = new Set(getSupportCategoryExcludedAgentIds(categoryId));
+            return allSupportAgentIds.filter(id => !excluded.has(id));
+        }
+
+        function hasSupportCategoryDropdown(categoryId) {
+            return getSupportCategoryVisibleAgentIds(categoryId).length >= 2;
+        }
+
+        function updateSupportAvatarsVisibility(categoryId) {
+            const excluded = new Set(getSupportCategoryExcludedAgentIds(categoryId));
+            document.querySelectorAll('.avatar-item[data-avatar-type]').forEach(item => {
+                const hidden = excluded.has(item.dataset.avatarType);
+                item.hidden = hidden;
+                item.style.display = hidden ? 'none' : '';
+            });
+        }
+
+        function resetSupportAvatarsVisibility() {
+            document.querySelectorAll('.avatar-item[data-avatar-type]').forEach(item => {
+                item.hidden = false;
+                item.style.display = '';
+            });
+        }
+
+        function setSupportSecondaryNavExpanded(expanded) {
+            const host = document.getElementById('top-nav-avatars-host');
+            const stack = document.getElementById('support-top-nav-stack');
+            host?.classList.toggle('is-secondary-expanded', expanded);
+            stack?.classList.toggle('is-secondary-expanded', expanded);
+        }
+
+        function selectSupportCategory(categoryId) {
+            if (!supportTopCategories.some(cat => cat.id === categoryId)) return;
+            currentSupportCategoryId = categoryId;
+            setSupportSecondaryNavExpanded(true);
+            document.querySelectorAll('.support-category-item').forEach(btn => {
+                const active = btn.dataset.supportCategory === categoryId;
+                btn.classList.toggle('active', active);
+                btn.classList.toggle('is-expanded', active);
+                btn.setAttribute('aria-selected', active ? 'true' : 'false');
+                btn.setAttribute('aria-expanded', active ? 'true' : 'false');
+            });
+            const secondaryWrap = document.getElementById('support-secondary-avatars-wrap');
+            secondaryWrap?.classList.add('is-visible');
+            updateSupportAvatarsVisibility(categoryId);
+            updateSupportAvatarPendingDots(categoryId);
+        }
+
+        function clearSupportCategorySelection() {
+            currentSupportCategoryId = null;
+            setSupportSecondaryNavExpanded(false);
+            document.querySelectorAll('.support-category-item').forEach(btn => {
+                btn.classList.remove('active', 'is-expanded');
+                btn.setAttribute('aria-selected', 'false');
+                btn.setAttribute('aria-expanded', 'false');
+            });
+            const secondaryWrap = document.getElementById('support-secondary-avatars-wrap');
+            secondaryWrap?.classList.remove('is-visible');
+            resetSupportAvatarsVisibility();
+            restoreSupportSecondaryAvatarFullNames();
+        }
+
+        function syncSupportTopNavLayout() {
+            const host = document.getElementById('top-nav-avatars-host');
+            const isSupport = document.body.classList.contains('support-tab-active');
+            if (!host) return;
+
+            host.classList.toggle('is-support-mode', isSupport);
+
+            if (isSupport) {
+                initSupportCategoryRow();
+                updateSupportCategoryCardBadges();
+                if (currentSupportCategoryId) {
+                    selectSupportCategory(currentSupportCategoryId);
+                } else {
+                    clearSupportCategorySelection();
+                }
+                return;
+            }
+
+            clearSupportCategorySelection();
+            restoreSupportSecondaryAvatarFullNames();
+        }
+
+        function getAvatarNameFullLabel(nameEl) {
+            if (!nameEl) return '';
+            if (nameEl.dataset.fullLabel) return nameEl.dataset.fullLabel;
+            const stored = nameEl.textContent.trim();
+            nameEl.dataset.fullLabel = stored;
+            return stored;
+        }
+
+        function stripAssistantSuffix(name) {
+            const suffix = '助理';
+            return name && name.endsWith(suffix) ? name.slice(0, -suffix.length) : (name || '');
+        }
+
+        function getSupportSecondaryAvatarDisplayName(nameEl) {
+            return stripAssistantSuffix(getAvatarNameFullLabel(nameEl));
+        }
+
+        function applySupportSecondaryAvatarDisplayName(nameEl) {
+            if (!nameEl) return;
+            nameEl.textContent = getSupportSecondaryAvatarDisplayName(nameEl);
+        }
+
+        function restoreSupportSecondaryAvatarFullNames() {
+            document.querySelectorAll('.avatar-item[data-avatar-type] .avatar-name').forEach(nameEl => {
+                if (!nameEl.dataset.fullLabel) return;
+                nameEl.textContent = nameEl.dataset.fullLabel;
+            });
+        }
+
+        function restoreAvatarNameLabel(nameEl) {
+            if (!nameEl) return;
+            const full = getAvatarNameFullLabel(nameEl);
+            nameEl.textContent = full;
+        }
+
+        function setAvatarImgTaskBadge(wrap, count) {
+            if (!wrap) return;
+            const badge = document.createElement('span');
+            badge.className = 'avatar-task-badge';
+            badge.textContent = String(count);
+            badge.setAttribute('aria-label', count + '项今日任务');
+            wrap.appendChild(badge);
+        }
+
+        function updateSupportAvatarPendingDots(categoryId) {
             const isSupportTab = document.body.classList.contains('support-tab-active');
+            const activeCategoryId = categoryId ?? currentSupportCategoryId;
+
             document.querySelectorAll('.avatar-item[data-avatar-type]').forEach(item => {
                 const agentId = item.dataset.avatarType;
                 const wrap = item.querySelector('.avatar-img-wrap');
-                if (!wrap) return;
+                const nameEl = item.querySelector('.avatar-name');
+                if (!wrap || !nameEl) return;
 
                 wrap.querySelector('.avatar-pending-dot')?.remove();
                 wrap.querySelector('.avatar-task-badge')?.remove();
+                nameEl.querySelector('.avatar-task-badge')?.remove();
 
-                if (!isSupportTab || !supportBadgeAgentIds.includes(agentId)) return;
+                if (!isSupportTab || !activeCategoryId) {
+                    restoreAvatarNameLabel(nameEl);
+                    return;
+                }
+                if (!shouldShowSupportAgentBadge(agentId, activeCategoryId)) {
+                    applySupportSecondaryAvatarDisplayName(nameEl);
+                    return;
+                }
 
-                const agent = getSupportAgent(agentId);
-                const count = agent.tasks?.length || 0;
-                if (count <= 0) return;
-
-                const badge = document.createElement('span');
-                badge.className = 'avatar-task-badge';
-                badge.textContent = String(count);
-                badge.setAttribute('aria-label', count + '项今日任务');
-                wrap.appendChild(badge);
+                const count = getSupportCategoryAgentTasks(activeCategoryId, agentId).length;
+                applySupportSecondaryAvatarDisplayName(nameEl);
+                setAvatarImgTaskBadge(wrap, count);
             });
         }
 
@@ -2548,12 +3142,12 @@
             });
         }
 
-        function showOrgAgentJumpToast(agentName) {
+        function showOrgAgentJumpToast(agentName, options = {}) {
             document.querySelectorAll('.org-agent-jump-toast').forEach(el => el.remove());
 
             const toast = document.createElement('div');
             toast.className = 'org-agent-jump-toast';
-            toast.textContent = '点击跳转' + agentName;
+            toast.textContent = options.fullMessage ? agentName : ('点击跳转' + agentName);
             document.body.appendChild(toast);
 
             requestAnimationFrame(() => toast.classList.add('show'));
@@ -2683,15 +3277,18 @@
         }
 
         function switchWorkbenchTab(tabKey) {
-            document.querySelectorAll('.workbench-tab').forEach(tab => {
-                tab.classList.toggle('active', tab.dataset.tab === tabKey);
-            });
+            currentWorkbenchRole = tabKey === 'support' ? 'support' : (tabKey === 'org' ? 'org' : 'employee');
             document.querySelectorAll('.workbench-panel').forEach(panel => {
                 panel.classList.toggle('active', panel.dataset.panel === tabKey);
             });
             document.body.classList.toggle('org-tab-active', tabKey === 'org');
             document.body.classList.toggle('support-tab-active', tabKey === 'support');
+            if (tabKey === 'support') {
+                currentSupportCategoryId = null;
+            }
+            syncSupportTopNavLayout();
             syncEmployeeChatModeLayout();
+            updateNavTitleForRole(tabKey === 'support' ? 'support' : 'employee');
 
             if (tabKey === 'org') {
                 const orgPanel = document.getElementById('workbench-panel-org');
@@ -2708,6 +3305,9 @@
                 initWorkbenchPanel(panel);
             }
             updateSupportAvatarPendingDots();
+            if (tabKey === 'support') {
+                updateSupportCategoryCardBadges();
+            }
         }
 
         function initWorkbenchTabs() {
@@ -5426,7 +6026,7 @@
         
         // 页面加载时初始化
         document.addEventListener('DOMContentLoaded', function() {
-            initWorkbenchTabs();
+            showLoginPage();
         });
 
         // 数字人头像区域拖拽滑动功能
