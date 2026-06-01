@@ -100,9 +100,7 @@
                 <div class="nav-divider"></div>
                 <div class="nav-right top-nav-avatars-host" id="top-nav-avatars-host">
                     <div class="support-top-nav-stack" id="support-top-nav-stack">
-                    <!-- 业务支持：一级分类 -->
-                    <div class="support-category-row" id="support-category-row" role="tablist" aria-label="业务支持分类"></div>
-                    <!-- 业务支持二级 / 其他 Tab：业务助理头像 -->
+                    <!-- 业务支持：业务助理头像 -->
                     <div class="support-secondary-avatars-wrap support-category-bar" id="support-secondary-avatars-wrap" role="region" aria-label="业务助理选择">
                     <div class="digital-avatars-scroll">
                         <div class="digital-avatars">
@@ -2097,8 +2095,8 @@
             sessionStorage.removeItem(WORKBENCH_LOGIN_STORAGE_KEY);
             sessionStorage.removeItem(WORKBENCH_ROLE_STORAGE_KEY);
             currentWorkbenchRole = null;
-            if (typeof clearSupportCategorySelection === 'function') {
-                clearSupportCategorySelection();
+            if (typeof hideSupportAvatarsNav === 'function') {
+                hideSupportAvatarsNav();
             }
             if (typeof restoreSupportSecondaryAvatarFullNames === 'function') {
                 restoreSupportSecondaryAvatarFullNames();
@@ -2412,10 +2410,9 @@
             return `<button type="button" class="support-chat-todo-trigger" data-agent-id="${escapeHtmlAttr(agentId)}" data-task-id="${escapeHtmlAttr(task.id)}" data-step-text="${escapeHtmlAttr(stepText)}" data-send-text="${escapeHtmlAttr(displayText)}" data-reply-mode="${escapeHtmlAttr(replyMode)}">${escapeHtmlText(displayText)}</button>`;
         }
 
-        function buildSupportTodoLineSummaryHtml(agentId, task, index, categoryName) {
+        function buildSupportTodoLineSummaryHtml(agentId, task, index) {
             const nextStep = task.nextSteps[0] || '请跟进推进';
-            const categoryPrefix = categoryName ? `【${categoryName}】` : '';
-            const lineText = `${index + 1}. ${categoryPrefix}${task.title}：${nextStep}`;
+            const lineText = `${index + 1}. ${task.title}：${nextStep}`;
             return `<p class="support-chat-todo-line">${buildSupportTodoTriggerHtml(agentId, task, lineText, nextStep)}</p>`;
         }
 
@@ -2480,10 +2477,10 @@
                 if (!allTasks.length) return;
                 html += `<p><strong>${escapeHtmlText(agent.name)}</strong>（${allTasks.length}项待办）</p>`;
                 getSupportAgentTasksWithCategory(agentId).forEach((item, index) => {
-                    html += buildSupportTodoLineSummaryHtml(agentId, item.task, index, item.categoryName);
+                    html += buildSupportTodoLineSummaryHtml(agentId, item.task, index);
                 });
             });
-            html += '<p>请点击上方任务项，或展开一级分类后选择带角标的业务助理，快速发起对话。</p>';
+            html += '<p>请点击上方任务项，或选择带角标的业务助理头像，快速发起对话。</p>';
             return html;
         }
 
@@ -3011,6 +3008,31 @@
             restoreSupportSecondaryAvatarFullNames();
         }
 
+        function showSupportAvatarsNav() {
+            const host = document.getElementById('top-nav-avatars-host');
+            const secondaryWrap = document.getElementById('support-secondary-avatars-wrap');
+            host?.classList.add('is-support-avatars-only');
+            secondaryWrap?.classList.add('is-visible');
+            resetSupportAvatarsVisibility();
+            document.querySelectorAll('.avatar-item[data-avatar-type]').forEach(item => {
+                const agentId = item.dataset.avatarType;
+                const nameEl = item.querySelector('.avatar-name');
+                const fullName = getSupportAgent(agentId)?.name || '';
+                if (!nameEl || !fullName) return;
+                nameEl.dataset.fullLabel = fullName;
+                nameEl.textContent = fullName;
+            });
+            updateSupportAvatarPendingDots();
+        }
+
+        function hideSupportAvatarsNav() {
+            const host = document.getElementById('top-nav-avatars-host');
+            const secondaryWrap = document.getElementById('support-secondary-avatars-wrap');
+            host?.classList.remove('is-support-avatars-only', 'is-secondary-expanded');
+            secondaryWrap?.classList.remove('is-visible');
+            document.getElementById('support-top-nav-stack')?.classList.remove('is-secondary-expanded');
+        }
+
         function syncSupportTopNavLayout() {
             const host = document.getElementById('top-nav-avatars-host');
             const isSupport = document.body.classList.contains('support-tab-active');
@@ -3019,17 +3041,11 @@
             host.classList.toggle('is-support-mode', isSupport);
 
             if (isSupport) {
-                initSupportCategoryRow();
-                updateSupportCategoryCardBadges();
-                if (currentSupportCategoryId) {
-                    selectSupportCategory(currentSupportCategoryId);
-                } else {
-                    clearSupportCategorySelection();
-                }
+                showSupportAvatarsNav();
                 return;
             }
 
-            clearSupportCategorySelection();
+            hideSupportAvatarsNav();
             restoreSupportSecondaryAvatarFullNames();
         }
 
@@ -3077,9 +3093,8 @@
             wrap.appendChild(badge);
         }
 
-        function updateSupportAvatarPendingDots(categoryId) {
+        function updateSupportAvatarPendingDots() {
             const isSupportTab = document.body.classList.contains('support-tab-active');
-            const activeCategoryId = categoryId ?? currentSupportCategoryId;
 
             document.querySelectorAll('.avatar-item[data-avatar-type]').forEach(item => {
                 const agentId = item.dataset.avatarType;
@@ -3091,18 +3106,16 @@
                 wrap.querySelector('.avatar-task-badge')?.remove();
                 nameEl.querySelector('.avatar-task-badge')?.remove();
 
-                if (!isSupportTab || !activeCategoryId) {
+                if (!isSupportTab) {
                     restoreAvatarNameLabel(nameEl);
                     return;
                 }
-                if (!shouldShowSupportAgentBadge(agentId, activeCategoryId)) {
-                    applySupportSecondaryAvatarDisplayName(nameEl);
-                    return;
-                }
 
-                const count = getSupportCategoryAgentTasks(activeCategoryId, agentId).length;
-                applySupportSecondaryAvatarDisplayName(nameEl);
-                setAvatarImgTaskBadge(wrap, count);
+                restoreAvatarNameLabel(nameEl);
+
+                if (!supportBadgeAgentIds.includes(agentId)) return;
+                const count = getSupportAgentAllTasks(agentId).length;
+                if (count > 0) setAvatarImgTaskBadge(wrap, count);
             });
         }
 
@@ -3283,9 +3296,6 @@
             });
             document.body.classList.toggle('org-tab-active', tabKey === 'org');
             document.body.classList.toggle('support-tab-active', tabKey === 'support');
-            if (tabKey === 'support') {
-                currentSupportCategoryId = null;
-            }
             syncSupportTopNavLayout();
             syncEmployeeChatModeLayout();
             updateNavTitleForRole(tabKey === 'support' ? 'support' : 'employee');
@@ -3305,9 +3315,6 @@
                 initWorkbenchPanel(panel);
             }
             updateSupportAvatarPendingDots();
-            if (tabKey === 'support') {
-                updateSupportCategoryCardBadges();
-            }
         }
 
         function initWorkbenchTabs() {
