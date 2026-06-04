@@ -15,6 +15,7 @@
     --text-secondary: #666666;
     --text-light: #999999;
     --border-color: #E8E8E8;
+    --chat-assistant-bubble-bg: #F7F4EE;
     --input-gold-border: rgba(201, 169, 110, 0.3);
     --gradient-gold: linear-gradient(135deg, #C9A96E 0%, #E8D4A8 50%, #C9A96E 100%);
     --gradient-dark: linear-gradient(135deg, #1A1A2E 0%, #2D2D44 100%);
@@ -3945,11 +3946,11 @@ body.employee-chat-mode .workbench-panel[data-panel="employee"] .input-section.c
 }
 
 .chat-bubble-assistant {
-    background: white;
+    background: var(--chat-assistant-bubble-bg);
     color: var(--text-primary);
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(201, 169, 110, 0.18);
     border-radius: 12px 12px 12px 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
 }
 
 .chat-bubble-assistant p {
@@ -3978,10 +3979,11 @@ body.employee-chat-mode .workbench-panel[data-panel="employee"] .input-section.c
 /* 方案生成助手 - 方案类型选择卡片 */
 .solution-select-card {
     margin-top: 12px;
-    background: white;
+    background: #FFFFFF;
     border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .solution-select-header {
