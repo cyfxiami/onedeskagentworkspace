@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>员工工作台原型</title>
+    <style>
+        :root {
+            --bg: #0f1419;
+            --surface: #1a2332;
+            --surface2: #243044;
+            --border: #2d3a4f;
+            --text: #e8edf4;
+            --muted: #8b9cb3;
+            --v1: #6b7c93;
+            --now: #4a90e2;
+            --new: #9b7fd4;
+            --radius: 12px;
+            --sidebar-w: 220px;
+            --log-w: 300px;
+            --brand-h: 56px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 15px;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .app {
+            display: flex;
+            min-height: 100vh;
+            height: 100vh;
+        }
+        .sidebar-shell {
+            flex-shrink: 0;
+            width: var(--sidebar-w);
+            height: 100vh;
+            overflow: hidden;
+            transition: width 0.25s ease, min-width 0.25s ease;
+        }
+        .app.is-sidebar-collapsed .sidebar-shell {
+            width: 0;
+            min-width: 0;
+        }
+        .sidebar {
+            width: var(--sidebar-w);
+            height: 100vh;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            z-index: 90;
+        }
+        .sidebar-brand {
+            flex-shrink: 0;
+            height: var(--brand-h);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 0 12px 0 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .app-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 0.02em;
+            line-height: 1.3;
+        }
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 0;
+        }
+        .nav-item {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-family: inherit;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+        }
+        .nav-item:hover {
+            background: rgba(74, 144, 226, 0.08);
+            color: var(--text);
+        }
+        .nav-item.active {
+            background: rgba(74, 144, 226, 0.15);
+            color: var(--now);
+            border-left-color: var(--now);
+            font-weight: 600;
+        }
+        .main-area {
+            position: relative;
+            flex: 1;
+            min-width: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: var(--bg);
+        }
+        .main-area-layout {
+            display: flex;
+            height: 100%;
+            min-height: 0;
+        }
+        .main-area-content {
+            flex: 1;
+            min-width: 0;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .log-shell {
+            flex-shrink: 0;
+            width: var(--log-w);
+            height: 100%;
+            overflow: hidden;
+            transition: width 0.25s ease, min-width 0.25s ease;
+        }
+        .app.is-log-collapsed .log-shell {
+            width: 0;
+            min-width: 0;
+        }
+        .page-changelog-log {
+            width: var(--log-w);
+            height: 100%;
+            border-left: 1px solid var(--border);
+            background: var(--surface);
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+        .page-changelog-log-header {
+            flex-shrink: 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 16px 12px 12px 18px;
+            border-bottom: 1px solid var(--border);
+        }
+        .page-changelog-log-header-text {
+            flex: 1;
+            min-width: 0;
+        }
+        .layout-toggle-icon {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .panel-expand-rail {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 95;
+            width: 20px;
+            height: 52px;
+            padding: 0;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--muted);
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .panel-expand-rail:hover {
+            color: var(--now);
+            border-color: rgba(74, 144, 226, 0.45);
+            background: rgba(74, 144, 226, 0.12);
+        }
+        .panel-expand-rail .layout-toggle-icon {
+            width: 12px;
+            height: 12px;
+        }
+        .panel-expand-rail-left {
+            left: 0;
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+        }
+        .panel-expand-rail-right {
+            right: 0;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+        }
+        .app.is-sidebar-collapsed .panel-expand-rail-left {
+            display: flex;
+        }
+        .app.is-log-collapsed .panel-expand-rail-right {
+            display: flex;
+        }
+        .panel-collapse-btn {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--surface2);
+            color: var(--muted);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .panel-collapse-btn:hover {
+            color: var(--now);
+            border-color: rgba(74, 144, 226, 0.45);
+            background: rgba(74, 144, 226, 0.12);
+        }
+        .panel-collapse-btn .layout-toggle-icon {
+            width: 12px;
+            height: 12px;
+        }
+        .page-changelog-log-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 0;
+        }
+        .page-changelog-log-hint {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin: 6px 0 0;
+            line-height: 1.5;
+        }
+        .page-changelog-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px 16px 20px;
+        }
+        .page-changelog-item {
+            position: relative;
+            padding-left: 14px;
+            padding-bottom: 18px;
+        }
+        .page-changelog-item:last-child {
+            padding-bottom: 0;
+        }
+        .page-changelog-item::before {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 6px;
+            bottom: -4px;
+            width: 2px;
+            background: var(--border);
+        }
+        .page-changelog-item:last-child::before {
+            display: none;
+        }
+        .page-changelog-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--now);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        }
+        .page-changelog-time {
+            font-size: 0.72rem;
+            color: var(--now);
+            margin-bottom: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+        .page-changelog-text {
+            font-size: 0.82rem;
+            color: var(--muted);
+            line-height: 1.55;
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        /* 滚动条：默认隐藏，滚动时显示，贴合深色界面 */
+        .overlay-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: transparent transparent;
+            color-scheme: dark;
+        }
+        .overlay-scrollbar.is-scrolling {
+            scrollbar-color: rgba(139, 156, 179, 0.42) transparent;
+        }
+        .overlay-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .overlay-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .overlay-scrollbar::-webkit-scrollbar-thumb {
+            background-color: transparent;
+            border-radius: 3px;
+        }
+        .overlay-scrollbar.is-scrolling::-webkit-scrollbar-thumb {
+            background-color: rgba(139, 156, 179, 0.42);
+        }
+        .overlay-scrollbar.is-scrolling::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(168, 184, 204, 0.55);
+        }
+        .content-panel {
+            display: none;
+            padding: 8px 40px 48px;
+            max-width: 960px;
+        }
+        .content-panel.active {
+            display: block;
+        }
+        .panel-header { margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .panel-header h2 { font-size: 1.5rem; margin-bottom: 8px; }
+        .panel-header p { color: var(--muted); max-width: 720px; }
+        .panel-summary-heading {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 8px;
+        }
+        .panel-summary-list {
+            color: var(--muted);
+            max-width: 720px;
+            margin: 0;
+            padding-left: 1.35em;
+            font-size: 0.95rem;
+        }
+        .panel-summary-list li { margin-bottom: 4px; }
+        .panel-summary-list li:last-child { margin-bottom: 0; }
+        .path-note {
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: var(--muted);
+            margin-top: 10px;
+            padding: 14px 18px;
+            background: var(--bg);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            word-break: break-all;
+        }
+        .path-note code {
+            color: #7eb8f7;
+            font-size: 0.92rem;
+        }
+        .path-note a {
+            color: #7eb8f7;
+            font-size: 0.95rem;
+            word-break: break-all;
+        }
+        .path-note a:hover { text-decoration: underline; }
+        .conclusion {
+            background: rgba(74, 144, 226, 0.1);
+            border: 1px solid rgba(74, 144, 226, 0.35);
+            border-radius: var(--radius);
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            color: #9ec5f0;
+            font-size: 0.95rem;
+        }
+        .conclusion strong { color: #c5e0ff; }
+        .change-points {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .change-point {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px 18px;
+        }
+        .change-point-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .change-point.is-collapsed .change-point-header {
+            margin-bottom: 0;
+        }
+        .change-point-main-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--now);
+            margin: 0;
+            letter-spacing: 0.02em;
+        }
+        .change-point-toggle {
+            flex-shrink: 0;
+            padding: 4px 12px;
+            border: 1px solid rgba(74, 144, 226, 0.45);
+            border-radius: 8px;
+            background: rgba(74, 144, 226, 0.12);
+            color: var(--now);
+            font-size: 0.8rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .change-point-toggle:hover {
+            background: rgba(74, 144, 226, 0.22);
+            border-color: var(--now);
+        }
+        .change-point-collapse {
+            overflow: hidden;
+        }
+        .change-point.is-collapsed .change-point-collapse {
+            display: none;
+        }
+        .editable-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+        .editable-row-subtitle {
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border);
+        }
+        .editable-row-body {
+            position: relative;
+            flex-direction: column;
+            align-items: stretch;
+            margin-bottom: 0;
+        }
+        .editable-row-body .editable-row-top {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 1;
+            margin: 0;
+        }
+        .editable-row-body .change-point-body {
+            padding-right: 36px;
+        }
+        .change-point-title {
+            flex: 1;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+        .editable-edit-btn {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--surface2);
+            color: var(--muted);
+            font-family: inherit;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .editable-edit-btn:hover {
+            color: var(--now);
+            border-color: rgba(74, 144, 226, 0.45);
+            background: rgba(74, 144, 226, 0.12);
+        }
+        .editable-edit-icon {
+            width: 14px;
+            height: 14px;
+            display: block;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .changelog-edit-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 6000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 28px 20px;
+        }
+        .changelog-edit-modal[hidden] {
+            display: none !important;
+        }
+        .changelog-edit-modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.58);
+        }
+        .changelog-edit-modal-panel {
+            position: relative;
+            width: min(720px, 94vw);
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+            overflow: hidden;
+        }
+        .changelog-edit-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 18px 22px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .changelog-edit-modal-title {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .changelog-edit-modal-close {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface2);
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .changelog-edit-modal-close:hover {
+            color: var(--text);
+            border-color: rgba(74, 144, 226, 0.45);
+        }
+        .changelog-edit-modal-body {
+            padding: 16px 22px 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
+        }
+        .changelog-edit-modal-hint {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin: 0 0 12px;
+        }
+        .changelog-edit-modal-textarea {
+            width: 100%;
+            min-height: 340px;
+            max-height: calc(88vh - 200px);
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.92rem;
+            font-family: inherit;
+            line-height: 1.65;
+            resize: vertical;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .changelog-edit-modal-textarea.is-subtitle {
+            min-height: 88px;
+            max-height: 160px;
+        }
+        .changelog-edit-modal-textarea:focus {
+            border-color: var(--now);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.18);
+        }
+        .changelog-edit-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .changelog-edit-modal-actions button {
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-family: inherit;
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+        .editable-save-btn {
+            background: rgba(74, 144, 226, 0.2);
+            border-color: rgba(74, 144, 226, 0.45);
+            color: var(--now);
+        }
+        .editable-save-btn:hover {
+            background: rgba(74, 144, 226, 0.32);
+        }
+        .editable-cancel-btn {
+            background: transparent;
+            color: var(--muted);
+        }
+        .editable-cancel-btn:hover {
+            color: var(--text);
+        }
+        .change-point-body {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+        .change-point-body ul {
+            margin: 0;
+            padding-left: 1.25em;
+        }
+        .change-point-body li {
+            margin-bottom: 6px;
+        }
+        .change-point-body li:last-child {
+            margin-bottom: 0;
+        }
+        h3.section-title {
+            font-size: 1.2rem;
+            margin: 32px 0 14px;
+            padding-left: 12px;
+            border-left: 4px solid var(--now);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        th { background: var(--surface2); font-weight: 600; text-align: center; }
+        th.col-v1 { color: var(--v1); width: 38%; }
+        th.col-now { color: var(--now); width: 38%; }
+        th.col-item { width: 24%; text-align: left; color: var(--text); }
+        td { color: var(--muted); background: var(--surface); }
+        td:first-child { color: var(--text); font-weight: 500; background: var(--surface2); }
+        ul { margin: 0; padding-left: 18px; }
+        ul li { margin-bottom: 4px; }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 6px;
+        }
+        .tag-same { background: rgba(39, 174, 96, 0.25); color: #6dd49a; }
+        .tag-new { background: rgba(155, 127, 212, 0.3); color: #d4c4f0; }
+        .tag-changed { background: rgba(74, 144, 226, 0.25); color: #7eb8f7; }
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        @media (max-width: 800px) { .module-grid { grid-template-columns: 1fr; } }
+        .module-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+        }
+        .module-card h4 { font-size: 0.95rem; margin-bottom: 10px; }
+        .module-card.v1 h4 { color: var(--v1); }
+        .module-card.new h4 { color: var(--new); }
+        .module-card.refine h4 { color: var(--now); }
+        .module-card ul { font-size: 0.88rem; color: var(--muted); }
+        .arch-compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        @media (max-width: 640px) { .arch-compare { grid-template-columns: 1fr; } }
+        .arch-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px;
+            font-size: 0.88rem;
+            color: var(--muted);
+        }
+        .arch-box strong { color: var(--text); display: block; margin-bottom: 10px; }
+        .arch-box .dual span {
+            display: block;
+            margin: 6px 0;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+        .arch-box .dual .e { background: rgba(74, 144, 226, 0.15); color: #7eb8f7; }
+        .arch-box .dual .s { background: rgba(155, 127, 212, 0.15); color: #d4c4f0; }
+        .demo-tip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 22px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+        .demo-tip strong { color: var(--text); }
+        .panel-footer { margin-top: 40px; font-size: 0.85rem; color: var(--muted); }
+        a { color: var(--now); }
+        .na { color: #5a6a7d; font-style: italic; }
+        @media (max-width: 1100px) {
+            .main-area-layout { flex-direction: column; }
+            .panel-expand-rail-right { display: none !important; }
+            .log-shell,
+            .app.is-log-collapsed .log-shell {
+                width: 100%;
+            }
+            .page-changelog-log {
+                width: 100%;
+                height: auto;
+                max-height: 280px;
+                border-left: none;
+                border-top: 1px solid var(--border);
+            }
+        }
+        @media (max-width: 768px) {
+            body { overflow: auto; }
+            .app { flex-direction: column; height: auto; min-height: 100vh; }
+            .panel-expand-rail-left { display: none !important; }
+            .sidebar-shell,
+            .app.is-sidebar-collapsed .sidebar-shell {
+                width: 100%;
+            }
+            .sidebar { width: 100%; height: auto; flex-direction: column; }
+            .sidebar-nav { display: flex; flex-direction: row; padding: 8px; gap: 4px; overflow-x: auto; flex: none; }
+            .nav-item { width: auto; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; border-radius: 6px; padding: 8px 14px; }
+            .nav-item.active { border-left: none; border-bottom-color: var(--now); }
+            .main-area { height: auto; overflow: visible; }
+            .main-area-layout { height: auto; }
+            .main-area-content { height: auto; overflow: visible; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="sidebar-shell">
+            <aside class="sidebar">
+                <div class="sidebar-brand">
+                    <h1 class="app-title">员工工作台原型</h1>
+                    <button type="button" class="panel-collapse-btn" id="toggle-sidebar" aria-expanded="true" aria-label="收起左侧栏" title="收起左侧栏">
+                        <svg class="layout-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                </div>
+                <nav class="sidebar-nav" aria-label="版本导航">
+                    <button type="button" class="nav-item active" data-panel="v20260604">20260604版本</button>
+                </nav>
+            </aside>
+        </div>
+
+        <main class="main-area">
+            <button type="button" class="panel-expand-rail panel-expand-rail-left" id="expand-sidebar-rail" aria-label="展开左侧栏" title="展开左侧栏">
+                <svg class="layout-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <button type="button" class="panel-expand-rail panel-expand-rail-right" id="expand-log-rail" aria-label="展开更新日志" title="展开更新日志">
+                <svg class="layout-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="main-area-layout">
+                <div class="main-area-content">
+                <!-- 20260604版本 -->
+                <div class="content-panel active" id="panel-v20260604" role="tabpanel">
+                    <div class="panel-header">
+                        <h2>20260604版本</h2>
+                        <p class="panel-summary-heading">主要优化内容</p>
+                        <ol class="panel-summary-list">
+                            <li>增加登录页面以及角色切换；</li>
+                            <li>业务角色端（员工端）页面优化；</li>
+                            <li>增加业务支持中心端；</li>
+                        </ol>
+                        <div class="path-note">
+                            原型demo地址：<a href="https://workv2-igj2601lh.maozi.io/" target="_blank" rel="noopener noreferrer">https://workv2-igj2601lh.maozi.io/</a><br>
+                            GitHub地址：<code>git@github.com:cyfxiami/onedeskagentworkspace.git</code>
+                        </div>
+                    </div>
+
+                    <div class="conclusion">
+                        <strong>最大变化：</strong>从<strong>单端员工工作台</strong>扩展为<strong>业务团队 + 业务支持中心</strong> 两端。原员工侧核心能力保留并升级；业务支持中心为全新产品端。
+                    </div>
+
+                    <div class="change-points">
+                        <section class="change-point">
+                            <div class="change-point-header">
+                                <p class="change-point-main-title">登录页面</p>
+                                <button type="button" class="change-point-toggle" aria-expanded="true" aria-label="收起登录页面内容">收起</button>
+                            </div>
+                            <div class="change-point-collapse">
+                                <div class="editable-row editable-row-subtitle" data-edit-id="login-subtitle" data-edit-kind="subtitle">
+                                    <h3 class="change-point-title">增加登录页面以及角色切换</h3>
+                                    <button type="button" class="editable-edit-btn" aria-label="修改副标题" title="修改"><svg class="editable-edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+                                </div>
+                                <div class="editable-row editable-row-body" data-edit-id="login-body" data-edit-kind="body">
+                                    <div class="editable-row-top">
+                                        <button type="button" class="editable-edit-btn" aria-label="修改内容" title="修改"><svg class="editable-edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+                                    </div>
+                                    <div class="change-point-body">
+                                        <ul>
+                                            <li>登录时需选择角色：<strong>业务团队</strong> 或 <strong>业务支持中心</strong>，按角色进入对应工作台。</li>
+                                            <li>登录后顶栏展示当前角色名称，支持退出登录返回登录页。</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="change-point">
+                            <div class="change-point-header">
+                                <p class="change-point-main-title">业务团队端</p>
+                                <button type="button" class="change-point-toggle" aria-expanded="true" aria-label="收起业务团队端内容">收起</button>
+                            </div>
+                            <div class="change-point-collapse">
+                                <div class="editable-row editable-row-subtitle" data-edit-id="team-subtitle" data-edit-kind="subtitle">
+                                    <h3 class="change-point-title">业务角色端（员工端）页面优化</h3>
+                                    <button type="button" class="editable-edit-btn" aria-label="修改副标题" title="修改"><svg class="editable-edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+                                </div>
+                                <div class="editable-row editable-row-body" data-edit-id="team-body" data-edit-kind="body">
+                                    <div class="editable-row-top">
+                                        <button type="button" class="editable-edit-btn" aria-label="修改内容" title="修改"><svg class="editable-edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+                                    </div>
+                                    <div class="change-point-body">
+                                        <ul>
+                                            <li>待办区域由「工作提示」更名为「今日任务」，与业务支持端命名统一。</li>
+                                            <li>AI 团队和输入框由一个背景框构建形成一个整体。</li>
+                                            <li>AI 团队由 4 张助手卡片扩展为 5 张，新增交叉验证助手；「方案制定助手」更名为「方案生成助手」。</li>
+                                            <li>主输入框样式优化修改；主输入框文案改为「开启我的工作」，并增加附件上传；点击助手卡片后展开内嵌对话区，可通过底部迷你头像切换助手。</li>
+                                            <li>对话区滚动条默认隐藏，仅在用户滚动时显示，减少视觉干扰（业务团队端与业务支持中心端对话区均适用）。</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="change-point">
+                            <div class="change-point-header">
+                                <p class="change-point-main-title">业务支持中心端</p>
+                                <button type="button" class="change-point-toggle" aria-expanded="true" aria-label="收起业务支持中心端内容">收起</button>
+                            </div>
+                            <div class="change-point-collapse">
+                                <div class="editable-row editable-row-subtitle" data-edit-id="support-subtitle" data-edit-kind="subtitle">
+                                    <h3 class="change-point-title">增加业务支持中心端</h3>
+                                    <button type="button" class="editable-edit-btn" aria-label="修改副标题" title="修改"><svg class="editable-edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+                                </div>
+                                <div class="editable-row editable-row-body" data-edit-id="support-body" data-edit-kind="body">
+                                    <div class="editable-row-top">
+                                        <button type="button" class="editable-edit-btn" aria-label="修改内容" title="修改"><svg class="editable-edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+                                    </div>
+                                    <div class="change-point-body">
+                                        <ul>
+                                            <li>新增完整业务支持中心工作台，登录时选择该角色进入，与业务团队端并列，形成「两端」架构。</li>
+                                            <li>顶部提供 7 个条线业务助理，头像上增加角标可按助理查看与跟进任务；点击顶栏助理头像时，跳转××业务助理。</li>
+                                            <li>对话区上方增加「今日任务」独立折叠面板（机器人形象），汇总各助理待办。</li>
+                                            <li>「今日任务」卡片内点击待办项：交互与顶栏头像一致，跳转相应助理。</li>
+                                            <li>底部输入框左侧增加助理选择器：默认展示当前所选助理的圆形头像，鼠标悬停显示助理名称；点击展开下拉，每项为「左圆形头像 + 右助理名称」，可选 8 项：今日任务助理（置顶）+ 顶部 7 个条线助理；在输入框发送消息后，助手回复头像与所选助理一致。</li>
+                                            <li>主输入框操作区与业务团队端一致：文本输入 → 附件上传 → 语音输入 → 发送。</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                </div>
+
+                <div class="log-shell">
+                    <aside class="page-changelog-log" aria-label="页面更新日志">
+                        <div class="page-changelog-log-header">
+                            <div class="page-changelog-log-header-text">
+                                <h2 class="page-changelog-log-title">更新日志</h2>
+                                <p class="page-changelog-log-hint">本说明页后续改动按时间顺序记录于此</p>
+                            </div>
+                            <button type="button" class="panel-collapse-btn" id="toggle-log" aria-expanded="true" aria-label="收起更新日志" title="收起更新日志">
+                                <svg class="layout-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                            </button>
+                        </div>
+                        <div class="page-changelog-list" id="page-changelog-list"></div>
+                    </aside>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="changelog-edit-modal" class="changelog-edit-modal" hidden aria-hidden="true">
+        <div class="changelog-edit-modal-overlay" data-changelog-edit-close="true"></div>
+        <div class="changelog-edit-modal-panel" role="dialog" aria-labelledby="changelog-edit-modal-title">
+            <div class="changelog-edit-modal-header">
+                <h3 class="changelog-edit-modal-title" id="changelog-edit-modal-title">编辑内容</h3>
+                <button type="button" class="changelog-edit-modal-close" data-changelog-edit-close="true" aria-label="关闭">✕</button>
+            </div>
+            <div class="changelog-edit-modal-body">
+                <p class="changelog-edit-modal-hint" id="changelog-edit-modal-hint"></p>
+                <textarea id="changelog-edit-modal-textarea" class="changelog-edit-modal-textarea"></textarea>
+                <div class="changelog-edit-modal-actions">
+                    <button type="button" class="editable-cancel-btn" data-changelog-edit-close="true">取消</button>
+                    <button type="button" class="editable-save-btn" id="changelog-edit-modal-save">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            /** 内置首条日志；time 为北京时间 YYYY-MM-DD HH:mm，展示按时间降序 */
+            const PAGE_CHANGELOG = [
+                { time: '2026-06-04 09:00', text: '· 新建 20260604 版本说明页（含登录页面、业务团队端、业务支持中心端）' }
+            ];
+
+            const STORAGE_KEY = 'demo-changelog-page-state-v20260604';
+            const LOG_STORE_VERSION = 5;
+            let activeEditContext = null;
+            let pageLogs = [];
+
+            function sanitizeStoredEdits(edits) {
+                var next = Object.assign({}, edits || {});
+                Object.keys(next).forEach(function (key) {
+                    var raw = JSON.stringify(next[key] || '');
+                    if (raw.indexOf('你好') !== -1) {
+                        delete next[key];
+                    }
+                });
+                return next;
+            }
+
+            function loadPageState() {
+                try {
+                    const raw = localStorage.getItem(STORAGE_KEY);
+                    if (!raw) return { edits: {}, logs: [], needsPersist: false };
+                    const parsed = JSON.parse(raw);
+                    var needsPersist = (parsed.logVersion || 0) < LOG_STORE_VERSION;
+                    var logs = needsPersist ? [] : (Array.isArray(parsed.logs) ? parsed.logs : []);
+                    var edits = sanitizeStoredEdits(parsed.edits || {});
+                    return {
+                        edits: edits,
+                        logs: logs,
+                        needsPersist: needsPersist
+                    };
+                } catch (e) {
+                    return { edits: {}, logs: [], needsPersist: false };
+                }
+            }
+
+            function savePageState(edits, logs) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    edits: edits,
+                    logs: logs,
+                    logVersion: LOG_STORE_VERSION
+                }));
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function formatNowBeijing() {
+                const parts = new Intl.DateTimeFormat('en-CA', {
+                    timeZone: 'Asia/Shanghai',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                }).formatToParts(new Date());
+                const get = function (type) {
+                    const p = parts.find(function (x) { return x.type === type; });
+                    return p ? p.value : '';
+                };
+                return get('year') + '-' + get('month') + '-' + get('day') + ' ' + get('hour') + ':' + get('minute');
+            }
+
+            function splitContentLines(text) {
+                return String(text || '').split('\n').map(function (line) { return line.trim(); }).filter(Boolean);
+            }
+
+            function quoteLine(text) {
+                var t = String(text || '').trim();
+                if (t.length > 120) {
+                    return '「' + t.slice(0, 120) + '…」';
+                }
+                return '「' + t + '」';
+            }
+
+            function buildEditChangeLog(moduleName, kindLabel, kind, oldValue, newValue) {
+                var lines = [moduleName + ' · ' + kindLabel];
+                var oldText = String(oldValue || '').trim();
+                var newText = String(newValue || '').trim();
+
+                if (oldText === newText) {
+                    return null;
+                }
+
+                if (kind === 'subtitle') {
+                    var oldTitle = oldText.split('\n')[0].trim();
+                    var newTitle = newText.split('\n')[0].trim();
+                    if (oldTitle !== newTitle) {
+                        lines.push('· 由 ' + quoteLine(oldTitle) + ' 改为 ' + quoteLine(newTitle));
+                    }
+                    return lines.length > 1 ? lines.join('\n') : null;
+                }
+
+                var oldLines = splitContentLines(oldText);
+                var newLines = splitContentLines(newText);
+                var removed = oldLines.filter(function (l) { return newLines.indexOf(l) === -1; });
+                var added = newLines.filter(function (l) { return oldLines.indexOf(l) === -1; });
+
+                removed.forEach(function (l) {
+                    lines.push('· 删除：' + quoteLine(l));
+                });
+                added.forEach(function (l) {
+                    lines.push('· 新增：' + quoteLine(l));
+                });
+
+                if (!removed.length && !added.length) {
+                    lines.push('· 内容调整：条目顺序或表述变更');
+                    lines.push('  原：共 ' + oldLines.length + ' 条');
+                    lines.push('  现：共 ' + newLines.length + ' 条');
+                }
+
+                return lines.length > 1 ? lines.join('\n') : null;
+            }
+
+            function getAllLogs() {
+                return PAGE_CHANGELOG.concat(pageLogs);
+            }
+
+            function addPageLog(text) {
+                if (!text) return;
+                pageLogs.push({ time: formatNowBeijing(), text: text });
+                var state = loadPageState();
+                savePageState(state.edits, pageLogs);
+                renderPageChangelog();
+            }
+
+            function renderPageChangelog() {
+                const listEl = document.getElementById('page-changelog-list');
+                if (!listEl) return;
+
+                const sorted = getAllLogs().slice().sort(function (a, b) {
+                    return b.time.localeCompare(a.time);
+                });
+
+                listEl.innerHTML = sorted.map(function (item) {
+                    var datetime = item.time.replace(' ', 'T') + ':00+08:00';
+                    return (
+                        '<article class="page-changelog-item">' +
+                        '<time class="page-changelog-time" datetime="' + datetime + '">' + escapeHtml(item.time) + '</time>' +
+                        '<p class="page-changelog-text">' + escapeHtml(item.text) + '</p>' +
+                        '</article>'
+                    );
+                }).join('');
+
+                listEl.scrollTop = 0;
+            }
+
+            function getModuleName(row) {
+                const section = row.closest('.change-point');
+                const title = section && section.querySelector('.change-point-main-title');
+                return title ? title.textContent.trim() : '未知模块';
+            }
+
+            function getSubtitleEl(row) {
+                return row.querySelector('.change-point-title');
+            }
+
+            function getBodyEl(row) {
+                return row.querySelector('.change-point-body');
+            }
+
+            function getBodyLines(bodyEl) {
+                const items = bodyEl.querySelectorAll('ul > li');
+                if (!items.length) return bodyEl.innerText.trim();
+                return Array.prototype.map.call(items, function (li) { return li.innerText.trim(); }).join('\n');
+            }
+
+            function setBodyFromLines(bodyEl, text) {
+                const lines = text.split('\n').map(function (line) { return line.trim(); }).filter(Boolean);
+                bodyEl.innerHTML = '<ul>' + lines.map(function (line) {
+                    return '<li>' + escapeHtml(line) + '</li>';
+                }).join('') + '</ul>';
+            }
+
+            function getEditModal() {
+                return document.getElementById('changelog-edit-modal');
+            }
+
+            function closeActiveEditor() {
+                var modal = getEditModal();
+                if (modal) {
+                    modal.hidden = true;
+                    modal.setAttribute('aria-hidden', 'true');
+                }
+                activeEditContext = null;
+            }
+
+            function saveActiveEditor() {
+                if (!activeEditContext) return;
+
+                var ctx = activeEditContext;
+                var textarea = document.getElementById('changelog-edit-modal-textarea');
+                var newValue = textarea ? textarea.value.trim() : '';
+                if (!newValue) {
+                    alert('内容不能为空');
+                    return;
+                }
+
+                var oldValue = ctx.value;
+                var row = ctx.row;
+                var targetEl = ctx.targetEl;
+                var kind = ctx.kind;
+                var moduleName = ctx.moduleName;
+                var kindLabel = ctx.kindLabel;
+
+                if (kind === 'subtitle') {
+                    targetEl.textContent = newValue.split('\n')[0];
+                } else {
+                    setBodyFromLines(targetEl, newValue);
+                }
+
+                var state = loadPageState();
+                if (kind === 'subtitle') {
+                    state.edits[row.dataset.editId] = { kind: 'subtitle', text: targetEl.textContent.trim() };
+                } else {
+                    state.edits[row.dataset.editId] = {
+                        kind: 'body',
+                        lines: newValue.split('\n').map(function (l) { return l.trim(); }).filter(Boolean)
+                    };
+                }
+                savePageState(state.edits, pageLogs);
+
+                var savedNewValue = kind === 'subtitle' ? targetEl.textContent.trim() : newValue;
+                var changeLog = buildEditChangeLog(moduleName, kindLabel, kind, oldValue, savedNewValue);
+                if (changeLog) {
+                    addPageLog(changeLog);
+                }
+
+                closeActiveEditor();
+            }
+
+            function openEditor(row) {
+                var modal = getEditModal();
+                if (!modal) return;
+
+                if (activeEditContext && activeEditContext.row === row && !modal.hidden) {
+                    closeActiveEditor();
+                    return;
+                }
+
+                const kind = row.dataset.editKind;
+                const moduleName = getModuleName(row);
+                const kindLabel = kind === 'subtitle' ? '副标题' : '内容';
+                let value = '';
+                let targetEl = null;
+
+                if (kind === 'subtitle') {
+                    targetEl = getSubtitleEl(row);
+                    value = targetEl.textContent.trim();
+                } else {
+                    targetEl = getBodyEl(row);
+                    value = getBodyLines(targetEl);
+                }
+
+                activeEditContext = {
+                    row: row,
+                    targetEl: targetEl,
+                    kind: kind,
+                    value: value,
+                    moduleName: moduleName,
+                    kindLabel: kindLabel
+                };
+
+                document.getElementById('changelog-edit-modal-title').textContent = moduleName + ' · ' + kindLabel;
+                document.getElementById('changelog-edit-modal-hint').textContent =
+                    kind === 'body' ? '每行一条说明，可直接在此编辑全部条目' : '单行标题';
+
+                var textarea = document.getElementById('changelog-edit-modal-textarea');
+                textarea.value = value;
+                textarea.classList.toggle('is-subtitle', kind === 'subtitle');
+
+                modal.hidden = false;
+                modal.setAttribute('aria-hidden', 'false');
+                textarea.focus();
+            }
+
+            function initEditModal() {
+                var modal = getEditModal();
+                if (!modal || modal.dataset.bound === 'true') return;
+                modal.dataset.bound = 'true';
+
+                modal.querySelectorAll('[data-changelog-edit-close="true"]').forEach(function (el) {
+                    el.addEventListener('click', closeActiveEditor);
+                });
+
+                document.getElementById('changelog-edit-modal-save')?.addEventListener('click', saveActiveEditor);
+
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape' && activeEditContext) {
+                        closeActiveEditor();
+                    }
+                });
+            }
+
+            function applySavedEdits(edits) {
+                Object.keys(edits).forEach(function (id) {
+                    const row = document.querySelector('.editable-row[data-edit-id="' + id + '"]');
+                    if (!row) return;
+                    const data = edits[id];
+                    if (data.kind === 'subtitle') {
+                        const el = getSubtitleEl(row);
+                        if (el && data.text) el.textContent = data.text;
+                    } else if (data.kind === 'body') {
+                        const el = getBodyEl(row);
+                        if (el && data.lines && data.lines.length) {
+                            setBodyFromLines(el, data.lines.join('\n'));
+                        }
+                    }
+                });
+            }
+
+            function initEditableBlocks() {
+                initEditModal();
+
+                const state = loadPageState();
+                pageLogs = state.logs;
+                if (state.needsPersist) {
+                    savePageState(state.edits, pageLogs);
+                }
+                applySavedEdits(state.edits);
+                renderPageChangelog();
+
+                document.querySelectorAll('.editable-edit-btn').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        const row = btn.closest('.editable-row');
+                        if (!row) return;
+                        openEditor(row);
+                    });
+                });
+            }
+
+            initEditableBlocks();
+
+            function bindOverlayScrollbar(el) {
+                if (!el || el.dataset.overlayScrollbarBound === 'true') return;
+                el.dataset.overlayScrollbarBound = 'true';
+                el.classList.add('overlay-scrollbar');
+                var hideTimer;
+                el.addEventListener('scroll', function () {
+                    el.classList.add('is-scrolling');
+                    clearTimeout(hideTimer);
+                    hideTimer = setTimeout(function () {
+                        el.classList.remove('is-scrolling');
+                    }, 800);
+                }, { passive: true });
+            }
+
+            function initPageOverlayScrollbars() {
+                document.querySelectorAll('.main-area-content, .page-changelog-list, .sidebar-nav').forEach(bindOverlayScrollbar);
+            }
+
+            initPageOverlayScrollbars();
+
+            function setSidebarCollapsed(collapsed) {
+                var app = document.querySelector('.app');
+                if (!app) return;
+                app.classList.toggle('is-sidebar-collapsed', collapsed);
+                var btn = document.getElementById('toggle-sidebar');
+                if (btn) {
+                    var label = collapsed ? '展开左侧栏' : '收起左侧栏';
+                    btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+                    btn.setAttribute('aria-label', label);
+                    btn.title = label;
+                }
+            }
+
+            function setLogCollapsed(collapsed) {
+                var app = document.querySelector('.app');
+                if (!app) return;
+                app.classList.toggle('is-log-collapsed', collapsed);
+                var btn = document.getElementById('toggle-log');
+                if (btn) {
+                    var label = collapsed ? '展开更新日志' : '收起更新日志';
+                    btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+                    btn.setAttribute('aria-label', label);
+                    btn.title = label;
+                }
+            }
+
+            function bindPanelCollapse(btnId, getCollapsed, setCollapsed) {
+                var btn = document.getElementById(btnId);
+                if (!btn) return;
+                btn.addEventListener('click', function () {
+                    setCollapsed(!getCollapsed());
+                });
+            }
+
+            bindPanelCollapse('toggle-sidebar', function () {
+                return document.querySelector('.app').classList.contains('is-sidebar-collapsed');
+            }, setSidebarCollapsed);
+
+            bindPanelCollapse('toggle-log', function () {
+                return document.querySelector('.app').classList.contains('is-log-collapsed');
+            }, setLogCollapsed);
+
+            var expandSidebarRail = document.getElementById('expand-sidebar-rail');
+            if (expandSidebarRail) {
+                expandSidebarRail.addEventListener('click', function () {
+                    setSidebarCollapsed(false);
+                });
+            }
+
+            var expandLogRail = document.getElementById('expand-log-rail');
+            if (expandLogRail) {
+                expandLogRail.addEventListener('click', function () {
+                    setLogCollapsed(false);
+                });
+            }
+
+            const navItems = document.querySelectorAll('.nav-item[data-panel]');
+            const panels = document.querySelectorAll('.content-panel');
+
+            const mainArea = document.querySelector('.main-area-content');
+
+            function switchPanel(panelId) {
+                navItems.forEach(function (btn) {
+                    btn.classList.toggle('active', btn.dataset.panel === panelId);
+                });
+                panels.forEach(function (panel) {
+                    const isActive = panel.id === 'panel-' + panelId;
+                    panel.classList.toggle('active', isActive);
+                    panel.hidden = !isActive;
+                });
+                if (mainArea) mainArea.scrollTop = 0;
+            }
+
+            navItems.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    switchPanel(btn.dataset.panel);
+                });
+            });
+
+            var defaultBtn = document.querySelector('.nav-item.active[data-panel]');
+            if (defaultBtn) {
+                switchPanel(defaultBtn.dataset.panel);
+            }
+
+            document.querySelectorAll('.change-point-toggle').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var section = btn.closest('.change-point');
+                    if (!section) return;
+                    var collapsed = section.classList.toggle('is-collapsed');
+                    btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+                    btn.textContent = collapsed ? '展开' : '收起';
+                    var title = section.querySelector('.change-point-main-title');
+                    var titleText = title ? title.textContent : '';
+                    btn.setAttribute('aria-label', (collapsed ? '展开' : '收起') + titleText + '内容');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

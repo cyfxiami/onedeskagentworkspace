@@ -3821,6 +3821,34 @@ body.employee-chat-mode .workbench-panel[data-panel="employee"] .input-section.c
     flex-direction: column;
 }
 
+/* 对话框滚动条：默认隐藏，滚动时显示 */
+.overlay-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+.overlay-scrollbar.is-scrolling {
+    scrollbar-color: rgba(0, 0, 0, 0.22) transparent;
+}
+
+.overlay-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.overlay-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.overlay-scrollbar::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 3px;
+}
+
+.overlay-scrollbar.is-scrolling::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.22);
+}
+
 .ai-chat-view {
     flex: 1;
     min-height: 280px;
@@ -4091,6 +4119,150 @@ body.employee-chat-mode .workbench-panel[data-panel="employee"] .input-section.c
     margin-bottom: 0;
     margin-top: 20px;
     padding-top: 20px;
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-picker {
+    position: relative;
+    flex-shrink: 0;
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-trigger {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 2px solid rgba(201, 169, 110, 0.45);
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-trigger:hover,
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-trigger:focus-visible {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.18);
+    outline: none;
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-picker.is-open .support-input-agent-trigger {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.22);
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-trigger-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-trigger::after {
+    content: attr(data-agent-name);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 10px);
+    transform: translateX(-50%) translateY(4px);
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(51, 51, 51, 0.92);
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+    z-index: 1600;
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-trigger:hover::after,
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-trigger:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-picker.is-open .support-input-agent-trigger::after {
+    opacity: 0;
+    visibility: hidden;
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-menu {
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 10px);
+    min-width: 188px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 6px;
+    border-radius: 12px;
+    border: 1px solid rgba(201, 169, 110, 0.35);
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+    z-index: 1601;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-picker.is-open .support-input-agent-menu {
+    display: flex;
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s;
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-option:hover {
+    background: rgba(201, 169, 110, 0.12);
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-option.is-active {
+    background: rgba(201, 169, 110, 0.16);
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-option-avatar {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(201, 169, 110, 0.35);
+    background: #f8f6f2;
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-option-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+body.support-tab-active .workbench-panel[data-panel="support"] .support-input-agent-option-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .input-container {

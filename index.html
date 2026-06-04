@@ -332,13 +332,13 @@
             <div class="input-section">
                 <div class="ai-mini-avatars" id="ai-mini-avatars" style="display: none;"></div>
                 <div class="input-container">
+                    <input type="text" id="main-chat-input" class="chat-input" placeholder="开启我的工作" onkeypress="handleMainInput(event)">
                     <button type="button" class="input-action-btn upload-btn" onclick="startMainFileUpload()" aria-label="上传文件" title="上传文件">
                         <svg class="input-action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
                         </svg>
                     </button>
                     <input type="file" id="main-chat-file-input" class="main-chat-file-input" accept=".doc,.docx,.pdf,.txt,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg" hidden onchange="handleMainFileUpload(this)">
-                    <input type="text" id="main-chat-input" class="chat-input" placeholder="开启我的工作" onkeypress="handleMainInput(event)">
                     <button type="button" class="input-action-btn voice-btn" onclick="startMainVoiceInput()" aria-label="语音输入" title="语音输入">
                         <svg class="input-action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <rect x="9" y="2" width="6" height="12" rx="3"></rect>
@@ -1640,7 +1640,7 @@
         
         // ========== 工作台 Tab 切换 ==========
         const workbenchPanelState = {
-            support: { chatModeActive: true, currentCardIndex: 0, miniAvatarsInitialized: false, currentSupportAgent: null, currentTaskAgentId: null, currentTask: null, currentTodoStep: null, supportWelcomeShown: false },
+            support: { chatModeActive: true, currentCardIndex: 0, miniAvatarsInitialized: false, currentSupportAgent: null, currentSupportInputAgent: 'daily-task', currentTaskAgentId: null, currentTask: null, currentTodoStep: null, supportWelcomeShown: false },
             org: { chatModeActive: true, currentCardIndex: 0, miniAvatarsInitialized: false, currentOrgAgent: null },
             employee: { chatModeActive: false, currentCardIndex: 0, miniAvatarsInitialized: false }
         };
@@ -2284,10 +2284,12 @@
 
             if (workTips) workTips.remove();
 
+            initSupportInputAgentSelect(panel);
             panel.dataset.supportCustomized = 'true';
         }
 
         const SUPPORT_DAILY_TASK_AVATAR_SRC = 'images/daily-task-assistant-avatar.png';
+        const SUPPORT_INPUT_AGENT_DAILY_TASK = 'daily-task';
 
         function getSupportDailyTaskRobotAvatarHtml() {
             return `<div class="support-daily-task-robot-avatar" title="今日任务">
@@ -2432,7 +2434,169 @@
         }
 
         function getSupportAgentDisplayLabel(agentId) {
+            if (agentId === SUPPORT_INPUT_AGENT_DAILY_TASK) return '今日任务助理';
             return getSupportAgent(agentId)?.name || '';
+        }
+
+        function getSupportInputAgentMeta(agentId) {
+            if (!agentId) return null;
+            if (agentId === SUPPORT_INPUT_AGENT_DAILY_TASK) {
+                return { id: SUPPORT_INPUT_AGENT_DAILY_TASK, name: '今日任务助理', image: SUPPORT_DAILY_TASK_AVATAR_SRC };
+            }
+            const agent = getSupportAgent(agentId);
+            return agent ? { id: agentId, name: agent.name, image: agent.image } : null;
+        }
+
+        function getSupportInputReplyAgentId(state) {
+            return state?.currentSupportInputAgent || SUPPORT_INPUT_AGENT_DAILY_TASK;
+        }
+
+        function getSupportInputAgentOptions() {
+            const options = [getSupportInputAgentMeta(SUPPORT_INPUT_AGENT_DAILY_TASK)];
+            supportAgents.forEach((agent) => {
+                options.push(getSupportInputAgentMeta(agent.id));
+            });
+            return options.filter(Boolean);
+        }
+
+        function buildSupportInputAgentOptionHtml(meta, isActive) {
+            return `
+                <button type="button" class="support-input-agent-option${isActive ? ' is-active' : ''}" data-agent-id="${escapeHtml(meta.id)}" role="option" aria-selected="${isActive ? 'true' : 'false'}">
+                    <span class="support-input-agent-option-avatar">
+                        <img src="${escapeHtml(meta.image)}" alt="">
+                    </span>
+                    <span class="support-input-agent-option-name">${escapeHtmlText(meta.name)}</span>
+                </button>
+            `;
+        }
+
+        function updateSupportInputAgentPickerUI(picker, agentId) {
+            if (!picker) return;
+            const meta = getSupportInputAgentMeta(agentId);
+            if (!meta) return;
+
+            const trigger = picker.querySelector('.support-input-agent-trigger');
+            const triggerImg = picker.querySelector('.support-input-agent-trigger-img');
+            if (trigger) {
+                trigger.dataset.agentName = meta.name;
+                trigger.setAttribute('aria-label', `当前助理：${meta.name}，点击切换`);
+                trigger.title = meta.name;
+            }
+            if (triggerImg) {
+                triggerImg.src = meta.image;
+                triggerImg.alt = meta.name;
+            }
+
+            picker.querySelectorAll('.support-input-agent-option').forEach((btn) => {
+                const active = btn.dataset.agentId === agentId;
+                btn.classList.toggle('is-active', active);
+                btn.setAttribute('aria-selected', active ? 'true' : 'false');
+            });
+        }
+
+        function closeSupportInputAgentPicker(picker) {
+            if (!picker) return;
+            picker.classList.remove('is-open');
+            picker.querySelector('.support-input-agent-trigger')?.setAttribute('aria-expanded', 'false');
+        }
+
+        function closeAllSupportInputAgentPickers(exceptPicker) {
+            document.querySelectorAll('.support-input-agent-picker.is-open').forEach((picker) => {
+                if (exceptPicker && picker === exceptPicker) return;
+                closeSupportInputAgentPicker(picker);
+            });
+        }
+
+        function setSupportInputAgent(panel, agentId) {
+            const state = getPanelState(panel);
+            state.currentSupportInputAgent = agentId;
+            const picker = panel?.querySelector('.support-input-agent-picker');
+            updateSupportInputAgentPickerUI(picker, agentId);
+        }
+
+        function toggleSupportInputAgentPicker(picker) {
+            if (!picker) return;
+            const willOpen = !picker.classList.contains('is-open');
+            closeAllSupportInputAgentPickers(picker);
+            picker.classList.toggle('is-open', willOpen);
+            picker.querySelector('.support-input-agent-trigger')?.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        }
+
+        function initSupportInputAgentSelect(panel) {
+            const container = panel?.querySelector('.input-container');
+            if (!container) return;
+
+            container.querySelector('.support-input-agent-select')?.remove();
+
+            let picker = container.querySelector('.support-input-agent-picker');
+            if (!picker) {
+                const defaultMeta = getSupportInputAgentMeta(SUPPORT_INPUT_AGENT_DAILY_TASK);
+                const optionsHtml = getSupportInputAgentOptions()
+                    .map((meta) => buildSupportInputAgentOptionHtml(meta, meta.id === SUPPORT_INPUT_AGENT_DAILY_TASK))
+                    .join('');
+
+                picker = document.createElement('div');
+                picker.className = 'support-input-agent-picker';
+                picker.innerHTML = `
+                    <button type="button" class="support-input-agent-trigger" aria-haspopup="listbox" aria-expanded="false" data-agent-name="${escapeHtmlText(defaultMeta.name)}" title="${escapeHtmlText(defaultMeta.name)}">
+                        <img src="${escapeHtml(defaultMeta.image)}" alt="${escapeHtmlText(defaultMeta.name)}" class="support-input-agent-trigger-img">
+                    </button>
+                    <div class="support-input-agent-menu" role="listbox" aria-label="选择助理" hidden>
+                        ${optionsHtml}
+                    </div>
+                `;
+
+                const chatInput = container.querySelector('.chat-input');
+                if (chatInput) {
+                    container.insertBefore(picker, chatInput);
+                } else {
+                    container.insertBefore(picker, container.firstChild);
+                }
+            }
+
+            const state = getPanelState(panel);
+            if (!state.currentSupportInputAgent) {
+                state.currentSupportInputAgent = SUPPORT_INPUT_AGENT_DAILY_TASK;
+            }
+            updateSupportInputAgentPickerUI(picker, state.currentSupportInputAgent);
+
+            if (!picker.dataset.bound) {
+                picker.dataset.bound = 'true';
+
+                const trigger = picker.querySelector('.support-input-agent-trigger');
+                const menu = picker.querySelector('.support-input-agent-menu');
+
+                trigger?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleSupportInputAgentPicker(picker);
+                    if (picker.classList.contains('is-open')) {
+                        menu?.removeAttribute('hidden');
+                    } else {
+                        menu?.setAttribute('hidden', '');
+                    }
+                });
+
+                picker.querySelectorAll('.support-input-agent-option').forEach((btn) => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const agentId = btn.dataset.agentId;
+                        if (!agentId) return;
+                        setSupportInputAgent(panel, agentId);
+                        closeSupportInputAgentPicker(picker);
+                        menu?.setAttribute('hidden', '');
+                    });
+                });
+            }
+        }
+
+        if (!window.__supportInputAgentPickerDocBound) {
+            window.__supportInputAgentPickerDocBound = true;
+            document.addEventListener('click', () => {
+                closeAllSupportInputAgentPickers();
+                document.querySelectorAll('.support-input-agent-menu').forEach((menu) => {
+                    menu.setAttribute('hidden', '');
+                });
+            });
         }
 
         function getSupportAgentIntroHtml(agentId) {
@@ -2540,6 +2704,13 @@
                 const trigger = event.target.closest('.support-chat-todo-trigger');
                 if (!trigger) return;
                 event.preventDefault();
+
+                if (trigger.closest('.support-daily-task-body')) {
+                    const agent = getSupportAgent(trigger.dataset.agentId);
+                    if (agent) showOrgAgentJumpToast(agent.name);
+                    return;
+                }
+
                 sendSupportTodoQuick(
                     trigger.dataset.agentId,
                     trigger.dataset.taskId,
@@ -2580,8 +2751,10 @@
         function initSupportPanel(panel) {
             const state = getPanelState(panel);
             state.currentSupportAgent = null;
+            state.currentSupportInputAgent = SUPPORT_INPUT_AGENT_DAILY_TASK;
             state.chatModeActive = true;
             state.supportWelcomeShown = false;
+            initSupportInputAgentSelect(panel);
             updateSupportAgentButton(panel, null);
             updateTopAvatarActive(null);
             updateSupportAvatarPendingDots();
@@ -2629,8 +2802,8 @@
             if (!messagesEl) return;
 
             const state = getPanelState(p);
-            const agentId = options.agentId || state.currentSupportAgent || state.currentTaskAgentId;
-            const agent = agentId ? getSupportAgent(agentId) : null;
+            const agentId = options.agentId || state.currentTaskAgentId || state.currentSupportInputAgent || state.currentSupportAgent;
+            const agentMeta = agentId ? getSupportInputAgentMeta(agentId) : null;
             const row = document.createElement('div');
             row.className = role === 'user' ? 'chat-row chat-row-user' : 'chat-row chat-row-assistant support-assistant-row';
 
@@ -2638,9 +2811,9 @@
 
             if (role === 'user') {
                 row.innerHTML = `<div class="chat-bubble chat-bubble-user">${escapeHtml(text)}</div>`;
-            } else if (agent) {
+            } else if (agentMeta) {
                 row.innerHTML = `
-                    <div class="chat-avatar support-chat-avatar"><img src="${agent.image}" alt="${escapeHtmlText(getSupportAgentDisplayLabel(agentId))}"></div>
+                    <div class="chat-avatar support-chat-avatar"><img src="${agentMeta.image}" alt="${escapeHtmlText(agentMeta.name)}"></div>
                     <div class="chat-bubble chat-bubble-assistant">${assistantBody}</div>
                 `;
             } else {
@@ -2751,7 +2924,7 @@
         function appendSupportAssistantReply(message, agentId, panel) {
             const p = panel || document.getElementById('workbench-panel-support');
             const state = getPanelState(p);
-            const resolvedAgentId = agentId || state.currentSupportAgent || state.currentTaskAgentId;
+            const resolvedAgentId = agentId || state.currentSupportInputAgent || state.currentTaskAgentId || state.currentSupportAgent;
             const task = state.currentTask || (resolvedAgentId ? findSupportTaskByMessage(message, resolvedAgentId) : null);
             if (task && resolvedAgentId) {
                 state.currentTask = task;
@@ -2787,6 +2960,9 @@
             const task = supportState?.currentTask;
             if (task && (message.includes(task.title) || task.nextSteps.some(step => message.includes(step) || step.includes(message)))) {
                 return getSupportTaskReply(task, agentId || supportState.currentTaskAgentId);
+            }
+            if (agentId === SUPPORT_INPUT_AGENT_DAILY_TASK) {
+                return `您好，我是今日任务助理。关于「${message}」，我将为您汇总待办并协助跟进处理。请补充具体需求或相关材料。`;
             }
             return `您好，我是${getSupportAgentDisplayLabel(agentId)}。关于「${message}」，我将结合当前任务进展为您提供支持。请补充具体需求或相关材料。`;
         }
@@ -3317,9 +3493,27 @@
             updateSupportAvatarPendingDots();
         }
 
+        function bindOverlayScrollbar(el) {
+            if (!el || el.dataset.overlayScrollbarBound === 'true') return;
+            el.dataset.overlayScrollbarBound = 'true';
+            el.classList.add('overlay-scrollbar');
+            let hideTimer;
+            el.addEventListener('scroll', () => {
+                el.classList.add('is-scrolling');
+                clearTimeout(hideTimer);
+                hideTimer = setTimeout(() => el.classList.remove('is-scrolling'), 800);
+            }, { passive: true });
+        }
+
+        function initOverlayScrollbars(root) {
+            const scope = root || document;
+            scope.querySelectorAll('.ai-chat-view, .support-dialogue, .org-workbench-scroll').forEach(bindOverlayScrollbar);
+        }
+
         function initWorkbenchTabs() {
             cloneWorkbenchPanels();
             initWorkbenchPanel(document.getElementById('workbench-panel-employee'));
+            initOverlayScrollbars();
         }
 
         // AI横向堆叠卡片功能
@@ -3763,7 +3957,7 @@
                 const supportState = getPanelState(panel);
                 appendSupportChatMessage(message, 'user', panel);
                 setTimeout(() => {
-                    appendSupportAssistantReply(message, supportState.currentSupportAgent || supportState.currentTaskAgentId, panel);
+                    appendSupportAssistantReply(message, getSupportInputReplyAgentId(supportState), panel);
                 }, 400);
                 return;
             }
@@ -3826,7 +4020,7 @@
                 const supportState = getPanelState(panel);
                 appendSupportChatMessage(message, 'user', panel);
                 setTimeout(() => {
-                    appendSupportAssistantReply(`已收到文件「${file.name}」，我将结合当前任务为您解析内容。`, supportState.currentSupportAgent || supportState.currentTaskAgentId, panel);
+                    appendSupportAssistantReply(`已收到文件「${file.name}」，我将结合当前任务为您解析内容。`, getSupportInputReplyAgentId(supportState), panel);
                 }, 400);
                 return;
             }
