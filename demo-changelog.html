@@ -425,196 +425,13 @@
         .change-point.is-collapsed .change-point-collapse {
             display: none;
         }
-        .editable-row {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 6px;
-        }
-        .editable-row-subtitle {
-            padding-bottom: 6px;
-            border-bottom: 1px solid var(--border);
-        }
-        .editable-row-body {
-            position: relative;
-            flex-direction: column;
-            align-items: stretch;
-            margin-bottom: 0;
-        }
-        .editable-row-body .editable-row-top {
-            position: absolute;
-            top: 0;
-            right: 0;
-            z-index: 1;
-            margin: 0;
-        }
-        .editable-row-body .change-point-body {
-            padding-right: 36px;
-        }
         .change-point-title {
-            flex: 1;
             font-size: 1rem;
             font-weight: 600;
             color: var(--text);
-            margin: 0;
-            padding: 0;
-            border: none;
-        }
-        .editable-edit-btn {
-            flex-shrink: 0;
-            width: 28px;
-            height: 28px;
-            padding: 0;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            background: var(--surface2);
-            color: var(--muted);
-            font-family: inherit;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s, color 0.2s, border-color 0.2s;
-        }
-        .editable-edit-btn:hover {
-            color: var(--now);
-            border-color: rgba(74, 144, 226, 0.45);
-            background: rgba(74, 144, 226, 0.12);
-        }
-        .editable-edit-icon {
-            width: 14px;
-            height: 14px;
-            display: block;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-        .changelog-edit-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 6000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 28px 20px;
-        }
-        .changelog-edit-modal[hidden] {
-            display: none !important;
-        }
-        .changelog-edit-modal-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.58);
-        }
-        .changelog-edit-modal-panel {
-            position: relative;
-            width: min(720px, 94vw);
-            max-height: 88vh;
-            display: flex;
-            flex-direction: column;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-            overflow: hidden;
-        }
-        .changelog-edit-modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 18px 22px 12px;
+            margin: 0 0 6px;
+            padding: 0 0 6px;
             border-bottom: 1px solid var(--border);
-        }
-        .changelog-edit-modal-title {
-            margin: 0;
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--text);
-        }
-        .changelog-edit-modal-close {
-            width: 32px;
-            height: 32px;
-            padding: 0;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--surface2);
-            color: var(--muted);
-            font-size: 1rem;
-            line-height: 1;
-            cursor: pointer;
-        }
-        .changelog-edit-modal-close:hover {
-            color: var(--text);
-            border-color: rgba(74, 144, 226, 0.45);
-        }
-        .changelog-edit-modal-body {
-            padding: 16px 22px 20px;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-height: 0;
-        }
-        .changelog-edit-modal-hint {
-            font-size: 0.8rem;
-            color: var(--muted);
-            margin: 0 0 12px;
-        }
-        .changelog-edit-modal-textarea {
-            width: 100%;
-            min-height: 340px;
-            max-height: calc(88vh - 200px);
-            padding: 14px 16px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            background: var(--bg);
-            color: var(--text);
-            font-size: 0.92rem;
-            font-family: inherit;
-            line-height: 1.65;
-            resize: vertical;
-            outline: none;
-            box-sizing: border-box;
-        }
-        .changelog-edit-modal-textarea.is-subtitle {
-            min-height: 88px;
-            max-height: 160px;
-        }
-        .changelog-edit-modal-textarea:focus {
-            border-color: var(--now);
-            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.18);
-        }
-        .changelog-edit-modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 16px;
-        }
-        .changelog-edit-modal-actions button {
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-size: 0.88rem;
-            font-family: inherit;
-            cursor: pointer;
-            border: 1px solid var(--border);
-        }
-        .editable-save-btn {
-            background: rgba(74, 144, 226, 0.2);
-            border-color: rgba(74, 144, 226, 0.45);
-            color: var(--now);
-        }
-        .editable-save-btn:hover {
-            background: rgba(74, 144, 226, 0.32);
-        }
-        .editable-cancel-btn {
-            background: transparent;
-            color: var(--muted);
-        }
-        .editable-cancel-btn:hover {
-            color: var(--text);
         }
         .change-point-body {
             font-size: 0.9rem;
@@ -806,20 +623,12 @@
                                 <button type="button" class="change-point-toggle" aria-expanded="true" aria-label="收起登录页面内容">收起</button>
                             </div>
                             <div class="change-point-collapse">
-                                <div class="editable-row editable-row-subtitle" data-edit-id="login-subtitle" data-edit-kind="subtitle">
-                                    <h3 class="change-point-title">增加登录页面以及角色切换</h3>
-                                    <button type="button" class="editable-edit-btn" aria-label="修改副标题" title="修改"><svg class="editable-edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
-                                </div>
-                                <div class="editable-row editable-row-body" data-edit-id="login-body" data-edit-kind="body">
-                                    <div class="editable-row-top">
-                                        <button type="button" class="editable-edit-btn" aria-label="修改内容" title="修改"><svg class="editable-edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
-                                    </div>
-                                    <div class="change-point-body">
-                                        <ul>
-                                            <li>登录时需选择角色：<strong>业务团队</strong> 或 <strong>业务支持中心</strong>，按角色进入对应工作台。</li>
-                                            <li>登录后顶栏展示当前角色名称，支持退出登录返回登录页。</li>
-                                        </ul>
-                                    </div>
+                                <h3 class="change-point-title">增加登录页面以及角色切换</h3>
+                                <div class="change-point-body">
+                                    <ul>
+                                        <li>登录时需选择角色：<strong>业务团队</strong> 或 <strong>业务支持中心</strong>，按角色进入对应工作台。</li>
+                                        <li>登录后顶栏展示当前角色名称，支持退出登录返回登录页。</li>
+                                    </ul>
                                 </div>
                             </div>
                         </section>
@@ -829,23 +638,17 @@
                                 <button type="button" class="change-point-toggle" aria-expanded="true" aria-label="收起业务团队端内容">收起</button>
                             </div>
                             <div class="change-point-collapse">
-                                <div class="editable-row editable-row-subtitle" data-edit-id="team-subtitle" data-edit-kind="subtitle">
-                                    <h3 class="change-point-title">业务角色端（员工端）页面优化</h3>
-                                    <button type="button" class="editable-edit-btn" aria-label="修改副标题" title="修改"><svg class="editable-edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
-                                </div>
-                                <div class="editable-row editable-row-body" data-edit-id="team-body" data-edit-kind="body">
-                                    <div class="editable-row-top">
-                                        <button type="button" class="editable-edit-btn" aria-label="修改内容" title="修改"><svg class="editable-edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
-                                    </div>
-                                    <div class="change-point-body">
-                                        <ul>
-                                            <li>待办区域由「工作提示」更名为「今日任务」，与业务支持端命名统一。</li>
-                                            <li>AI 团队和输入框由一个背景框构建形成一个整体。</li>
-                                            <li>AI 团队由 4 张助手卡片扩展为 5 张，新增交叉验证助手；「方案制定助手」更名为「方案生成助手」。</li>
-                                            <li>主输入框样式优化修改；主输入框文案改为「开启我的工作」，并增加附件上传；点击助手卡片后展开内嵌对话区，可通过底部迷你头像切换助手。</li>
-                                            <li>对话区滚动条默认隐藏，仅在用户滚动时显示，减少视觉干扰（业务团队端与业务支持中心端对话区均适用）。</li>
-                                        </ul>
-                                    </div>
+                                <h3 class="change-point-title">业务角色端（员工端）页面优化</h3>
+                                <div class="change-point-body">
+                                    <ul>
+                                        <li>待办区域由「工作提示」更名为「今日任务」，与业务支持端命名统一。</li>
+                                        <li>AI 团队和输入框由一个背景框构建形成一个整体。</li>
+                                        <li>AI 团队由 4 张助手卡片扩展为 5 张，新增交叉验证助手；「方案制定助手」更名为「方案生成助手」。</li>
+                                        <li>主输入框样式优化修改；主输入框文案改为「开启我的工作」，并增加附件上传；点击助手卡片后展开内嵌对话区，可通过底部迷你头像切换助手。</li>
+                                        <li>对话区滚动条默认隐藏，仅在用户滚动时显示，减少视觉干扰（业务团队端与业务支持中心端对话区均适用）。</li>
+                                        <li>进入页面，今日任务和业绩与绩效默认展开，在对话框进行对话后再收起。</li>
+                                        <li>对话框内的卡片底色需要调整，让卡片稍微凸显一些。</li>
+                                    </ul>
                                 </div>
                             </div>
                         </section>
@@ -855,24 +658,16 @@
                                 <button type="button" class="change-point-toggle" aria-expanded="true" aria-label="收起业务支持中心端内容">收起</button>
                             </div>
                             <div class="change-point-collapse">
-                                <div class="editable-row editable-row-subtitle" data-edit-id="support-subtitle" data-edit-kind="subtitle">
-                                    <h3 class="change-point-title">增加业务支持中心端</h3>
-                                    <button type="button" class="editable-edit-btn" aria-label="修改副标题" title="修改"><svg class="editable-edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
-                                </div>
-                                <div class="editable-row editable-row-body" data-edit-id="support-body" data-edit-kind="body">
-                                    <div class="editable-row-top">
-                                        <button type="button" class="editable-edit-btn" aria-label="修改内容" title="修改"><svg class="editable-edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
-                                    </div>
-                                    <div class="change-point-body">
-                                        <ul>
-                                            <li>新增完整业务支持中心工作台，登录时选择该角色进入，与业务团队端并列，形成「两端」架构。</li>
-                                            <li>顶部提供 7 个条线业务助理，头像上增加角标可按助理查看与跟进任务；点击顶栏助理头像时，跳转××业务助理。</li>
-                                            <li>对话区上方增加「今日任务」独立折叠面板（机器人形象），汇总各助理待办。</li>
-                                            <li>「今日任务」卡片内点击待办项：交互与顶栏头像一致，跳转相应助理。</li>
-                                            <li>底部输入框左侧增加助理选择器：默认展示当前所选助理的圆形头像，鼠标悬停显示助理名称；点击展开下拉，每项为「左圆形头像 + 右助理名称」，可选 8 项：今日任务助理（置顶）+ 顶部 7 个条线助理；在输入框发送消息后，助手回复头像与所选助理一致。</li>
-                                            <li>主输入框操作区与业务团队端一致：文本输入 → 附件上传 → 语音输入 → 发送。</li>
-                                        </ul>
-                                    </div>
+                                <h3 class="change-point-title">增加业务支持中心端</h3>
+                                <div class="change-point-body">
+                                    <ul>
+                                        <li>新增完整业务支持中心工作台，登录时选择该角色进入，与业务团队端并列，形成「两端」架构。</li>
+                                        <li>顶部提供 7 个条线业务助理，头像上增加角标可按助理查看与跟进任务；点击顶栏助理头像时，跳转××业务助理。</li>
+                                        <li>对话区上方增加「今日任务」独立折叠面板（机器人形象），汇总各助理待办。</li>
+                                        <li>「今日任务」卡片内点击待办项：交互与顶栏头像一致，跳转相应助理。</li>
+                                        <li>底部输入框左侧增加助理选择器：默认展示当前所选助理的圆形头像，鼠标悬停显示助理名称；点击展开下拉，每项为「左圆形头像 + 右助理名称」，可选 8 项：今日任务助理（置顶）+ 顶部 7 个条线助理；在输入框发送消息后，助手回复头像与所选助理一致。</li>
+                                        <li>主输入框操作区与业务团队端一致：文本输入 → 附件上传 → 语音输入 → 发送。</li>
+                                    </ul>
                                 </div>
                             </div>
                         </section>
@@ -898,24 +693,6 @@
         </main>
     </div>
 
-    <div id="changelog-edit-modal" class="changelog-edit-modal" hidden aria-hidden="true">
-        <div class="changelog-edit-modal-overlay" data-changelog-edit-close="true"></div>
-        <div class="changelog-edit-modal-panel" role="dialog" aria-labelledby="changelog-edit-modal-title">
-            <div class="changelog-edit-modal-header">
-                <h3 class="changelog-edit-modal-title" id="changelog-edit-modal-title">编辑内容</h3>
-                <button type="button" class="changelog-edit-modal-close" data-changelog-edit-close="true" aria-label="关闭">✕</button>
-            </div>
-            <div class="changelog-edit-modal-body">
-                <p class="changelog-edit-modal-hint" id="changelog-edit-modal-hint"></p>
-                <textarea id="changelog-edit-modal-textarea" class="changelog-edit-modal-textarea"></textarea>
-                <div class="changelog-edit-modal-actions">
-                    <button type="button" class="editable-cancel-btn" data-changelog-edit-close="true">取消</button>
-                    <button type="button" class="editable-save-btn" id="changelog-edit-modal-save">保存</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         (function () {
             /** 内置首条日志；time 为北京时间 YYYY-MM-DD HH:mm，展示按时间降序 */
@@ -924,42 +701,27 @@
             ];
 
             const STORAGE_KEY = 'demo-changelog-page-state-v20260604';
-            const LOG_STORE_VERSION = 5;
-            let activeEditContext = null;
+            const LOG_STORE_VERSION = 6;
             let pageLogs = [];
-
-            function sanitizeStoredEdits(edits) {
-                var next = Object.assign({}, edits || {});
-                Object.keys(next).forEach(function (key) {
-                    var raw = JSON.stringify(next[key] || '');
-                    if (raw.indexOf('你好') !== -1) {
-                        delete next[key];
-                    }
-                });
-                return next;
-            }
 
             function loadPageState() {
                 try {
                     const raw = localStorage.getItem(STORAGE_KEY);
-                    if (!raw) return { edits: {}, logs: [], needsPersist: false };
+                    if (!raw) return { logs: [], needsPersist: false };
                     const parsed = JSON.parse(raw);
                     var needsPersist = (parsed.logVersion || 0) < LOG_STORE_VERSION;
                     var logs = needsPersist ? [] : (Array.isArray(parsed.logs) ? parsed.logs : []);
-                    var edits = sanitizeStoredEdits(parsed.edits || {});
                     return {
-                        edits: edits,
                         logs: logs,
                         needsPersist: needsPersist
                     };
                 } catch (e) {
-                    return { edits: {}, logs: [], needsPersist: false };
+                    return { logs: [], needsPersist: false };
                 }
             }
 
-            function savePageState(edits, logs) {
+            function savePageState(logs) {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify({
-                    edits: edits,
                     logs: logs,
                     logVersion: LOG_STORE_VERSION
                 }));
@@ -988,57 +750,6 @@
                 return get('year') + '-' + get('month') + '-' + get('day') + ' ' + get('hour') + ':' + get('minute');
             }
 
-            function splitContentLines(text) {
-                return String(text || '').split('\n').map(function (line) { return line.trim(); }).filter(Boolean);
-            }
-
-            function quoteLine(text) {
-                var t = String(text || '').trim();
-                if (t.length > 120) {
-                    return '「' + t.slice(0, 120) + '…」';
-                }
-                return '「' + t + '」';
-            }
-
-            function buildEditChangeLog(moduleName, kindLabel, kind, oldValue, newValue) {
-                var lines = [moduleName + ' · ' + kindLabel];
-                var oldText = String(oldValue || '').trim();
-                var newText = String(newValue || '').trim();
-
-                if (oldText === newText) {
-                    return null;
-                }
-
-                if (kind === 'subtitle') {
-                    var oldTitle = oldText.split('\n')[0].trim();
-                    var newTitle = newText.split('\n')[0].trim();
-                    if (oldTitle !== newTitle) {
-                        lines.push('· 由 ' + quoteLine(oldTitle) + ' 改为 ' + quoteLine(newTitle));
-                    }
-                    return lines.length > 1 ? lines.join('\n') : null;
-                }
-
-                var oldLines = splitContentLines(oldText);
-                var newLines = splitContentLines(newText);
-                var removed = oldLines.filter(function (l) { return newLines.indexOf(l) === -1; });
-                var added = newLines.filter(function (l) { return oldLines.indexOf(l) === -1; });
-
-                removed.forEach(function (l) {
-                    lines.push('· 删除：' + quoteLine(l));
-                });
-                added.forEach(function (l) {
-                    lines.push('· 新增：' + quoteLine(l));
-                });
-
-                if (!removed.length && !added.length) {
-                    lines.push('· 内容调整：条目顺序或表述变更');
-                    lines.push('  原：共 ' + oldLines.length + ' 条');
-                    lines.push('  现：共 ' + newLines.length + ' 条');
-                }
-
-                return lines.length > 1 ? lines.join('\n') : null;
-            }
-
             function getAllLogs() {
                 return PAGE_CHANGELOG.concat(pageLogs);
             }
@@ -1046,8 +757,7 @@
             function addPageLog(text) {
                 if (!text) return;
                 pageLogs.push({ time: formatNowBeijing(), text: text });
-                var state = loadPageState();
-                savePageState(state.edits, pageLogs);
+                savePageState(pageLogs);
                 renderPageChangelog();
             }
 
@@ -1072,191 +782,17 @@
                 listEl.scrollTop = 0;
             }
 
-            function getModuleName(row) {
-                const section = row.closest('.change-point');
-                const title = section && section.querySelector('.change-point-main-title');
-                return title ? title.textContent.trim() : '未知模块';
-            }
-
-            function getSubtitleEl(row) {
-                return row.querySelector('.change-point-title');
-            }
-
-            function getBodyEl(row) {
-                return row.querySelector('.change-point-body');
-            }
-
-            function getBodyLines(bodyEl) {
-                const items = bodyEl.querySelectorAll('ul > li');
-                if (!items.length) return bodyEl.innerText.trim();
-                return Array.prototype.map.call(items, function (li) { return li.innerText.trim(); }).join('\n');
-            }
-
-            function setBodyFromLines(bodyEl, text) {
-                const lines = text.split('\n').map(function (line) { return line.trim(); }).filter(Boolean);
-                bodyEl.innerHTML = '<ul>' + lines.map(function (line) {
-                    return '<li>' + escapeHtml(line) + '</li>';
-                }).join('') + '</ul>';
-            }
-
-            function getEditModal() {
-                return document.getElementById('changelog-edit-modal');
-            }
-
-            function closeActiveEditor() {
-                var modal = getEditModal();
-                if (modal) {
-                    modal.hidden = true;
-                    modal.setAttribute('aria-hidden', 'true');
-                }
-                activeEditContext = null;
-            }
-
-            function saveActiveEditor() {
-                if (!activeEditContext) return;
-
-                var ctx = activeEditContext;
-                var textarea = document.getElementById('changelog-edit-modal-textarea');
-                var newValue = textarea ? textarea.value.trim() : '';
-                if (!newValue) {
-                    alert('内容不能为空');
-                    return;
-                }
-
-                var oldValue = ctx.value;
-                var row = ctx.row;
-                var targetEl = ctx.targetEl;
-                var kind = ctx.kind;
-                var moduleName = ctx.moduleName;
-                var kindLabel = ctx.kindLabel;
-
-                if (kind === 'subtitle') {
-                    targetEl.textContent = newValue.split('\n')[0];
-                } else {
-                    setBodyFromLines(targetEl, newValue);
-                }
-
-                var state = loadPageState();
-                if (kind === 'subtitle') {
-                    state.edits[row.dataset.editId] = { kind: 'subtitle', text: targetEl.textContent.trim() };
-                } else {
-                    state.edits[row.dataset.editId] = {
-                        kind: 'body',
-                        lines: newValue.split('\n').map(function (l) { return l.trim(); }).filter(Boolean)
-                    };
-                }
-                savePageState(state.edits, pageLogs);
-
-                var savedNewValue = kind === 'subtitle' ? targetEl.textContent.trim() : newValue;
-                var changeLog = buildEditChangeLog(moduleName, kindLabel, kind, oldValue, savedNewValue);
-                if (changeLog) {
-                    addPageLog(changeLog);
-                }
-
-                closeActiveEditor();
-            }
-
-            function openEditor(row) {
-                var modal = getEditModal();
-                if (!modal) return;
-
-                if (activeEditContext && activeEditContext.row === row && !modal.hidden) {
-                    closeActiveEditor();
-                    return;
-                }
-
-                const kind = row.dataset.editKind;
-                const moduleName = getModuleName(row);
-                const kindLabel = kind === 'subtitle' ? '副标题' : '内容';
-                let value = '';
-                let targetEl = null;
-
-                if (kind === 'subtitle') {
-                    targetEl = getSubtitleEl(row);
-                    value = targetEl.textContent.trim();
-                } else {
-                    targetEl = getBodyEl(row);
-                    value = getBodyLines(targetEl);
-                }
-
-                activeEditContext = {
-                    row: row,
-                    targetEl: targetEl,
-                    kind: kind,
-                    value: value,
-                    moduleName: moduleName,
-                    kindLabel: kindLabel
-                };
-
-                document.getElementById('changelog-edit-modal-title').textContent = moduleName + ' · ' + kindLabel;
-                document.getElementById('changelog-edit-modal-hint').textContent =
-                    kind === 'body' ? '每行一条说明，可直接在此编辑全部条目' : '单行标题';
-
-                var textarea = document.getElementById('changelog-edit-modal-textarea');
-                textarea.value = value;
-                textarea.classList.toggle('is-subtitle', kind === 'subtitle');
-
-                modal.hidden = false;
-                modal.setAttribute('aria-hidden', 'false');
-                textarea.focus();
-            }
-
-            function initEditModal() {
-                var modal = getEditModal();
-                if (!modal || modal.dataset.bound === 'true') return;
-                modal.dataset.bound = 'true';
-
-                modal.querySelectorAll('[data-changelog-edit-close="true"]').forEach(function (el) {
-                    el.addEventListener('click', closeActiveEditor);
-                });
-
-                document.getElementById('changelog-edit-modal-save')?.addEventListener('click', saveActiveEditor);
-
-                document.addEventListener('keydown', function (e) {
-                    if (e.key === 'Escape' && activeEditContext) {
-                        closeActiveEditor();
-                    }
-                });
-            }
-
-            function applySavedEdits(edits) {
-                Object.keys(edits).forEach(function (id) {
-                    const row = document.querySelector('.editable-row[data-edit-id="' + id + '"]');
-                    if (!row) return;
-                    const data = edits[id];
-                    if (data.kind === 'subtitle') {
-                        const el = getSubtitleEl(row);
-                        if (el && data.text) el.textContent = data.text;
-                    } else if (data.kind === 'body') {
-                        const el = getBodyEl(row);
-                        if (el && data.lines && data.lines.length) {
-                            setBodyFromLines(el, data.lines.join('\n'));
-                        }
-                    }
-                });
-            }
-
-            function initEditableBlocks() {
-                initEditModal();
-
+            function initPageChangelog() {
                 const state = loadPageState();
                 pageLogs = state.logs;
                 if (state.needsPersist) {
-                    savePageState(state.edits, pageLogs);
+                    pageLogs = [];
+                    savePageState(pageLogs);
                 }
-                applySavedEdits(state.edits);
                 renderPageChangelog();
-
-                document.querySelectorAll('.editable-edit-btn').forEach(function (btn) {
-                    btn.addEventListener('click', function () {
-                        const row = btn.closest('.editable-row');
-                        if (!row) return;
-                        openEditor(row);
-                    });
-                });
             }
 
-            initEditableBlocks();
+            initPageChangelog();
 
             function bindOverlayScrollbar(el) {
                 if (!el || el.dataset.overlayScrollbarBound === 'true') return;
