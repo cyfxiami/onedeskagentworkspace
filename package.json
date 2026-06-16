@@ -5,7 +5,8 @@
   "main": "proxy-server.js",
   "scripts": {
     "start": "node proxy-server.js",
-    "dev": "nodemon proxy-server.js"
+    "dev": "nodemon proxy-server.js",
+    "build": "node scripts/build-static.js"
   },
   "keywords": [
     "AI",
