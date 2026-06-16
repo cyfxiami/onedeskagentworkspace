@@ -83,18 +83,16 @@
                         <span class="nav-logo">📊</span>
                         <div class="nav-brand-main">
                             <span class="nav-title" id="nav-page-title">员工工作台</span>
-                            <div class="workbench-role-context" id="workbench-role-context">
-                                <div class="workbench-role-dropdown" id="workbench-role-dropdown">
-                                    <span class="workbench-role-switch-btn" id="workbench-role-switch-btn" tabindex="0" role="button" aria-haspopup="true">
-                                        <span class="workbench-role-switch-label" id="workbench-role-switch-label">业务团队</span>
-                                    </span>
-                                    <div class="workbench-role-dropdown-menu" id="workbench-role-dropdown-menu">
-                                        <button type="button" class="workbench-role-dropdown-item" onclick="logoutWorkbench()">退出登录</button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
+                    <button type="button" class="workbench-logout-btn" onclick="logoutWorkbench()" aria-label="退出登录">
+                        <svg class="workbench-logout-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 17l5-5-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M21 12H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>退出登录</span>
+                    </button>
                 </div>
                 <!-- 竖线分隔 -->
                 <div class="nav-divider"></div>
@@ -102,7 +100,11 @@
                     <div class="support-top-nav-stack" id="support-top-nav-stack">
                     <!-- 业务支持：业务助理头像 -->
                     <div class="support-secondary-avatars-wrap support-category-bar" id="support-secondary-avatars-wrap" role="region" aria-label="业务助理选择">
-                    <div class="digital-avatars-scroll">
+                    <div class="digital-avatars-scroll-wrap">
+                        <button type="button" class="digital-avatars-scroll-btn digital-avatars-scroll-left" aria-label="向左滑动" hidden>
+                            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8L10 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <div class="digital-avatars-scroll">
                         <div class="digital-avatars">
                             <div class="avatar-item" data-avatar-type="ib" onclick="handleTopAvatarClick('ib')">
                                 <div class="avatar-img-wrap">
@@ -140,6 +142,18 @@
                                 </div>
                                 <span class="avatar-name">机构业务助理</span>
                             </div>
+                            <div class="avatar-item" data-avatar-type="research" onclick="handleTopAvatarClick('research')">
+                                <div class="avatar-img-wrap">
+                                    <img src="images/Avatar8.png" alt="研究业务助理" class="avatar-img">
+                                </div>
+                                <span class="avatar-name">研究业务助理</span>
+                            </div>
+                            <div class="avatar-item" data-avatar-type="credit" onclick="handleTopAvatarClick('credit')">
+                                <div class="avatar-img-wrap">
+                                    <img src="images/Avatar9.png" alt="信用业务助理" class="avatar-img">
+                                </div>
+                                <span class="avatar-name">信用业务助理</span>
+                            </div>
                             <div class="avatar-item" data-avatar-type="verify" onclick="handleTopAvatarClick('verify')">
                                 <div class="avatar-img-wrap">
                                     <img src="images/Avatar7.png" alt="交叉验证助理" class="avatar-img">
@@ -147,6 +161,10 @@
                                 <span class="avatar-name">交叉验证助理</span>
                             </div>
                         </div>
+                        </div>
+                        <button type="button" class="digital-avatars-scroll-btn digital-avatars-scroll-right" aria-label="向右滑动" hidden>
+                            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
                     </div>
                     </div>
                     </div>
@@ -168,29 +186,16 @@
                     <span class="tips-count">4</span>
                     <button class="work-log-btn" onclick="openWorkLog()">
                         <span class="log-icon">📝</span>
-                        <span>工作日志</span>
+                        <span>今日任务</span>
                     </button>
                     <button class="section-toggle-btn" id="work-tips-toggle" onclick="toggleSection('work-tips')">收起</button>
                 </div>
                 <div class="section-collapsible-body" id="work-tips-body">
-                <ul class="tips-list">
-                    <li class="tip-item">
-                        <span class="tip-number">1</span>
-                        <p class="tip-content">协和医院赵宇主任已提交开户资料，赵主任提出调降两融费率的申请，今日需与赵主任联系确定；</p>
-                    </li>
-                    <li class="tip-item">
-                        <span class="tip-number">2</span>
-                        <p class="tip-content">海南农商行机构准入事项已与黄亮副行长沟通，黄亮副行长建议本周安排与金融市场部赵翔鹏总经理面谈，需准备路演材料；</p>
-                    </li>
-                    <li class="tip-item">
-                        <span class="tip-number">3</span>
-                        <p class="tip-content">ST沐邦共益债方案中出资金额需在本周内确定；</p>
-                    </li>
-                    <li class="tip-item">
-                        <span class="tip-number">4</span>
-                        <p class="tip-content">中银金租有新能源方面的研究服务需求，本周需协调研究所新能源领域研究员进行路演。</p>
-                    </li>
-                </ul>
+                <div class="employee-tasks-layout" id="employee-tasks-layout">
+                    <div class="employee-tasks-scroll" id="employee-daily-tasks-scroll">
+                        <ul class="tips-list" id="employee-daily-tasks-list"></ul>
+                    </div>
+                </div>
                 </div>
             </div>
         </section>
@@ -1156,7 +1161,7 @@
                     <span class="back-icon">‹</span>
                     <span>返回</span>
                 </button>
-                <h3>工作日志</h3>
+                <h3>今日任务</h3>
                 <div class="header-spacer"></div>
             </div>
             <div class="detail-page-content work-log-content">
@@ -1164,12 +1169,12 @@
                 <div class="import-section">
                     <h4 class="section-subtitle">📁 导入方式</h4>
                     <div class="import-buttons">
-                        <button class="import-btn document-btn" onclick="importDocument()">
+                        <button type="button" class="import-btn document-btn" onclick="importDocument()">
                             <span class="import-icon">📄</span>
                             <span class="import-label">导入文档</span>
                             <span class="import-hint">支持 Word、PDF、TXT</span>
                         </button>
-                        <button class="import-btn voice-btn" onclick="importVoice()">
+                        <button type="button" class="import-btn voice-btn" onclick="importVoice()">
                             <span class="import-icon">🎙️</span>
                             <span class="import-label">语音导入</span>
                             <span class="import-hint">自动转文字</span>
@@ -1179,7 +1184,6 @@
                     <input type="file" id="voice-input" accept="audio/*" style="display: none;" onchange="handleVoiceImport(this)">
                 </div>
 
-                <!-- 结构化输入区域 -->
                 <div class="log-input-section">
                     <h4 class="section-subtitle">✏️ 手动记录</h4>
                     <form id="work-log-form" onsubmit="saveWorkLog(event)">
@@ -1191,10 +1195,27 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">事项</label>
-                            <textarea id="log-content" class="form-textarea" placeholder="请输入工作内容..." rows="4" required></textarea>
+                            <label class="form-label" for="log-title">标题</label>
+                            <div class="form-textarea-wrap">
+                                <textarea id="log-title" class="form-textarea form-textarea-compact" placeholder="请输入工作标题..." maxlength="100" rows="2" required oninput="updateEmployeeTaskCharCount('log-title', 'log-title-count', 100)"></textarea>
+                                <span class="form-char-count" id="log-title-count">0/100</span>
+                            </div>
                         </div>
-                        <div class="form-actions">
+                        <div class="form-group">
+                            <label class="form-label" for="log-summary">摘要</label>
+                            <div class="form-textarea-wrap">
+                                <textarea id="log-summary" class="form-textarea form-textarea-compact" placeholder="请输入工作摘要..." maxlength="200" rows="3" oninput="updateEmployeeTaskCharCount('log-summary', 'log-summary-count', 200)"></textarea>
+                                <span class="form-char-count" id="log-summary-count">0/200</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="log-content">事项</label>
+                            <div class="form-textarea-wrap">
+                                <textarea id="log-content" class="form-textarea" placeholder="请输入工作内容..." maxlength="2000" rows="5" required oninput="updateEmployeeTaskCharCount('log-content', 'log-content-count', 2000)"></textarea>
+                                <span class="form-char-count" id="log-content-count">0/2000</span>
+                            </div>
+                        </div>
+                        <div class="form-actions work-log-form-actions">
                             <button type="button" class="secondary-btn" onclick="closeWorkLog()">取消</button>
                             <button type="submit" class="primary-btn">保存日志</button>
                         </div>
@@ -1206,10 +1227,54 @@
                     <h4 class="section-subtitle">📋 导入内容预览</h4>
                     <div class="preview-content" id="preview-text"></div>
                     <div class="preview-actions">
-                        <button class="secondary-btn" onclick="cancelImport()">取消</button>
-                        <button class="primary-btn" onclick="confirmImport()">确认导入</button>
+                        <button type="button" class="secondary-btn" onclick="cancelImport()">取消</button>
+                        <button type="button" class="primary-btn" onclick="confirmImport()">确认导入</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 今日任务详情抽屉 -->
+    <div id="employee-task-detail-drawer" class="employee-task-drawer" hidden>
+        <div class="employee-task-drawer-overlay" onclick="closeEmployeeTaskDetail()"></div>
+        <aside class="employee-task-drawer-panel" id="employee-task-detail-panel" role="dialog" aria-modal="true" aria-labelledby="employee-task-drawer-heading">
+            <div class="employee-task-drawer-header">
+                <span class="employee-task-drawer-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                </span>
+                <h4 class="employee-task-drawer-heading" id="employee-task-drawer-heading">任务详情</h4>
+                <button type="button" class="employee-task-detail-close" id="employee-task-detail-close" aria-label="关闭">×</button>
+            </div>
+            <div class="employee-task-drawer-body">
+                <p class="employee-task-drawer-main-title" id="employee-task-detail-title"></p>
+                <div class="employee-task-detail-field">
+                    <span class="employee-task-detail-label">摘要</span>
+                    <p class="employee-task-detail-text" id="employee-task-detail-summary"></p>
+                </div>
+                <div class="employee-task-detail-field">
+                    <span class="employee-task-detail-label">事项</span>
+                    <p class="employee-task-detail-text" id="employee-task-detail-content"></p>
+                </div>
+            </div>
+            <div class="employee-task-drawer-footer">
+                <div class="employee-task-detail-meta">
+                    <span id="employee-task-detail-source"></span>
+                    <span id="employee-task-detail-time"></span>
+                </div>
+                <button type="button" class="employee-task-agent-btn" id="employee-task-agent-btn">智能体协同处理</button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 今日任务删除确认 -->
+    <div id="employee-task-delete-modal" class="employee-task-confirm-modal" hidden>
+        <div class="employee-task-confirm-overlay" onclick="closeEmployeeTaskDeleteModal()"></div>
+        <div class="employee-task-confirm-box" role="dialog" aria-modal="true" aria-labelledby="employee-task-delete-title">
+            <p class="employee-task-confirm-text" id="employee-task-delete-title">确定要删除这条消息吗？</p>
+            <div class="employee-task-confirm-actions">
+                <button type="button" class="employee-task-confirm-btn employee-task-confirm-cancel" onclick="closeEmployeeTaskDeleteModal()">取消</button>
+                <button type="button" class="employee-task-confirm-btn employee-task-confirm-ok" onclick="confirmDeleteEmployeeTask()">确定</button>
             </div>
         </div>
     </div>
@@ -1424,6 +1489,8 @@
                 'invest': '投资业务助理',
                 'sales': '销交业务助理',
                 'institution': '机构业务助理',
+                'research': '研究业务助理',
+                'credit': '信用业务助理',
                 'verify': '交叉验证助理'
             };
             const avatarName = avatarNames[avatarType] || '业务助理';
@@ -1650,37 +1717,39 @@
                 ib: [
                     {
                         id: 'ib-1',
-                        title: 'ST沐邦共益债方案推进',
-                        description: 'ST沐邦共益债方案中出资金额需在本周内确定，涉及多方协调。',
-                        completedSteps: ['完成共益债方案初稿', '与发行人完成首轮沟通', '梳理出资方意向名单'],
-                        nextSteps: ['本周内确定各出资方出资金额', '协调法务审核方案条款', '准备董事会审议材料']
+                        title: '机构客户"测试科技有限公司"开户绿色通道申请待审批',
+                        description: '机构客户"测试科技有限公司"开户绿色通道申请待审批，需协调运营部加急处理。',
+                        completedSteps: ['开户申请已提交至运营系统', '客户资料初审已完成', '已标记绿色通道加急标签'],
+                        nextSteps: ['需协调运营部加急处理']
                     },
                     {
                         id: 'ib-2',
-                        title: '某科技IPO尽调跟进',
-                        description: '科创板IPO项目进入尽职调查阶段，需同步推进财务与法律尽调。',
-                        completedSteps: ['下发尽调资料清单', '完成现场尽调第一轮访谈', '收集近三年审计报告'],
-                        nextSteps: ['整理尽调发现问题清单', '撰写招股书业务与技术章节框架', '安排内核委预审时间']
+                        title: '高净值客户张三拟参与"演示一号"股权投资项目',
+                        description: '高净值客户张三拟参与"演示一号"股权投资项目，需协助完成合格投资者认定。',
+                        completedSteps: ['客户表达参与意向', '初步核验资产与风险测评', '收集合格投资者认定材料清单'],
+                        nextSteps: ['需协助完成合格投资者认定']
                     }
                 ]
             },
             investment_manager: {
-                ib: [
-                    {
-                        id: 'ib-im-1',
-                        title: '某上市公司定增发行方案',
-                        description: '非公开发行股票方案需结合投资策略与发行节奏，本周完成投资人意向摸排。',
-                        completedSteps: ['完成发行规模与定价区间测算', '梳理战略投资者名单', '与发行人法务初步沟通审批流程'],
-                        nextSteps: ['本周完成意向投资者路演', '汇总认购意向与分配预案', '提交内核委审议材料']
-                    }
-                ],
                 asset: [
                     {
                         id: 'asset-1',
-                        title: '固收+产品方案设计',
-                        description: '为高净值客户定制一款固收+资管产品，需完成方案设计与合规审查。',
-                        completedSteps: ['完成客户需求调研', '初步设计产品结构与收益目标', '梳理投资范围与限制'],
-                        nextSteps: ['完善产品说明书草案', '提交合规与风控审核', '安排产品立项评审会']
+                        title: '客户李四"测试一号"私募基金双录视频待合规审核',
+                        description: '客户李四"测试一号"私募基金双录视频待合规审核，需协助推进产品签约流程。',
+                        completedSteps: ['客户已完成风险揭示书签署', '双录视频已上传系统', '产品合同草案已生成'],
+                        nextSteps: ['需协助推进产品签约流程']
+                    }
+                ]
+            },
+            account_service: {
+                retail: [
+                    {
+                        id: 'retail-1',
+                        title: '团队定投任务缺口8户且客户周八适当性异常待复核',
+                        description: '团队定投任务缺口8户且客户周八适当性异常待复核，需督导客户经理并协调资源。',
+                        completedSteps: ['定投任务完成率已统计', '适当性异常客户已标记', '客户经理名单已梳理'],
+                        nextSteps: ['需督导客户经理并协调资源']
                     }
                 ]
             }
@@ -1812,6 +1881,18 @@
                 ]
             },
             {
+                id: 'research',
+                name: '研究业务助理',
+                image: 'images/Avatar8.png',
+                tasks: []
+            },
+            {
+                id: 'credit',
+                name: '信用业务助理',
+                image: 'images/Avatar9.png',
+                tasks: []
+            },
+            {
                 id: 'verify',
                 name: '交叉验证助理',
                 image: 'images/Avatar7.png',
@@ -1841,7 +1922,7 @@
             }
         ];
 
-        const supportBadgeAgentIds = ['ib', 'asset'];
+        const supportBadgeAgentIds = ['ib', 'asset', 'retail'];
 
         const supportAgentCategoryMap = {
             ib: 'organizer',
@@ -1850,13 +1931,15 @@
             invest: 'investment_manager',
             sales: 'account_service',
             institution: 'organizer',
+            research: 'investment_manager',
+            credit: 'account_service',
             verify: 'product_design'
         };
 
         const supportTopCategories = [
             { id: 'organizer', name: '组织者助理', desc: '统筹项目资源与进度', icon: 'users', badgeAgentIds: ['ib'] },
-            { id: 'investment_manager', name: '投资经理助理', desc: '管理投资组合与收益', icon: 'trending-up', badgeAgentIds: ['ib', 'asset'] },
-            { id: 'account_service', name: '账户服务助理', desc: '处理账户相关事务', icon: 'shield', badgeAgentIds: [] },
+            { id: 'investment_manager', name: '投资经理助理', desc: '管理投资组合与收益', icon: 'trending-up', badgeAgentIds: ['asset'] },
+            { id: 'account_service', name: '账户服务助理', desc: '处理账户相关事务', icon: 'shield', badgeAgentIds: ['retail'] },
             { id: 'product_design', name: '产品设计助理', desc: '设计金融产品方案', icon: 'layers', badgeAgentIds: [] }
         ];
 
@@ -1952,6 +2035,36 @@
                     '分析重点机构客户业务渗透空间'
                 ],
                 getReply: (msg) => `您好，我是机构业务助理。针对「${msg}」，我将协助您完成准入材料、合作方案与客户分析。请提供机构客户名称。`
+            },
+            {
+                id: 'research',
+                name: '研究业务助理',
+                image: 'images/Avatar8.png',
+                prompts: [
+                    '撰写行业深度研究报告框架',
+                    '整理宏观策略周报核心观点',
+                    '分析某上市公司盈利预测与估值',
+                    '梳理研究所路演材料要点',
+                    '对比同行业竞品财务与经营指标',
+                    '生成Research Memo研究提纲',
+                    '汇总最新政策对行业影响分析'
+                ],
+                getReply: (msg) => `您好，我是研究业务助理。关于「${msg}」，我将从行业研究、公司分析、策略观点等方面协助您。请提供具体研究主题或标的。`
+            },
+            {
+                id: 'credit',
+                name: '信用业务助理',
+                image: 'images/Avatar9.png',
+                prompts: [
+                    '分析客户信用评级与授信方案',
+                    '梳理两融业务风险监控要点',
+                    '生成股票质押项目尽调清单',
+                    '整理信用业务合规审查流程',
+                    '评估客户担保品折算率调整建议',
+                    '撰写信用风险预警报告框架',
+                    '对比同业信用业务产品方案'
+                ],
+                getReply: (msg) => `您好，我是信用业务助理。针对「${msg}」，我将从授信评估、风险监控、合规审查等维度为您提供支持。请补充客户或项目基本情况。`
             },
             {
                 id: 'verify',
@@ -2077,10 +2190,17 @@
         function updateNavTitleForRole(role) {
             const resolvedRole = role || currentWorkbenchRole || 'employee';
             const titleEl = document.getElementById('nav-page-title');
-            const labelEl = document.getElementById('workbench-role-switch-label');
-            if (titleEl) titleEl.textContent = '员工工作台';
-            if (labelEl) {
-                labelEl.textContent = resolvedRole === 'support' ? '业务支持中心' : '业务团队';
+            const brandEl = titleEl?.closest('.nav-brand');
+            if (!titleEl) return;
+
+            if (resolvedRole === 'support') {
+                titleEl.classList.add('nav-title-multiline');
+                brandEl?.classList.add('nav-brand-support-title');
+                titleEl.innerHTML = '<span class="nav-title-line-main">业务支持中心</span><span class="nav-title-line-sub">工作台</span>';
+            } else {
+                titleEl.classList.remove('nav-title-multiline');
+                brandEl?.classList.remove('nav-brand-support-title');
+                titleEl.textContent = '员工工作台';
             }
         }
 
@@ -2121,6 +2241,7 @@
 
             if (!workbenchInitialized) {
                 initWorkbenchTabs();
+                initEmployeeDailyTasks();
                 workbenchInitialized = true;
             }
             switchWorkbenchTab(resolvedRole);
@@ -2447,6 +2568,58 @@
             return agent ? { id: agentId, name: agent.name, image: agent.image } : null;
         }
 
+        function getSupportInputPlaceholder(agentId) {
+            const name = getSupportInputAgentMeta(agentId)?.name || '今日任务助理';
+            return `向${name}发送工作指令`;
+        }
+
+        function getMainInputDefaultPlaceholder(panel) {
+            if (getPanelKey(panel) === 'support') {
+                const state = getPanelState(panel);
+                return getSupportInputPlaceholder(getSupportInputReplyAgentId(state));
+            }
+            return '开启我的工作';
+        }
+
+        function updateSupportInputPlaceholder(panel, agentId) {
+            const input = getPanelEl('main-chat-input', panel);
+            if (input) input.placeholder = getSupportInputPlaceholder(agentId);
+        }
+
+        function prepareSupportInputField(panel) {
+            const container = panel?.querySelector('.input-container');
+            const input = container?.querySelector('.chat-input');
+            if (!container || !input || container.dataset.supportInputReady === 'true') return;
+
+            container.classList.add('support-input-container');
+            container.dataset.supportInputReady = 'true';
+
+            let field = input;
+            if (input.tagName !== 'TEXTAREA') {
+                const textarea = document.createElement('textarea');
+                textarea.id = input.id;
+                textarea.className = 'chat-input support-chat-input';
+                textarea.rows = 1;
+                textarea.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMainMessage();
+                    }
+                });
+                textarea.addEventListener('input', () => autoResizeTextarea(textarea));
+                input.replaceWith(textarea);
+                field = textarea;
+            } else {
+                field.classList.add('support-chat-input');
+            }
+
+            const sendBtn = container.querySelector('.send-btn');
+            if (sendBtn) sendBtn.classList.add('support-input-send-btn');
+
+            const state = getPanelState(panel);
+            updateSupportInputPlaceholder(panel, state.currentSupportInputAgent || SUPPORT_INPUT_AGENT_DAILY_TASK);
+        }
+
         function getSupportInputReplyAgentId(state) {
             return state?.currentSupportInputAgent || SUPPORT_INPUT_AGENT_DAILY_TASK;
         }
@@ -2475,6 +2648,7 @@
             const meta = getSupportInputAgentMeta(agentId);
             if (!meta) return;
 
+            const panel = picker.closest('.workbench-panel');
             const trigger = picker.querySelector('.support-input-agent-trigger');
             const triggerImg = picker.querySelector('.support-input-agent-trigger-img');
             if (trigger) {
@@ -2486,6 +2660,7 @@
                 triggerImg.src = meta.image;
                 triggerImg.alt = meta.name;
             }
+            if (panel) updateSupportInputPlaceholder(panel, agentId);
 
             picker.querySelectorAll('.support-input-agent-option').forEach((btn) => {
                 const active = btn.dataset.agentId === agentId;
@@ -2526,6 +2701,7 @@
             const container = panel?.querySelector('.input-container');
             if (!container) return;
 
+            prepareSupportInputField(panel);
             container.querySelector('.support-input-agent-select')?.remove();
 
             let picker = container.querySelector('.support-input-agent-picker');
@@ -2707,7 +2883,7 @@
 
                 if (trigger.closest('.support-daily-task-body')) {
                     const agent = getSupportAgent(trigger.dataset.agentId);
-                    if (agent) showOrgAgentJumpToast(agent.name);
+                    if (agent) showOrgAgentJumpToast(agent.name, { switchMode: true });
                     return;
                 }
 
@@ -3115,7 +3291,7 @@
             document.body.dataset.supportDropdownDismissBound = 'true';
         }
 
-        const allSupportAgentIds = ['ib', 'asset', 'retail', 'invest', 'sales', 'institution', 'verify'];
+        const allSupportAgentIds = ['ib', 'asset', 'retail', 'invest', 'sales', 'institution', 'research', 'credit', 'verify'];
 
         function getSupportCategoryExcludedAgentIds(categoryId) {
             return supportTopCategories.find(cat => cat.id === categoryId)?.excludeAgentIds || [];
@@ -3137,6 +3313,7 @@
                 item.hidden = hidden;
                 item.style.display = hidden ? 'none' : '';
             });
+            updateDigitalAvatarsScrollButtons();
         }
 
         function resetSupportAvatarsVisibility() {
@@ -3144,6 +3321,7 @@
                 item.hidden = false;
                 item.style.display = '';
             });
+            updateDigitalAvatarsScrollButtons();
         }
 
         function setSupportSecondaryNavExpanded(expanded) {
@@ -3199,6 +3377,7 @@
                 nameEl.textContent = fullName;
             });
             updateSupportAvatarPendingDots();
+            updateDigitalAvatarsScrollButtons();
         }
 
         function hideSupportAvatarsNav() {
@@ -3223,6 +3402,7 @@
 
             hideSupportAvatarsNav();
             restoreSupportSecondaryAvatarFullNames();
+            updateDigitalAvatarsScrollButtons();
         }
 
         function getAvatarNameFullLabel(nameEl) {
@@ -3336,7 +3516,13 @@
 
             const toast = document.createElement('div');
             toast.className = 'org-agent-jump-toast';
-            toast.textContent = options.fullMessage ? agentName : ('点击跳转' + agentName);
+            if (options.fullMessage) {
+                toast.textContent = agentName;
+            } else if (options.switchMode) {
+                toast.textContent = `跳转到${agentName}处理`;
+            } else {
+                toast.textContent = '点击跳转' + agentName;
+            }
             document.body.appendChild(toast);
 
             requestAnimationFrame(() => toast.classList.add('show'));
@@ -3491,6 +3677,8 @@
                 initWorkbenchPanel(panel);
             }
             updateSupportAvatarPendingDots();
+            updateDigitalAvatarsScrollButtons();
+            requestAnimationFrame(updateDigitalAvatarsScrollButtons);
         }
 
         function bindOverlayScrollbar(el) {
@@ -3507,7 +3695,7 @@
 
         function initOverlayScrollbars(root) {
             const scope = root || document;
-            scope.querySelectorAll('.ai-chat-view, .support-dialogue, .org-workbench-scroll').forEach(bindOverlayScrollbar);
+            scope.querySelectorAll('.ai-chat-view, .support-dialogue, .org-workbench-scroll, .employee-tasks-scroll').forEach(bindOverlayScrollbar);
         }
 
         function initWorkbenchTabs() {
@@ -3785,7 +3973,8 @@
                 `;
             }
 
-            messagesEl.appendChild(row);
+            const lastBlock = messagesEl.querySelector('.chat-conversation-block:last-of-type');
+            (lastBlock || messagesEl).appendChild(row);
             scrollWorkbenchChatToBottom(p);
         }
 
@@ -4056,7 +4245,7 @@
                     const transcript = event.results[0][0].transcript;
                     const input = getPanelEl('main-chat-input', panel);
                     input.value = transcript;
-                    input.placeholder = '开启我的工作';
+                    input.placeholder = getMainInputDefaultPlaceholder(panel);
                     
                     // 自动发送
                     setTimeout(() => {
@@ -4067,14 +4256,14 @@
                 recognition.onerror = function() {
                     getInputContainer(panel)?.classList.remove('is-recording');
                     const input = getPanelEl('main-chat-input', panel);
-                    if (input) input.placeholder = '开启我的工作';
+                    if (input) input.placeholder = getMainInputDefaultPlaceholder(panel);
                     alert('语音识别出错，请手动输入');
                 };
                 
                 recognition.onend = function() {
                     getInputContainer(panel)?.classList.remove('is-recording');
                     const input = getPanelEl('main-chat-input', panel);
-                    if (input) input.placeholder = '开启我的工作';
+                    if (input) input.placeholder = getMainInputDefaultPlaceholder(panel);
                 };
                 
                 recognition.start();
@@ -6085,204 +6274,531 @@
             alert('分析结果已保存！');
         }
         
-        // ========== 工作日志功能 ==========
-        
-        // 打开工作日志页面
+        // ========== 今日任务 / 工作日志功能 ==========
+        const EMPLOYEE_DAILY_TASKS_KEY = 'employeeDailyTasks';
+        const EMPLOYEE_DAILY_TASKS_SEED_VERSION = 2;
+        let pendingDeleteEmployeeTaskId = null;
+        let selectedEmployeeTaskId = null;
+
+        const defaultEmployeeDailyTasks = [
+            {
+                id: 'seed-1',
+                title: '高净值客户张三季度回访待完成，客户资产近3月波动较大需主动触达',
+                summary: '张三（资产规模888万），近3月资产变动约15%，需了解持仓变动原因并推荐固收类产品进行仓位调整',
+                content: '该客户为营业部重点维护的高净值客户，账户资产规模约888万元，近三个月账户资产出现约15%的波动，主要系持仓的权益类产品净值调整所致。客户此前风险偏好为稳健型，目前持仓中权益类占比偏高，需在本次回访中了解客户对近期市场波动的反馈，评估其风险承受能力是否有变化，并根据客户反馈推荐合适的固收类或固收+产品进行仓位再平衡，回访记录需在CRM系统中完整留痕。',
+                source: '投资业务助理',
+                sourceType: 'agent',
+                date: '2026-06-16',
+                time: '09:00',
+                timestamp: new Date('2026-06-16T09:00:00').getTime()
+            },
+            {
+                id: 'seed-2',
+                title: '机构客户"测试科技有限公司"开户资料补件待跟进，营业执照及法人证件需重新上传',
+                summary: '测试科技有限公司开户申请，营业执照复印件不清晰需重新上传，法人身份证即将过期需提醒更新',
+                content: '测试科技有限公司为营业部新拓展的机构客户，拟开通证券账户用于闲置资金理财。该客户开户申请已提交至柜台系统，目前因营业执照印件扫描件清晰度不足被退回，且法人身份证有效期将于下月到期，需提醒客户同步更新证件。客户表示有资金使用计划，希望尽快完成开户，已申请绿色通道加急处理，需持续跟进资料补齐进度。',
+                source: '投行业务助理',
+                sourceType: 'agent',
+                date: '2026-06-16',
+                time: '09:45',
+                timestamp: new Date('2026-06-16T09:45:00').getTime()
+            },
+            {
+                id: 'seed-3',
+                title: '私募基金双录视频待完成，客户已签署风险揭示书',
+                summary: '李四（合格投资者）已签署"测试一号"私募基金风险揭示书，需在系统中完成双录视频上传及合规提交',
+                content: '客户李四已完成合格投资者认定，风险测评结果为进取型，符合"测试一号"私募基金(R4风险等级)的投资者适当性要求。客户已线下签署基金合同及风险揭示书，根据监管要求，需在签约过程中完成录音录像双录。目前双录视频尚未上传至合规系统，需尽快预约客户完成双录环节，确保签约流程符合合规要求并归档备查。',
+                source: '资管业务助理',
+                sourceType: 'agent',
+                date: '2026-06-16',
+                time: '10:30',
+                timestamp: new Date('2026-06-16T10:30:00').getTime()
+            },
+            {
+                id: 'seed-4',
+                title: '本月基金定投任务缺口8户，需重点触达偏股型持仓客户',
+                summary: '当前完成率73% (22/30户)，需对持仓偏股型客户进行定投转化营销',
+                content: '本月营业部下达的基金定投新增签约任务目标为30户，截至目前已完成22户，缺口8户，完成率73%。经分析，存量客户中持有偏股型基金但未开通定投功能的客户约35人，该群体对权益市场已有一定认知，转化为定投客户的概率较高。建议重点针对该客户群体进行外呼营销，介绍定投分散风险、平摊成本的优势，争取在本月20日前补齐缺口。',
+                source: '员工工作台',
+                sourceType: 'workbench',
+                date: '2026-06-16',
+                time: '11:15',
+                timestamp: new Date('2026-06-16T11:15:00').getTime()
+            },
+            {
+                id: 'seed-5',
+                title: '适当性匹配异常客户待处理，需出具不匹配警示书',
+                summary: '客户周八风险等级C1却持有R4产品，需出具风险不匹配警示书并系统留痕',
+                content: '客户周八于两年前开户时风险测评结果为保守型(C1)，期间未进行风险测评更新。系统监测发现该客户目前持仓中持有"测试一号"私募基金(R4风险等级)，与其当前风险承受能力存在不匹配情况。根据适当性管理要求，需对该客户进行风险承受能力重测，如果测评结果仍为C1，需向客户出具风险不匹配警示书，由客户签字确认已知悉风险，相关文件需扫描上传至系统留痕备查。',
+                source: '交叉验证助理',
+                sourceType: 'agent',
+                date: '2026-06-16',
+                time: '14:00',
+                timestamp: new Date('2026-06-16T14:00:00').getTime()
+            },
+            {
+                id: 'seed-6',
+                title: '大额资金到账客户3日内无持仓变动，需主动推荐短期理财',
+                summary: '客户吴九银证转账转入566万，3日内未做持仓配置，需主动触达推荐短期理财产品',
+                content: '客户吴九为营业部活跃客户，历史交易以股票为主，账户日均资产约120万元。系统监测到该客户于6月12日通过银证转账转入资金566万元，截至今日(6月15日)该笔资金尚未进行任何证券或理财产品配置，处于闲置状态。考虑到客户可能有短期理财需求，建议主动联系客户了解资金安排计划，推荐短期理财产品或货币基金，帮助客户。',
+                source: '投资业务助理',
+                sourceType: 'agent',
+                date: '2026-06-16',
+                time: '15:30',
+                timestamp: new Date('2026-06-16T15:30:00').getTime()
+            }
+        ];
+
+        function getEmployeeDailyTasks() {
+            try {
+                const raw = localStorage.getItem(EMPLOYEE_DAILY_TASKS_KEY);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) ? parsed : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function saveEmployeeDailyTasks(tasks) {
+            localStorage.setItem(EMPLOYEE_DAILY_TASKS_KEY, JSON.stringify(tasks));
+        }
+
+        function initEmployeeDailyTasks() {
+            const seedVersion = localStorage.getItem(EMPLOYEE_DAILY_TASKS_KEY + '_seed');
+            if (!getEmployeeDailyTasks() || seedVersion !== String(EMPLOYEE_DAILY_TASKS_SEED_VERSION)) {
+                saveEmployeeDailyTasks(defaultEmployeeDailyTasks);
+                localStorage.setItem(EMPLOYEE_DAILY_TASKS_KEY + '_seed', String(EMPLOYEE_DAILY_TASKS_SEED_VERSION));
+            }
+            bindOverlayScrollbar(document.getElementById('employee-daily-tasks-scroll'));
+            renderEmployeeDailyTasks();
+            bindEmployeeDailyTaskEvents();
+        }
+
+        function bindEmployeeDailyTaskEvents() {
+            if (document.body.dataset.employeeTaskEventsBound === 'true') return;
+            document.body.dataset.employeeTaskEventsBound = 'true';
+
+            document.getElementById('employee-daily-tasks-list')?.addEventListener('click', (event) => {
+                const sendBtn = event.target.closest('.employee-task-send-btn');
+                if (sendBtn) {
+                    event.stopPropagation();
+                    sendEmployeeTaskToChat(sendBtn.dataset.taskId);
+                    return;
+                }
+                const deleteBtn = event.target.closest('.employee-task-delete-btn');
+                if (deleteBtn) {
+                    event.stopPropagation();
+                    openEmployeeTaskDeleteModal(deleteBtn.dataset.taskId);
+                    return;
+                }
+                const item = event.target.closest('.tip-item[data-task-id]');
+                if (item) {
+                    openEmployeeTaskDetail(item.dataset.taskId);
+                }
+            });
+
+            document.getElementById('employee-task-detail-close')?.addEventListener('click', closeEmployeeTaskDetail);
+            document.getElementById('employee-task-agent-btn')?.addEventListener('click', () => {
+                if (selectedEmployeeTaskId) {
+                    sendEmployeeTaskToChat(selectedEmployeeTaskId);
+                    closeEmployeeTaskDetail();
+                }
+            });
+        }
+
+        function renderEmployeeDailyTasks() {
+            const listEl = document.getElementById('employee-daily-tasks-list');
+            const countEl = document.querySelector('#work-tips-section .tips-count');
+            const tasks = getEmployeeDailyTasks() || [];
+            if (!listEl) return;
+
+            if (countEl) countEl.textContent = String(tasks.length);
+
+            if (!tasks.length) {
+                listEl.innerHTML = '<li class="employee-task-empty">暂无今日任务，点击「今日任务」添加</li>';
+                closeEmployeeTaskDetail();
+                return;
+            }
+
+            listEl.innerHTML = tasks.map((task, index) => `
+                <li class="tip-item${selectedEmployeeTaskId === task.id ? ' is-active' : ''}" data-task-id="${escapeHtmlAttr(task.id)}">
+                    <span class="tip-number">${index + 1}</span>
+                    <p class="tip-content tip-content-title">${escapeHtmlText(task.title)}</p>
+                    <div class="employee-task-item-actions">
+                        <button type="button" class="employee-task-send-btn" data-task-id="${escapeHtmlAttr(task.id)}" aria-label="发送到对话" title="发送到对话">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                        <button type="button" class="employee-task-delete-btn" data-task-id="${escapeHtmlAttr(task.id)}">删除</button>
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        function formatEmployeeTaskDateTime(task) {
+            const date = task.date || '';
+            const time = (task.time || '').slice(0, 5);
+            return `${date} ${time}`.trim();
+        }
+
+        function openEmployeeTaskDetail(taskId) {
+            const tasks = getEmployeeDailyTasks() || [];
+            const task = tasks.find(item => item.id === taskId);
+            if (!task) return;
+
+            selectedEmployeeTaskId = taskId;
+            const drawer = document.getElementById('employee-task-detail-drawer');
+            if (!drawer) return;
+
+            document.getElementById('employee-task-detail-title').textContent = task.title;
+            document.getElementById('employee-task-detail-summary').textContent = task.summary || '暂无摘要';
+            document.getElementById('employee-task-detail-content').textContent = task.content || '暂无事项内容';
+            document.getElementById('employee-task-detail-source').textContent = `来源：${task.source || '员工工作台'}`;
+            document.getElementById('employee-task-detail-time').textContent = `创建时间：${formatEmployeeTaskDateTime(task)}`;
+
+            drawer.hidden = false;
+            document.body.style.overflow = 'hidden';
+            renderEmployeeDailyTasks();
+        }
+
+        function closeEmployeeTaskDetail() {
+            selectedEmployeeTaskId = null;
+            const drawer = document.getElementById('employee-task-detail-drawer');
+            if (drawer) drawer.hidden = true;
+            document.body.style.overflow = '';
+            renderEmployeeDailyTasks();
+        }
+
+        function openEmployeeTaskDeleteModal(taskId) {
+            pendingDeleteEmployeeTaskId = taskId;
+            const modal = document.getElementById('employee-task-delete-modal');
+            if (modal) modal.hidden = false;
+        }
+
+        function closeEmployeeTaskDeleteModal() {
+            pendingDeleteEmployeeTaskId = null;
+            const modal = document.getElementById('employee-task-delete-modal');
+            if (modal) modal.hidden = true;
+        }
+
+        function confirmDeleteEmployeeTask() {
+            if (!pendingDeleteEmployeeTaskId) return;
+            const tasks = (getEmployeeDailyTasks() || []).filter(item => item.id !== pendingDeleteEmployeeTaskId);
+            saveEmployeeDailyTasks(tasks);
+            if (selectedEmployeeTaskId === pendingDeleteEmployeeTaskId) {
+                closeEmployeeTaskDetail();
+            }
+            closeEmployeeTaskDeleteModal();
+            renderEmployeeDailyTasks();
+        }
+
+        function ensureEmployeeChatMode(panel) {
+            const state = getPanelState(panel);
+            if (state.chatModeActive) return state.currentCardIndex ?? 0;
+
+            state.chatModeActive = true;
+            const assistantIndex = state.currentCardIndex ?? 0;
+            const carousel = getPanelEl('ai-carousel-view', panel);
+            const chatView = getPanelEl('ai-chat-view', panel);
+            const miniAvatars = getPanelEl('ai-mini-avatars', panel);
+            const workbench = panel.querySelector('.ai-workbench-section');
+            const inputSection = panel.querySelector('.input-section');
+
+            if (carousel) carousel.style.display = 'none';
+            if (chatView) chatView.style.display = 'block';
+            if (miniAvatars) miniAvatars.style.display = 'flex';
+            if (workbench) workbench.classList.add('chat-mode');
+            if (inputSection) inputSection.classList.add('chat-mode');
+
+            collapseTopSections(panel);
+            initMiniAvatars(panel);
+            updateMiniAvatarActive(assistantIndex, panel);
+            syncEmployeeChatModeLayout();
+            return assistantIndex;
+        }
+
+        function getTaskAssistantReply(task, index) {
+            const assistant = aiAssistants[index] || aiAssistants[0];
+            return `您好！收到您的任务「${task.title}」。\n\n我是${assistant.name}，可协助您：\n• 梳理任务背景与关键节点\n• 生成执行建议与协作清单\n• 跟进任务进展并同步相关事项\n\n请告诉我您希望从哪一步开始？`;
+        }
+
+        function sendEmployeeTaskToChat(taskId) {
+            const tasks = getEmployeeDailyTasks() || [];
+            const task = tasks.find(item => item.id === taskId);
+            if (!task) return;
+
+            const panel = document.getElementById('workbench-panel-employee');
+            if (!panel) return;
+
+            const assistantIndex = ensureEmployeeChatMode(panel);
+            appendChatMessage(task.title, 'user', panel);
+            setTimeout(() => {
+                appendChatMessage(getTaskAssistantReply(task, getPanelState(panel).currentCardIndex ?? assistantIndex), 'assistant', panel);
+            }, 400);
+
+            const workTipsSection = panel.querySelector('#work-tips-section');
+            const workTipsToggle = panel.querySelector('#work-tips-toggle');
+            if (workTipsSection) {
+                workTipsSection.classList.add('collapsed');
+                if (workTipsToggle) workTipsToggle.textContent = '展开';
+            }
+            syncEmployeeChatModeLayout();
+        }
+
+        function updateEmployeeTaskCharCount(inputId, countId, max) {
+            const input = document.getElementById(inputId);
+            const counter = document.getElementById(countId);
+            if (!input || !counter) return;
+            counter.textContent = `${input.value.length}/${max}`;
+        }
+
+        function resetEmployeeTaskFormCounters() {
+            ['log-title', 'log-summary', 'log-content'].forEach((id) => {
+                const el = document.getElementById(id);
+                if (el) el.dispatchEvent(new Event('input'));
+            });
+        }
+
         function openWorkLog() {
             const workLogPage = document.getElementById('work-log-page');
             const now = new Date();
-            
-            // 设置默认时间为当前时间
+
             document.getElementById('log-date').value = now.toISOString().split('T')[0];
             document.getElementById('log-time').value = now.toTimeString().slice(0, 5);
-            
-            // 清空表单
+            document.getElementById('log-title').value = '';
+            document.getElementById('log-summary').value = '';
             document.getElementById('log-content').value = '';
+            resetEmployeeTaskFormCounters();
             document.getElementById('import-preview').style.display = 'none';
-            
+
             workLogPage.style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
-        
-        // 关闭工作日志页面
+
         function closeWorkLog() {
             const workLogPage = document.getElementById('work-log-page');
             workLogPage.style.display = 'none';
             document.body.style.overflow = '';
-            
-            // 隐藏导入预览
             document.getElementById('import-preview').style.display = 'none';
         }
-        
-        // 导入文档
+
         function importDocument() {
-            document.getElementById('document-input').click();
+            document.getElementById('document-input')?.click();
         }
-        
-        // 导入语音
+
         function importVoice() {
-            document.getElementById('voice-input').click();
+            document.getElementById('voice-input')?.click();
         }
-        
-        // 处理文档导入
+
         function handleDocumentImport(input) {
             const file = input.files[0];
-            if (file) {
-                // 模拟文件读取和内容提取
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const content = e.target.result;
-                    showImportPreview('文档导入成功：\n文件名：' + file.name + '\n大小：' + (file.size / 1024).toFixed(2) + 'KB\n\n内容预览：\n' + content.substring(0, 200) + '...');
-                };
-                
-                // 根据文件类型选择读取方式
-                if (file.type === 'text/plain') {
-                    reader.readAsText(file);
-                } else {
-                    // 对于Word和PDF，模拟提取文本
-                    showImportPreview('📄 ' + file.name + '\n\n已识别到以下工作事项：\n\n1. 【客户拜访】与协和医院赵主任沟通两融费率调整事宜\n2. 【材料准备】海南农商行机构准入路演PPT制作\n3. 【方案讨论】ST沐邦共益债出资金额确定\n4. 【研究对接】中银金租新能源领域研究服务安排');
-                }
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                showImportPreview('文档导入成功：\n文件名：' + file.name + '\n大小：' + (file.size / 1024).toFixed(2) + 'KB\n\n内容预览：\n' + String(content).substring(0, 200) + '...');
+            };
+
+            if (file.type === 'text/plain') {
+                reader.readAsText(file);
+            } else {
+                showImportPreview('📄 ' + file.name + '\n\n已识别到以下工作事项：\n\n1. 【客户拜访】与协和医院赵主任沟通两融费率调整事宜\n2. 【材料准备】海南农商行机构准入路演PPT制作\n3. 【方案讨论】ST沐邦共益债出资金额确定\n4. 【研究对接】中银金租新能源领域研究服务安排');
             }
             input.value = '';
         }
-        
-        // 处理语音导入
+
         function handleVoiceImport(input) {
             const file = input.files[0];
-            if (file) {
-                // 模拟语音转文字过程
-                showImportPreview('🎙️ 语音文件：' + file.name + '\n时长：' + (file.size / 16000).toFixed(1) + '秒\n\n🔄 正在转换为文字...\n\n✅ 转换完成！\n\n识别内容：\n"今天联系了晋商银行的黄亮副行长，讨论了机构准入的事项。他建议本周安排与金融市场部赵翔鹏总经理进行面谈，需要准备路演材料。另外，ST沐邦的共益债方案需要在本周内确定出资金额。"');
-            }
+            if (!file) return;
+            showImportPreview('🎙️ 语音文件：' + file.name + '\n时长：' + (file.size / 16000).toFixed(1) + '秒\n\n🔄 正在转换为文字...\n\n✅ 转换完成！\n\n识别内容：\n"今天联系了晋商银行的黄亮副行长，讨论了机构准入的事项。他建议本周安排与金融市场部赵翔鹏总经理进行面谈，需要准备路演材料。另外，ST沐邦的共益债方案需要在本周内确定出资金额。"');
             input.value = '';
         }
-        
-        // 显示导入预览
+
         function showImportPreview(text) {
             document.getElementById('preview-text').textContent = text;
             document.getElementById('import-preview').style.display = 'block';
-            
-            // 滚动到预览区域
             document.getElementById('import-preview').scrollIntoView({ behavior: 'smooth' });
         }
-        
-        // 取消导入
+
         function cancelImport() {
             document.getElementById('import-preview').style.display = 'none';
         }
-        
-        // 确认导入
+
         function confirmImport() {
             const previewText = document.getElementById('preview-text').textContent;
-            
-            // 将导入内容填充到事项输入框
-            document.getElementById('log-content').value = previewText.replace(/.*识别内容：\n/, '').trim();
-            
-            // 隐藏预览
+            const imported = previewText.replace(/.*识别内容：\n/, '').replace(/^["']|["']$/g, '').trim();
+            if (imported) {
+                document.getElementById('log-content').value = imported;
+                updateEmployeeTaskCharCount('log-content', 'log-content-count', 2000);
+            }
             document.getElementById('import-preview').style.display = 'none';
-            
             alert('内容已导入到事项输入框，请编辑后保存！');
         }
-        
-        // 保存工作日志
+
         function saveWorkLog(event) {
             event.preventDefault();
-            
+
             const date = document.getElementById('log-date').value;
             const time = document.getElementById('log-time').value;
-            const content = document.getElementById('log-content').value;
-            
-            if (!date || !time || !content) {
-                alert('请填写完整的工作日志信息');
+            const title = document.getElementById('log-title').value.trim();
+            const summary = document.getElementById('log-summary').value.trim();
+            const content = document.getElementById('log-content').value.trim();
+
+            if (!date || !time || !title || !content) {
+                alert('请填写时间、标题和事项');
                 return;
             }
-            
-            // 创建工作日志对象
-            const workLog = {
-                id: Date.now(),
-                date: date,
-                time: time,
-                content: content,
-                timestamp: new Date(date + ' ' + time).getTime()
+
+            const task = {
+                id: `task-${Date.now()}`,
+                title,
+                summary,
+                content,
+                source: '员工工作台',
+                sourceType: 'workbench',
+                date,
+                time,
+                timestamp: new Date(`${date}T${time}`).getTime() || Date.now()
             };
-            
-            // 保存到本地存储
-            let workLogs = JSON.parse(localStorage.getItem('workLogs') || '[]');
-            workLogs.push(workLog);
-            workLogs.sort((a, b) => b.timestamp - a.timestamp);
-            localStorage.setItem('workLogs', JSON.stringify(workLogs));
-            
-            // 生成工作提示
-            generateWorkTips(workLogs);
-            
-            alert('工作日志保存成功！');
+
+            const tasks = getEmployeeDailyTasks() || [];
+            tasks.unshift(task);
+            tasks.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            saveEmployeeDailyTasks(tasks);
+            renderEmployeeDailyTasks();
+
+            alert('保存成功！');
             closeWorkLog();
         }
-        
-        // 生成工作提示（基于工作日志）
-        function generateWorkTips(workLogs) {
-            // 这里可以添加AI分析逻辑，根据工作日志生成工作提示
-            // 目前仅演示保存功能
-            console.log('已根据工作日志生成提示，共 ' + workLogs.length + ' 条记录');
+
+        function pushEmployeeDailyTaskFromAgent(taskData) {
+            const tasks = getEmployeeDailyTasks() || [];
+            tasks.unshift({
+                id: taskData.id || `task-${Date.now()}`,
+                title: taskData.title,
+                summary: taskData.summary || '',
+                content: taskData.content || taskData.title,
+                source: taskData.source || '智能体',
+                sourceType: 'agent',
+                date: taskData.date || new Date().toISOString().split('T')[0],
+                time: taskData.time || new Date().toTimeString().slice(0, 5),
+                timestamp: Date.now()
+            });
+            tasks.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            saveEmployeeDailyTasks(tasks);
+            renderEmployeeDailyTasks();
         }
         
+        function updateDigitalAvatarsScrollButtons() {
+            const wrap = document.querySelector('.digital-avatars-scroll-wrap');
+            const scrollContainer = wrap?.querySelector('.digital-avatars-scroll');
+            const btnLeft = wrap?.querySelector('.digital-avatars-scroll-left');
+            const btnRight = wrap?.querySelector('.digital-avatars-scroll-right');
+            if (!scrollContainer || !btnLeft || !btnRight) return;
+
+            const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+            const threshold = 4;
+            const canScrollLeft = scrollContainer.scrollLeft > threshold;
+            const canScrollRight = maxScroll > threshold && scrollContainer.scrollLeft < maxScroll - threshold;
+
+            btnLeft.hidden = !canScrollLeft;
+            btnRight.hidden = !canScrollRight;
+        }
+
+        function scrollDigitalAvatars(direction) {
+            const scrollContainer = document.querySelector('.digital-avatars-scroll-wrap .digital-avatars-scroll');
+            if (!scrollContainer) return;
+            const step = Math.max(180, Math.round(scrollContainer.clientWidth * 0.65));
+            scrollContainer.scrollBy({ left: direction * step, behavior: 'smooth' });
+        }
+
+        function initDigitalAvatarsScrollControls() {
+            const wrap = document.querySelector('.digital-avatars-scroll-wrap');
+            const scrollContainer = wrap?.querySelector('.digital-avatars-scroll');
+            const btnLeft = wrap?.querySelector('.digital-avatars-scroll-left');
+            const btnRight = wrap?.querySelector('.digital-avatars-scroll-right');
+            if (!wrap || !scrollContainer || !btnLeft || !btnRight) return;
+
+            if (wrap.dataset.scrollBound !== 'true') {
+                wrap.dataset.scrollBound = 'true';
+
+                btnLeft.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    scrollDigitalAvatars(-1);
+                });
+
+                btnRight.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    scrollDigitalAvatars(1);
+                });
+
+                scrollContainer.addEventListener('scroll', () => {
+                    updateDigitalAvatarsScrollButtons();
+                }, { passive: true });
+
+                window.addEventListener('resize', () => {
+                    updateDigitalAvatarsScrollButtons();
+                });
+
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+
+                scrollContainer.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    scrollContainer.classList.add('active');
+                    startX = e.pageX - scrollContainer.offsetLeft;
+                    scrollLeft = scrollContainer.scrollLeft;
+                });
+
+                scrollContainer.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    scrollContainer.classList.remove('active');
+                });
+
+                scrollContainer.addEventListener('mouseup', () => {
+                    isDown = false;
+                    scrollContainer.classList.remove('active');
+                    updateDigitalAvatarsScrollButtons();
+                });
+
+                scrollContainer.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - scrollContainer.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    scrollContainer.scrollLeft = scrollLeft - walk;
+                });
+
+                let touchStartX;
+                let touchScrollLeft;
+
+                scrollContainer.addEventListener('touchstart', (e) => {
+                    touchStartX = e.touches[0].pageX - scrollContainer.offsetLeft;
+                    touchScrollLeft = scrollContainer.scrollLeft;
+                }, { passive: true });
+
+                scrollContainer.addEventListener('touchmove', (e) => {
+                    const x = e.touches[0].pageX - scrollContainer.offsetLeft;
+                    const walk = (x - touchStartX) * 2;
+                    scrollContainer.scrollLeft = touchScrollLeft - walk;
+                }, { passive: true });
+
+                scrollContainer.addEventListener('touchend', () => {
+                    updateDigitalAvatarsScrollButtons();
+                }, { passive: true });
+            }
+
+            updateDigitalAvatarsScrollButtons();
+            requestAnimationFrame(updateDigitalAvatarsScrollButtons);
+        }
+
         // 页面加载时初始化
         document.addEventListener('DOMContentLoaded', function() {
             showLoginPage();
+            initDigitalAvatarsScrollControls();
         });
-
-        // 数字人头像区域拖拽滑动功能
-        (function() {
-            const scrollContainer = document.querySelector('.digital-avatars-scroll');
-            if (!scrollContainer) return;
-
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-
-            // 鼠标按下
-            scrollContainer.addEventListener('mousedown', (e) => {
-                isDown = true;
-                scrollContainer.classList.add('active');
-                startX = e.pageX - scrollContainer.offsetLeft;
-                scrollLeft = scrollContainer.scrollLeft;
-            });
-
-            // 鼠标离开
-            scrollContainer.addEventListener('mouseleave', () => {
-                isDown = false;
-                scrollContainer.classList.remove('active');
-            });
-
-            // 鼠标抬起
-            scrollContainer.addEventListener('mouseup', () => {
-                isDown = false;
-                scrollContainer.classList.remove('active');
-            });
-
-            // 鼠标移动
-            scrollContainer.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - scrollContainer.offsetLeft;
-                const walk = (x - startX) * 2; // 滑动速度倍数
-                scrollContainer.scrollLeft = scrollLeft - walk;
-            });
-
-            // 触摸设备支持
-            let touchStartX;
-            let touchScrollLeft;
-
-            scrollContainer.addEventListener('touchstart', (e) => {
-                touchStartX = e.touches[0].pageX - scrollContainer.offsetLeft;
-                touchScrollLeft = scrollContainer.scrollLeft;
-            }, { passive: true });
-
-            scrollContainer.addEventListener('touchmove', (e) => {
-                const x = e.touches[0].pageX - scrollContainer.offsetLeft;
-                const walk = (x - touchStartX) * 2;
-                scrollContainer.scrollLeft = touchScrollLeft - walk;
-            }, { passive: true });
-        })();
     </script>
 </body>
 </html>
