@@ -12,7 +12,7 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3003;
+const PORT = Number(process.env.PORT) || 3003;
 
 // 启用CORS，允许前端访问
 app.use(cors({
