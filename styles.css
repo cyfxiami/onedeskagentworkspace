@@ -2155,17 +2155,28 @@ body.support-tab-active .top-nav-avatars-host.is-support-mode .support-category-
 }
 
 .employee-task-delete-btn {
+    width: 28px;
+    height: 28px;
     border: none;
+    border-radius: 50%;
     background: transparent;
-    color: #e85d4c;
-    font-size: 12px;
+    color: #8f959e;
     cursor: pointer;
-    padding: 4px 2px;
-    transition: opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: color 0.2s, background 0.2s;
+}
+
+.employee-task-delete-btn svg {
+    width: 14px;
+    height: 14px;
 }
 
 .employee-task-delete-btn:hover {
-    opacity: 0.75;
+    color: #5a6a85;
+    background: rgba(0, 0, 0, 0.04);
 }
 
 .employee-task-empty {
@@ -2594,12 +2605,12 @@ body.support-tab-active .top-nav-avatars-host.is-support-mode .support-category-
     padding: 15px;
 }
 
-/* 业务挖掘助手页面 - 居中显示 */
+/* 业务分析助手页面 - 居中显示 */
 #tanma-page .detail-page-container {
     margin: auto;
 }
 
-/* 业务挖掘模型页面 - 右移150px，上移30px */
+/* 业务分析模型页面 - 右移150px，上移30px */
 #tanma-model-page .detail-page-container {
     margin-left: 150px;
     margin-top: 130px;
@@ -4270,7 +4281,18 @@ body.employee-chat-mode .workbench-panel[data-panel="employee"] .ai-workbench-se
     margin-bottom: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 12px;
+    padding-top: 4px;
+    padding-bottom: 180px;
+}
+
+body.employee-chat-mode .workbench-panel[data-panel="employee"] .ai-chat-messages {
+    padding-top: 4px;
+}
+
+body.employee-chat-mode .workbench-panel[data-panel="employee"] .work-tips-section.collapsed,
+body.employee-chat-mode .workbench-panel[data-panel="employee"] .performance-section.collapsed {
+    margin-bottom: 10px;
+    padding: 12px 20px;
 }
 
 body.employee-chat-mode .workbench-panel[data-panel="employee"] .input-section.chat-mode {
@@ -4533,6 +4555,228 @@ body.employee-chat-mode .workbench-panel[data-panel="employee"] .input-section.c
 .solution-btn-cancel:hover,
 .solution-btn-confirm:hover {
     opacity: 0.85;
+}
+
+/* 投行业务模型引导卡片 */
+.ib-guide-card {
+    margin-top: 12px;
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.ib-guide-header {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.ib-guide-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.ib-guide-group-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+    margin: 10px 0 6px;
+}
+
+.ib-guide-group-label:first-of-type {
+    margin-top: 0;
+}
+
+.ib-guide-option-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.ib-guide-option-row .ib-guide-option {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    margin-bottom: 0;
+}
+
+.ib-guide-option-row--auto .ib-guide-option {
+    flex: 1 1 calc(50% - 4px);
+    min-width: 120px;
+}
+
+.ib-guide-option {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: border-color 0.2s, background 0.2s;
+    box-sizing: border-box;
+}
+
+.ib-guide-option:hover {
+    border-color: var(--primary-color);
+    background: #FFFBF5;
+}
+
+.ib-guide-option strong {
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.ib-guide-option span {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.ib-guide-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.employee-prompt-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.employee-prompt-chip {
+    padding: 10px 14px;
+    background: #f5f6f8;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 13px;
+    color: var(--text-primary);
+    cursor: pointer;
+    text-align: left;
+    line-height: 1.5;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.employee-prompt-chip:hover {
+    background: #eef2ff;
+    border-color: #c7d2fe;
+}
+
+.ib-guide-result-card {
+    margin-top: 4px;
+}
+
+.ib-guide-result-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.ib-guide-result-meta {
+    background: #f8f9fb;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+}
+
+.ib-guide-result-row {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.ib-guide-result-row span {
+    color: var(--text-light);
+    min-width: 48px;
+}
+
+.ib-guide-result-row strong {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.ib-guide-result-list {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.ib-guide-feedback {
+    margin-top: 14px;
+    padding-top: 12px;
+    padding-bottom: 4px;
+    border-top: 1px solid var(--border-color);
+}
+
+.ib-guide-feedback-label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+
+.ib-guide-feedback-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    position: relative;
+    z-index: 2;
+}
+
+.ib-guide-feedback-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: #fff;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.ib-guide-feedback-btn:hover {
+    background: #f5f6f8;
+    border-color: #c5cad3;
+}
+
+.ib-guide-feedback-btn--primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    color: #fff;
+}
+
+.ib-guide-feedback-btn--primary:hover {
+    background: linear-gradient(135deg, #5a6fd6 0%, #6a4294 100%);
+    border-color: #5a6fd6;
+    color: #fff;
+    opacity: 1;
+}
+
+.ib-guide-feedback-actions--single {
+    justify-content: flex-end;
+}
+
+.ib-guide-feedback-actions--single .ib-guide-feedback-btn--primary {
+    min-width: 96px;
 }
 
 /* 小头像栏（输入框左上方） */
@@ -5611,12 +5855,12 @@ body.support-tab-active .workbench-panel[data-panel="support"] .input-section {
         margin: auto;
     }
 
-    /* 业务挖掘助手页面移动端适配 */
+    /* 业务分析助手页面移动端适配 */
     #tanma-page .detail-page-container {
         margin: auto;
     }
 
-    /* 业务挖掘模型页面移动端适配 */
+    /* 业务分析模型页面移动端适配 */
     #tanma-model-page .detail-page-container {
         margin-left: 0;
         margin-top: 0;

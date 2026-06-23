@@ -8,8 +8,8 @@ const path = require('path');
 const root = path.resolve(__dirname, '..');
 const outDir = path.join(root, 'build');
 
-const files = ['index.html', 'styles.css', 'demo-changelog.html'];
-const dirs = ['images'];
+const files = ['index.html', 'styles.css', 'demo-changelog.html', '投行业务模型清单文件-v5.2.html'];
+const dirs = ['images', 'scripts'];
 
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });

@@ -53,7 +53,7 @@
                                 <label class="login-role-option">
                                     <input type="radio" name="workbench-role" value="employee" class="login-role-input" checked>
                                     <span class="login-role-card">
-                                        <span class="login-role-name">业务团队</span>
+                                        <span class="login-role-name">员工</span>
                                     </span>
                                 </label>
                                 <label class="login-role-option">
@@ -283,15 +283,15 @@
                     <div class="ai-card-fan-inner">
                         <div class="ai-card-fan-avatar canmou">🧠</div>
                         <div class="ai-card-fan-name">客户分析助手</div>
-                        <div class="ai-card-fan-desc">全面分析看本质</div>
+                        <div class="ai-card-fan-desc">多维分析看客户</div>
                     </div>
                 </div>
-                <!-- 业务挖掘助手卡片 -->
+                <!-- 业务分析助手卡片 -->
                 <div class="ai-card-fan" data-index="1" onclick="bringToFront(this)">
                     <div class="ai-card-fan-inner">
                         <div class="ai-card-fan-avatar tanma">🐎</div>
-                        <div class="ai-card-fan-name">业务挖掘助手</div>
-                        <div class="ai-card-fan-desc">业务挖掘找客户</div>
+                        <div class="ai-card-fan-name">业务分析助手</div>
+                        <div class="ai-card-fan-desc">业务分析找客户</div>
                     </div>
                 </div>
                 <!-- 方案生成助手卡片 -->
@@ -370,10 +370,10 @@
                     <span class="back-icon">‹</span>
                     <span>返回</span>
                 </button>
-                <h3>🐎 业务挖掘助手 - 潜在客户与业务线索</h3>
+                <h3>🐎 业务分析助手 - 潜在客户与业务线索</h3>
                 <button class="model-btn" onclick="openTanmaModel()">
                     <span class="model-icon">🎯</span>
-                    <span>业务挖掘模型</span>
+                    <span>业务分析模型</span>
                 </button>
             </div>
             <div class="detail-page-content tanma-content">
@@ -467,7 +467,7 @@
                     <span class="back-icon">‹</span>
                     <span>返回</span>
                 </button>
-                <h3>🎯 业务挖掘模型</h3>
+                <h3>🎯 业务分析模型</h3>
                 <div class="header-spacer"></div>
             </div>
             <div class="detail-page-content tanma-model-content">
@@ -745,11 +745,11 @@
                     <div class="news-section">
                         <h4 class="news-category">🏭 行业动态</h4>
                         <div class="news-card" data-news-id="enterprise-1">
-                            <div class="news-title">新能源汽车产业链景气度持续上行</div>
+                            <div class="news-title">新能源汽车产业链销量同比增幅扩大</div>
                             <div class="news-summary">2月新能源汽车产销分别完成54.3万辆和52.5万辆，同比分别增长48.8%和49.6%。上游锂电池、中游零部件企业订单饱满。</div>
                             <div class="news-meta">
                                 <span class="news-time">2026-03-18 16:30</span>
-                                <span class="news-source">行业研究</span>
+                                <span class="news-source">公开数据</span>
                             </div>
                         </div>
                         <div class="news-card" data-news-id="enterprise-2">
@@ -899,7 +899,7 @@
                     <span class="back-icon">‹</span>
                     <span>返回</span>
                 </button>
-                <h3>🧠 客户分析助手 - 全面分析看本质</h3>
+                <h3>🧠 客户分析助手 - 多维分析看客户</h3>
                 <div class="header-spacer"></div>
             </div>
             <div class="detail-page-content canmou-content">
@@ -907,12 +907,12 @@
                 <div class="analysis-input-section">
                     <div class="analysis-prompt">
                         <span class="prompt-icon">💬</span>
-                        <span class="prompt-text">请告诉我要分析的内容</span>
+                        <span class="prompt-text">请输入客户名称或分析维度</span>
                     </div>
                     
                     <!-- 输入框 -->
                     <div class="analysis-input-box">
-                        <textarea id="analysis-input" class="analysis-textarea" placeholder="点击输入框输入分析内容..." rows="4" onclick="fillAnalysisExample()"></textarea>
+                        <textarea id="analysis-input" class="analysis-textarea" placeholder="例如：分析某企业客户的合作历史、资金规模与潜在需求..." rows="4" onclick="fillAnalysisExample()"></textarea>
                         <div class="analysis-input-actions">
                             <button class="voice-input-btn" onclick="startVoiceInput()">
                                 <span class="voice-icon">🎙️</span>
@@ -927,7 +927,7 @@
                     <!-- 示例提示 -->
                     <div class="analysis-example">
                         <span class="example-label">💡 提示：</span>
-                        <span class="example-text">输入分析需求或上传文档，AI参谋将为您深度解析</span>
+                        <span class="example-text">输入客户名称或分析需求，生成多维客户分析</span>
                     </div>
                 </div>
 
@@ -1165,27 +1165,7 @@
                 <div class="header-spacer"></div>
             </div>
             <div class="detail-page-content work-log-content">
-                <!-- 导入功能区域 -->
-                <div class="import-section">
-                    <h4 class="section-subtitle">📁 导入方式</h4>
-                    <div class="import-buttons">
-                        <button type="button" class="import-btn document-btn" onclick="importDocument()">
-                            <span class="import-icon">📄</span>
-                            <span class="import-label">导入文档</span>
-                            <span class="import-hint">支持 Word、PDF、TXT</span>
-                        </button>
-                        <button type="button" class="import-btn voice-btn" onclick="importVoice()">
-                            <span class="import-icon">🎙️</span>
-                            <span class="import-label">语音导入</span>
-                            <span class="import-hint">自动转文字</span>
-                        </button>
-                    </div>
-                    <input type="file" id="document-input" accept=".doc,.docx,.pdf,.txt" style="display: none;" onchange="handleDocumentImport(this)">
-                    <input type="file" id="voice-input" accept="audio/*" style="display: none;" onchange="handleVoiceImport(this)">
-                </div>
-
                 <div class="log-input-section">
-                    <h4 class="section-subtitle">✏️ 手动记录</h4>
                     <form id="work-log-form" onsubmit="saveWorkLog(event)">
                         <div class="form-group">
                             <label class="form-label">时间</label>
@@ -1217,19 +1197,9 @@
                         </div>
                         <div class="form-actions work-log-form-actions">
                             <button type="button" class="secondary-btn" onclick="closeWorkLog()">取消</button>
-                            <button type="submit" class="primary-btn">保存日志</button>
+                            <button type="submit" class="primary-btn">保存任务</button>
                         </div>
                     </form>
-                </div>
-
-                <!-- 导入内容预览区域 -->
-                <div id="import-preview" class="import-preview" style="display: none;">
-                    <h4 class="section-subtitle">📋 导入内容预览</h4>
-                    <div class="preview-content" id="preview-text"></div>
-                    <div class="preview-actions">
-                        <button type="button" class="secondary-btn" onclick="cancelImport()">取消</button>
-                        <button type="button" class="primary-btn" onclick="confirmImport()">确认导入</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1462,6 +1432,8 @@
         </div>
     </div>
 
+    <script src="scripts/ib-model-knowledge.js"></script>
+    <script src="scripts/employee-model-guide.js"></script>
     <script>
         // 登录处理函数
         function handleLogin() {
@@ -1709,7 +1681,7 @@
         const workbenchPanelState = {
             support: { chatModeActive: true, currentCardIndex: 0, miniAvatarsInitialized: false, currentSupportAgent: null, currentSupportInputAgent: 'daily-task', currentTaskAgentId: null, currentTask: null, currentTodoStep: null, supportWelcomeShown: false },
             org: { chatModeActive: true, currentCardIndex: 0, miniAvatarsInitialized: false, currentOrgAgent: null },
-            employee: { chatModeActive: false, currentCardIndex: 0, miniAvatarsInitialized: false }
+            employee: { chatModeActive: false, currentCardIndex: 0, miniAvatarsInitialized: false, employeeModelGuide: null }
         };
 
         const supportCategoryAgentTasks = {
@@ -1724,10 +1696,10 @@
                     },
                     {
                         id: 'ib-2',
-                        title: '高净值客户张三拟参与"演示一号"股权投资项目',
-                        description: '高净值客户张三拟参与"演示一号"股权投资项目，需协助完成合格投资者认定。',
-                        completedSteps: ['客户表达参与意向', '初步核验资产与风险测评', '收集合格投资者认定材料清单'],
-                        nextSteps: ['需协助完成合格投资者认定']
+                        title: '客户张三（账户资产待核验）拟参与"演示一号"股权投资项目',
+                        description: '客户张三（账户资产待核验）拟参与"演示一号"股权投资项目，需协助完成投资者准入认定（金融资产≥300万元）。',
+                        completedSteps: ['客户表达参与意向', '初步核验资产与风险测评', '收集投资者准入材料清单（资产证明、收入证明）'],
+                        nextSteps: ['需协助完成投资者准入认定（金融资产≥300万元）']
                     }
                 ]
             },
@@ -1746,9 +1718,9 @@
                 retail: [
                     {
                         id: 'retail-1',
-                        title: '团队定投任务缺口8户且客户周八适当性异常待复核',
-                        description: '团队定投任务缺口8户且客户周八适当性异常待复核，需督导客户经理并协调资源。',
-                        completedSteps: ['定投任务完成率已统计', '适当性异常客户已标记', '客户经理名单已梳理'],
+                        title: '团队定投缺口8户且客户周八（C1持有R4）待复核',
+                        description: '团队定投缺口8户；客户周八触发规则「C1不得持有R4产品」，待督导客户经理复核。',
+                        completedSteps: ['定投任务完成率已统计（22/30户）', 'C1持有R4客户已标记', '客户经理名单已梳理'],
                         nextSteps: ['需督导客户经理并协调资源']
                     }
                 ]
@@ -1782,8 +1754,8 @@
                     },
                     {
                         id: 'retail-2',
-                        title: '高净值客户资产配置',
-                        description: '为高净值客户制定季度资产配置建议，需结合市场环境与风险偏好。',
+                        title: '账户资产500万以上客户资产配置',
+                        description: '为账户资产500万以上的客户制定季度资产配置建议，需结合持仓结构与风险测评结果。',
                         completedSteps: ['更新客户风险测评结果', '梳理当前持仓结构', '完成大类资产研判'],
                         nextSteps: ['出具资产配置建议书', '预约客户面谈讲解', '跟进调仓执行方案']
                     },
@@ -1806,13 +1778,13 @@
                         title: '中银金租新能源研究服务',
                         description: '中银金租有新能源方面的研究服务需求，需协调研究所研究员路演。',
                         completedSteps: ['确认客户研究需求范围', '联系新能源领域首席研究员', '初步拟定路演提纲'],
-                        nextSteps: ['本周安排研究员路演', '准备新能源行业深度材料', '路演后跟进客户反馈']
+                        nextSteps: ['本周安排研究员路演', '准备新能源行业对比分析材料', '路演后跟进客户反馈']
                     },
                     {
                         id: 'invest-2',
                         title: '某行业Research Memo',
                         description: '撰写半导体行业Research Memo，覆盖投资逻辑与核心标的筛选。',
-                        completedSteps: ['完成行业产业链梳理', '收集核心公司财务数据', '整理政策与景气度指标'],
+                        completedSteps: ['完成行业产业链梳理', '收集核心公司财务数据', '整理政策文件与可验证行业指标'],
                         nextSteps: ['撰写投资逻辑与风险提示', '完成核心标的对比表', '提交内部评审']
                     },
                     {
@@ -1868,7 +1840,7 @@
                         id: 'institution-2',
                         title: '机构客户年度服务计划',
                         description: '为重点机构客户制定年度服务计划，覆盖研究、交易、产品等多维度。',
-                        completedSteps: ['完成客户画像更新', '梳理年度合作回顾', '收集各部门服务资源'],
+                        completedSteps: ['完成客户分析记录更新', '梳理年度合作回顾', '收集各部门服务资源'],
                         nextSteps: ['撰写年度服务计划书', '预约客户高层拜访', '确定季度服务里程碑']
                     },
                     {
@@ -1906,8 +1878,8 @@
                     },
                     {
                         id: 'verify-2',
-                        title: '投资研究结论复核',
-                        description: '复核新能源行业深度报告中的关键假设与结论逻辑。',
+                        title: '研究结论关键假设复核',
+                        description: '复核新能源行业对比分析报告中的关键假设与结论逻辑。',
                         completedSteps: ['提取报告核心结论与假设', '核对数据来源与计算过程', '标注待确认假设项'],
                         nextSteps: ['与研究员沟通确认', '更新复核意见', '归档复核工作底稿']
                     },
@@ -1953,7 +1925,7 @@
                 prompts: [
                     '帮我梳理IPO项目尽调清单',
                     '生成招股书核心章节写作框架',
-                    '分析同行业上市公司估值对比',
+                    '对比同行业上市公司资产负债与现金流',
                     '整理投行业务合规审查要点',
                     '撰写IPO路演PPT核心内容提纲',
                     '梳理定增项目关键审批流程',
@@ -1967,11 +1939,11 @@
                 image: 'images/Avatar2.png',
                 prompts: [
                     '设计一款固收+资管产品方案',
-                    '分析客户风险偏好与产品匹配',
+                    '分析客户风险测评结果与产品匹配',
                     '整理资管合同关键条款要点',
                     '生成产品说明书核心内容框架',
                     '对比同类资管产品收益与风险特征',
-                    '梳理私募产品合格投资者认定流程',
+                    '梳理私募产品投资者准入认定流程（金融资产≥300万元）',
                     '撰写资管产品路演材料提纲'
                 ],
                 getReply: (msg) => `您好，我是资管业务助理。针对「${msg}」，我可以协助您完成产品设计、风险匹配与合规要点梳理。请告诉我目标客户类型与产品方向。`
@@ -1981,7 +1953,7 @@
                 name: '零售业务助理',
                 image: 'images/Avatar3.png',
                 prompts: [
-                    '为高净值客户制定资产配置建议',
+                    '为账户资产500万以上的客户制定资产配置建议',
                     '分析两融业务客户需求与费率策略',
                     '生成客户拜访谈话要点',
                     '整理零售客户投诉处理流程',
@@ -1989,7 +1961,7 @@
                     '撰写理财产品营销话术要点',
                     '分析近期活跃客户交易行为特征'
                 ],
-                getReply: (msg) => `您好，我是零售业务助理。关于「${msg}」，我将结合客户画像与业务规则为您提供建议。请补充客户基本情况。`
+                getReply: (msg) => `您好，我是零售业务助理。关于「${msg}」，我将结合客户分析结果与业务规则为您提供建议。请补充客户基本情况。`
             },
             {
                 id: 'invest',
@@ -2000,11 +1972,11 @@
                     '生成Research Memo研究框架',
                     '对比同赛道竞品财务指标',
                     '梳理投资组合风险评估要点',
-                    '撰写行业深度报告核心章节提纲',
+                    '撰写行业对比分析框架提纲',
                     '分析宏观政策对某板块的影响',
                     '整理投研会议纪要关键结论'
                 ],
-                getReply: (msg) => `您好，我是投资业务助理。针对「${msg}」，我将从行业研究、标的筛选、风险评估等方面协助您。请提供具体行业或标的名称。`
+                getReply: (msg) => `您好，我是投资业务助理。针对「${msg}」，我将从对比对象、比较维度、资产负债与现金流等方面协助您。请提供具体行业或标的名称。`
             },
             {
                 id: 'sales',
@@ -2028,7 +2000,7 @@
                 prompts: [
                     '准备机构客户准入路演材料',
                     '梳理机构业务合作方案框架',
-                    '分析机构客户画像与业务机会',
+                    '分析机构客户分层与业务机会',
                     '生成机构拜访会议纪要模板',
                     '撰写机构客户年度服务计划提纲',
                     '整理跨境业务合作合规要点',
@@ -2041,15 +2013,15 @@
                 name: '研究业务助理',
                 image: 'images/Avatar8.png',
                 prompts: [
-                    '撰写行业深度研究报告框架',
+                    '撰写行业对比分析框架（对比对象+比较维度）',
                     '整理宏观策略周报核心观点',
-                    '分析某上市公司盈利预测与估值',
+                    '分析某上市公司资产负债、现金流与资产配置',
                     '梳理研究所路演材料要点',
                     '对比同行业竞品财务与经营指标',
                     '生成Research Memo研究提纲',
                     '汇总最新政策对行业影响分析'
                 ],
-                getReply: (msg) => `您好，我是研究业务助理。关于「${msg}」，我将从行业研究、公司分析、策略观点等方面协助您。请提供具体研究主题或标的。`
+                getReply: (msg) => `您好，我是研究业务助理。关于「${msg}」，我将从资产负债、现金流、资产配置及对比维度等方面协助您。请提供具体研究主题或标的。`
             },
             {
                 id: 'credit',
@@ -2072,11 +2044,11 @@
                 image: 'images/Avatar7.png',
                 prompts: [
                     '交叉验证财务数据一致性',
-                    '复核投资研究结论关键假设',
+                    '复核研究结论关键假设',
                     '核验合规要件完整性',
                     '比对多来源信息差异点',
                     '梳理尽调报告逻辑漏洞检查清单',
-                    '验证估值模型关键参数合理性',
+                    '验证定价模型关键参数与公开数据一致性',
                     '比对招股书与公开披露信息差异'
                 ],
                 getReply: (msg) => `您好，我是交叉验证助理。关于「${msg}」，我将从数据一致性、结论复核、合规核验等维度为您交叉验证。请提供需验证的材料或数据来源。`
@@ -2318,6 +2290,23 @@
             requestAnimationFrame(() => {
                 doScroll();
                 requestAnimationFrame(doScroll);
+            });
+        }
+
+        function scrollChatElementToTop(panel, element, padding = 12) {
+            const scrollEl = getWorkbenchChatScrollEl(panel);
+            if (!scrollEl || !element) return;
+
+            const align = () => {
+                const containerRect = scrollEl.getBoundingClientRect();
+                const elementRect = element.getBoundingClientRect();
+                scrollEl.scrollTop += elementRect.top - containerRect.top - padding;
+            };
+
+            align();
+            requestAnimationFrame(() => {
+                align();
+                requestAnimationFrame(align);
             });
         }
 
@@ -3713,14 +3702,14 @@
                 name: '客户分析助手',
                 emoji: '🧠',
                 avatarClass: 'canmou',
-                welcomeText: `您好！我是客户分析助手，很高兴为您服务。\n\n我可以帮您：\n• 📊 **公司分析** — 深度分析上市公司基本面、财务状况、估值水平\n• 📈 **股票分析** — 个股研究、行业对比、投资价值评估\n• 🔍 **投资研究** — 研报解读、市场动态、策略分析\n• 💰 **财务分析** — 财报解读、盈利能力、偿债能力评估\n\n请告诉我您想分析哪家公司的股票，或者有什么投资研究需求？`
+                welcomeText: `**客户分析助手**\n\n从资产、行为、交易、合作记录等维度分析客户价值与风险。\n\n输入：客户名称、客户类型或分析维度。`
             },
             {
                 index: 1,
-                name: '业务挖掘助手',
+                name: '业务分析助手',
                 emoji: '🐎',
                 avatarClass: 'tanma',
-                welcomeText: `您好！我是探马，您的商机挖掘助手。\n\n我可以帮您：\n• **查询潜在客户**：查看经纪/资管/投行业务的潜在客户线索\n• **管理挖掘规则**：配置和调整客户发掘模型规则\n\n请告诉我您需要哪项服务？`
+                welcomeText: `**业务分析助手**\n\n按业务分析模型（找目标）匹配业务类型与具体模型。`
             },
             {
                 index: 2,
@@ -3734,14 +3723,14 @@
                 name: '交叉验证助手',
                 emoji: '🔍',
                 avatarClass: 'jiaocha',
-                welcomeText: `您好！我是交叉验证助手，很高兴为您服务。\n\n我可以帮您：\n• **方案交叉验证**：多维度核验投行/资管/经纪方案合规性与可行性\n• **数据交叉比对**：比对客户信息、财务数据、市场数据的一致性\n• **结论复核**：对分析结论和研究报告进行独立复核验证\n• **风险提示**：识别方案与数据中的潜在矛盾与风险点\n\n请告诉我您需要交叉验证的内容是什么？`
+                welcomeText: `**交叉验证助手**\n\n按交叉验证模型（核异常）匹配业务与核验模型。`
             },
             {
                 index: 4,
                 name: '客户服务助手',
                 emoji: '👁️',
                 avatarClass: 'tianyan',
-                welcomeText: `您好！我是客户服务助手，请问您需要为哪种类型的客户提供服务？\n\n**个人客户 / 银行客户 / 企业客户**`
+                welcomeText: `**客户服务助手**\n\n按客户服务模块匹配买方分析、信披判断、临时公告生成模型。`
             }
         ];
 
@@ -3776,10 +3765,10 @@
         function getSolutionSelectHtml(blockId) {
             const radioName = `solution-type-${blockId}`;
             return `
-                <p>请选择您需要的方案类型，我将继续为您定制方案。</p>
+                <p><strong>方案生成助手</strong> · 选择方案类型</p>
                 <div class="solution-select-card">
                     <div class="solution-select-header">方案生成助手</div>
-                    <div class="solution-select-subtitle">请选择您需要的方案类型</div>
+                    <div class="solution-select-subtitle">选择方案类型，按方案设计模型继续</div>
                     <label class="solution-option">
                         <input type="radio" name="${radioName}" value="bankruptcy">
                         <div class="solution-option-content">
@@ -3930,21 +3919,18 @@
             if (!messagesEl) return;
 
             const blockId = `chat-block-${Date.now()}`;
+            if (EmployeeModelGuide.usesIbModelGuide(index)) {
+                EmployeeModelGuide.reset(p, index);
+            }
 
             const block = document.createElement('div');
             block.className = 'chat-conversation-block';
+            block.id = blockId;
             block.dataset.assistantIndex = index;
-
-            const userMsg = document.createElement('div');
-            userMsg.className = 'chat-row chat-row-user';
-            userMsg.innerHTML = `<div class="chat-bubble chat-bubble-user">${assistant.name}</div>`;
-            block.appendChild(userMsg);
 
             const aiMsg = document.createElement('div');
             aiMsg.className = 'chat-row chat-row-assistant';
-            const contentHtml = assistant.type === 'solution'
-                ? getSolutionSelectHtml(blockId)
-                : markdownToHtml(assistant.welcomeText);
+            const contentHtml = EmployeeModelGuide.getWelcomeHtml(blockId, index);
             aiMsg.innerHTML = `
                 ${buildEmployeeChatAvatarHtml(index)}
                 <div class="chat-bubble chat-bubble-assistant">${contentHtml}</div>
@@ -3952,7 +3938,10 @@
             block.appendChild(aiMsg);
 
             messagesEl.appendChild(block);
-            scrollWorkbenchChatToBottom(p);
+            const welcomeRow = block.querySelector('.chat-row-assistant');
+            if (welcomeRow) {
+                scrollChatElementToTop(p, welcomeRow.querySelector('.chat-bubble-assistant') || welcomeRow, 8);
+            }
         }
 
         function appendChatMessage(text, role, panel) {
@@ -3989,31 +3978,29 @@
             const lowerMsg = message.toLowerCase();
 
             if (index === 0) {
-                if (lowerMsg.includes('分析') || lowerMsg.includes('股票') || lowerMsg.includes('公司')) {
-                    return `好的，我将为您分析「${message}」。请稍候，正在调取相关研报与财务数据...\n\n您可以告诉我更具体的分析维度，例如：基本面分析、估值对比、行业地位等。`;
+                if (lowerMsg.includes('分析') || lowerMsg.includes('客户') || lowerMsg.includes('分层') || lowerMsg.includes('资产')) {
+                    return `**客户分析助手**\n\n任务：对「${message}」执行客户多维分析。\n\n补充：资产规模、交易行为、合作记录、风险测评结果等维度。`;
                 }
+                return `**客户分析助手**\n\n从资产、行为、交易、合作记录等维度分析客户价值与风险。\n\n输入：客户名称、客户类型或分析维度。`;
             }
             if (index === 1) {
-                if (lowerMsg.includes('客户') || lowerMsg.includes('线索') || lowerMsg.includes('挖掘')) {
-                    return `好的，正在为您查询「${message}」相关的潜在客户线索...\n\n如需查看完整线索列表，请告诉我具体的业务类型（经纪/资管/投行）。`;
-                }
+                return `**业务分析助手**\n\n任务：处理「${message}」。\n\n操作：选择业务类型，按业务分析模型继续。`;
+            }
+            if (index === 2) {
+                return `**方案生成助手**\n\n任务：处理「${message}」。\n\n操作：选择业务类型，按方案设计模型继续。`;
             }
             if (index === 3) {
-                if (lowerMsg.includes('验证') || lowerMsg.includes('复核') || lowerMsg.includes('比对')) {
-                    return `好的，我将启动交叉验证流程，对「${message}」进行多维度核验。\n\n请提供需要验证的方案文档或数据来源，我将为您出具验证报告。`;
-                }
+                return `**交叉验证助手**\n\n任务：对「${message}」执行交叉验证。\n\n补充：方案文档或数据来源。`;
             }
             if (index === 4) {
-                if (message.includes('个人') || message.includes('银行') || message.includes('企业')) {
-                    return `好的，已为您匹配「${message}」服务方案。请描述具体的服务需求，我将为您推荐合适的服务流程。`;
-                }
+                return `**客户服务助手**\n\n任务：处理「${message}」。\n\n操作：选择买方分析、信披判断或临时公告生成模型。`;
             }
 
-            return `收到您的需求：「${message}」。${assistant.name}正在为您处理，请稍候...`;
+            return `**${assistant.name}**\n\n任务：处理「${message}」。`;
         }
 
         function cancelSolutionSelect(blockId) {
-            appendChatMessage('已取消方案类型选择。如需重新选择，请告诉我。', 'assistant');
+            appendChatMessage('**方案生成助手**\n\n操作：方案类型选择已取消。', 'assistant');
         }
 
         function confirmSolutionSelect(blockId) {
@@ -4023,7 +4010,7 @@
                 return;
             }
             const labels = { bankruptcy: '破产重整', placement: '定增', bond: '债券', asset: '资管产品' };
-            appendChatMessage(`您选择了「${labels[selected.value]}」方案，我将为您定制方案，请提供相关项目信息。`, 'assistant');
+            appendChatMessage(`**方案生成助手**\n\n已选：${labels[selected.value]}。\n\n补充：项目背景与客户信息。`, 'assistant');
         }
 
         function bringToFront(clickedCard) {
@@ -4071,40 +4058,36 @@
         // AI助手关键词映射
         const aiAssistantKeywords = {
             junshi: {
-                // 军师 - 方案设计类
-                keywords: ['重整方案', '定增方案', '债券发行', '资管产品', '方案设计', '破产重整', 'st重整', 'st沐邦', '重整计划', '融资方案', '发行方案'],
-                name: '军师',
+                keywords: ['方案设计', '方案设计模型', '方案生成', '重整方案', '定增方案', '债券发行', '发行方案', '融资方案', '出方案', '发行规模', '发行价格'],
+                name: '方案生成助手',
                 action: () => {
                     enterChatMode(2);
                 }
             },
             tanma: {
-                // 探马 - 业务挖掘类
-                keywords: ['找客户', '客户挖掘', '业务线索', '潜在客户', '业务挖掘', '拓展客户', '客户获取', '挖掘客户'],
-                name: '探马',
+                keywords: ['业务分析', '业务分析模型', '找目标', '基本标准', '公司标准', '股东与实控人'],
+                name: '业务分析助手',
                 action: () => {
                     enterChatMode(1);
                 }
             },
             canmou: {
-                // 参谋 - 分析类
-                keywords: ['分析', '研报', '财务分析', '研究报告', '投资分析', '股票分析', '公司分析', '深度分析'],
-                name: '参谋',
+                keywords: ['客户分析', '客户需求', '客户价值', '客户关系', '客户风险', '潜在客户', '客户跟进', '客户分层', '企业客户', '个人客户', '交易行为', '合作记录', '资产规模'],
+                name: '客户分析助手',
                 action: () => {
                     enterChatMode(0);
                 }
             },
             tianyan: {
-                // 天眼 - 信息监控类
-                keywords: ['监控', '预警', '信息', '舆情', '跟踪', '实时信息', '市场信息', '客户服务', '个人客户', '银行客户', '企业客户'],
-                name: '天眼',
+                keywords: ['客户服务', '买方分析', '信披判断', '临时公告', '公告生成', '识信披', '写公告', '找买方'],
+                name: '客户服务助手',
                 action: () => {
                     enterChatMode(4);
                 }
             },
             jiaocha: {
-                keywords: ['交叉验证', '验证', '复核', '比对', '核验'],
-                name: '交叉验证',
+                keywords: ['交叉验证', '交叉验证模型', '核异常', '验证', '复核', '比对', '核验', '财务数据异常', '治理结构'],
+                name: '交叉验证助手',
                 action: () => {
                     enterChatMode(3);
                 }
@@ -4152,10 +4135,14 @@
             }
 
             if (getPanelState(panel).chatModeActive) {
-                appendChatMessage(message, 'user');
-                setTimeout(() => {
-                    appendChatMessage(getAssistantReply(message, getPanelState().currentCardIndex), 'assistant');
-                }, 400);
+                appendChatMessage(message, 'user', panel);
+                if (getPanelKey(panel) === 'employee') {
+                    EmployeeModelGuide.handleUserMessage(message, panel);
+                } else {
+                    setTimeout(() => {
+                        appendChatMessage(getAssistantReply(message, getPanelState(panel).currentCardIndex), 'assistant', panel);
+                    }, 400);
+                }
                 return;
             }
             
@@ -4166,9 +4153,28 @@
                 showRecognitionToast(matchedAssistant.name, message);
                 setTimeout(() => {
                     matchedAssistant.action();
+                    if (getPanelKey(panel) === 'employee' || !getPanelKey(panel)) {
+                        setTimeout(() => {
+                            EmployeeModelGuide.handleUserMessage(message, getActiveWorkbenchPanel());
+                        }, 300);
+                    }
                 }, 800);
             } else {
-                showGeneralHelp();
+                const assistantIndex = EmployeeModelGuide.matchAssistantFromMessage(message);
+                const matchedBiz = EmployeeModelGuide.matchBusinessFromMessage(message);
+                if (assistantIndex != null || matchedBiz) {
+                    const assistantNames = ['客户分析助手', '业务分析助手', '方案生成助手', '交叉验证助手', '客户服务助手'];
+                    const targetIndex = assistantIndex != null ? assistantIndex : 1;
+                    showRecognitionToast(assistantNames[targetIndex], message);
+                    setTimeout(() => {
+                        enterChatMode(targetIndex);
+                        setTimeout(() => {
+                            EmployeeModelGuide.handleUserMessage(message, getActiveWorkbenchPanel());
+                        }, 300);
+                    }, 800);
+                } else {
+                    showGeneralHelp();
+                }
             }
         }
         
@@ -4217,7 +4223,9 @@
             if (getPanelState(panel).chatModeActive) {
                 appendChatMessage(message, 'user');
                 setTimeout(() => {
-                    appendChatMessage(`已收到文件「${file.name}」，我将为您提取关键信息并协助处理。`, 'assistant');
+                    const idx = getPanelState(panel).currentCardIndex ?? 0;
+                    const name = getEmployeeAssistant(idx).name;
+                    appendChatMessage(`**${name}**\n\n文件：${file.name}\n\n操作：提取关键信息并继续处理。`, 'assistant');
                 }, 400);
                 return;
             }
@@ -4299,7 +4307,7 @@
                     <div class="toast-text">
                         <p class="toast-title">已识别您的需求</p>
                         <p class="toast-detail">"${message.substring(0, 30)}${message.length > 30 ? '...' : ''}"</p>
-                        <p class="toast-assistant">正在为您呼叫 <strong>${assistantName}</strong>...</p>
+                        <p class="toast-assistant">路由至 <strong>${assistantName}</strong></p>
                     </div>
                 </div>
             `;
@@ -4322,21 +4330,21 @@
         
         // 显示通用帮助
         function showGeneralHelp() {
-            const helpText = `💡 您可以这样问我：
+            const helpText = `💡 助手与模型清单对应关系：
 
-📋 军师（方案设计）：
-• "能出一个ST沐邦的重整方案吗？"
-• "帮我设计一个定增方案"
+🐎 业务分析助手 → 业务分析模型（找目标）
+📋 方案生成助手 → 方案设计模型（出方案）
+🔍 交叉验证助手 → 交叉验证模型（核异常）
+👁️ 客户服务助手 → 客户服务（买方分析 / 信披判断 / 临时公告生成）
 
-🐎 探马（客户挖掘）：
-• "帮我找一下潜在客户"
-• "挖掘一下业务线索"
+🧠 客户分析助手 → 客户多维分析（不走投行模型清单）
 
-🧠 参谋（分析研究）：
-• "分析一下声通科技的财务情况"
-• "出个研报"
-
-您可以输入具体需求，我会自动为您呼叫对应的AI助手！`;
+示例：
+• "分析某企业客户合作价值" → 客户分析助手
+• "定增业务分析" → 业务分析助手
+• "设计IPO发行方案" → 方案生成助手
+• "交叉验证财务异常" → 交叉验证助手
+• "生成临时公告" → 客户服务助手`;
             
             alert(helpText);
         }
@@ -4601,7 +4609,7 @@
         
         // 个人客户列表（用于发送资讯）
         const PERSONAL_CUSTOMER_LIST = [
-            { id: 'c1', name: '王斌', info: '高净值客户' },
+            { id: 'c1', name: '王斌', info: '账户资产分层A档' },
             { id: 'c2', name: '孙海燕', info: '优博科财务总监' },
             { id: 'c3', name: '高巍', info: 'VIP客户' },
             { id: 'c4', name: '张大为', info: '专业投资者' },
@@ -4767,7 +4775,7 @@
             { id: 'p1', name: '王斌', type: 'personal', info: '股票账户客户', phone: '13800138001' },
             { id: 'p2', name: '孙海燕', type: 'personal', info: '优博科公司财务总监', phone: '13932157387' },
             { id: 'p3', name: '赵宇', type: 'personal', info: '协和医院主任', phone: '13600136001' },
-            { id: 'p4', name: '李明', type: 'personal', info: '高净值客户', phone: '13500135001' },
+            { id: 'p4', name: '李明', type: 'personal', info: '账户资产分层A档', phone: '13500135001' },
             { id: 'p5', name: '张华', type: 'personal', info: 'VIP客户', phone: '13700137001' },
             { id: 'b1', name: '晋商银行', type: 'bank', info: '金融市场部', phone: '0351-5550101' },
             { id: 'b2', name: '海南农商行', type: 'bank', info: '黄亮副行长', phone: '0898-6655101' },
@@ -5657,7 +5665,7 @@
         function fillAnalysisExample() {
             const textarea = document.getElementById('analysis-input');
             if (!textarea.value.trim()) {
-                textarea.value = '请帮我对比分析中联数据与润泽科技营业收入、净利润、用电量、收入增速、客户结构五个维度的情况';
+                textarea.value = '请帮我分析某企业客户的合作历史、资金规模、已购产品/持仓结构与待确认需求项';
             }
         }
         
@@ -5670,7 +5678,7 @@
         
         // 使用示例文本
         function useExample() {
-            document.getElementById('analysis-input').value = '请分析声通科技的财务分析';
+            document.getElementById('analysis-input').value = '请分析客户张某的业务合作情况与跟进建议';
         }
         
         // 语音输入功能
@@ -5824,7 +5832,7 @@
                 <div class="analysis-section ai-summary">
                     <h5>🤖 AI参谋分析摘要</h5>
                     <div class="ai-thinking-box">
-                        <p class="ai-thinking-text">基于中联数据与润泽科技最新财报数据，我已完成两家IDC服务商的全面对比分析。中联数据在营收规模和客户结构方面占优，润泽科技在净利润表现和用电效率方面更具优势。两家公司均受益于AI算力需求增长，但面临不同的竞争压力和成长路径。</p>
+                        <p class="ai-thinking-text">基于中联数据与润泽科技最新财报数据，完成五维度对比：中联数据营收45.6亿元（+28.5%），润泽科技营收38.2亿元（+35.2%）；润泽科技净利率21.5%高于中联数据14.9%，PUE 1.35低于中联数据1.45。</p>
                     </div>
                 </div>
                 <div class="analysis-section">
@@ -5862,7 +5870,7 @@
                         <ul class="key-list">
                             <li><strong>中联数据：</strong>营收规模45.6亿元，行业排名第二，主要受益于字节跳动等大客户订单增长</li>
                             <li><strong>润泽科技：</strong>营收规模38.2亿元，增速35.2%高于中联数据，AI算力订单占比提升至40%</li>
-                            <li><strong>结论：</strong>中联数据规模领先，润泽科技增速更快，AI业务转型效果显著</li>
+                            <li><strong>结论：</strong>中联数据营收45.6亿高于润泽科技38.2亿；润泽科技收入增速35.2%高于中联数据28.5%</li>
                         </ul>
                     </div>
                     <div class="viewpoint-box">
@@ -5870,7 +5878,7 @@
                         <ul class="key-list">
                             <li><strong>中联数据：</strong>净利润6.8亿元，净利率14.9%，受上游硬件成本上涨影响</li>
                             <li><strong>润泽科技：</strong>净利润8.2亿元，净利率21.5%，自建园区模式降低运营成本</li>
-                            <li><strong>结论：</strong>润泽科技盈利能力更强，自建+自持模式在成本端优势明显</li>
+                            <li><strong>结论：</strong>润泽科技净利率21.5%，高于中联数据14.9%，差值6.6个百分点</li>
                         </ul>
                     </div>
                     <div class="viewpoint-box">
@@ -5878,7 +5886,7 @@
                         <ul class="key-list">
                             <li><strong>中联数据：</strong>年度用电量15.2亿度，PUE值1.45，绿色数据中心占比60%</li>
                             <li><strong>润泽科技：</strong>年度用电量11.8亿度，PUE值1.35，液冷技术大规模应用</li>
-                            <li><strong>结论：</strong>润泽科技在能效管理方面领先，液冷技术降低PUE约0.1，节能效益显著</li>
+                            <li><strong>结论：</strong>润泽科技PUE 1.35，低于中联数据1.45，差值0.10</li>
                         </ul>
                     </div>
                     <div class="viewpoint-box">
@@ -5886,15 +5894,15 @@
                         <ul class="key-list">
                             <li><strong>中联数据：</strong>近三年CAGR 25.3%，传统云计算业务增速放缓至15%</li>
                             <li><strong>润泽科技：</strong>近三年CAGR 32.8%，AI智算中心业务贡献主要增量</li>
-                            <li><strong>结论：</strong>润泽科技增速更快，AI业务布局更早，享受行业红利更充分</li>
+                            <li><strong>结论：</strong>润泽科技近三年CAGR 32.8%，高于中联数据25.3%</li>
                         </ul>
                     </div>
                     <div class="viewpoint-box">
                         <p class="viewpoint-title">5. 客户结构对比</p>
                         <ul class="key-list">
-                            <li><strong>中联数据：</strong>字节跳动占比55%，美团、京东等占比30%，客户集中度较高</li>
-                            <li><strong>润泽科技：</strong>字节跳动占比35%，华为、浪潮等AI厂商占比40%，结构更多元</li>
-                            <li><strong>结论：</strong>中联数据大客户依赖度高，润泽科技客户结构更均衡，抗风险能力更强</li>
+                            <li><strong>中联数据：</strong>字节跳动占比55%，美团、京东等占比30%，前两大客户合计占比85%</li>
+                            <li><strong>润泽科技：</strong>字节跳动占比35%，华为、浪潮等AI厂商占比40%，前两大客户合计占比75%</li>
+                            <li><strong>结论：</strong>中联数据前两大客户合计占比85%，高于润泽科技75%</li>
                         </ul>
                     </div>
                 </div>
@@ -5919,8 +5927,8 @@
                     <h5>⚠️ 风险提示</h5>
                     <div class="risk-warning-box">
                         <ul class="warning-list">
-                            <li><strong>客户集中风险：</strong>两家公司均存在大客户依赖，字节跳动订单波动将显著影响业绩</li>
-                            <li><strong>行业竞争风险：</strong>光环新网、数据港等同行加速AI数据中心布局，竞争格局可能恶化</li>
+                            <li><strong>客户集中风险：</strong>两家公司均存在大客户依赖，字节跳动订单占营收35%–55%</li>
+                            <li><strong>行业竞争风险：</strong>光环新网、数据港等同行加速AI数据中心布局，同业产能扩张速度与市场份额对比需持续跟踪</li>
                             <li><strong>政策风险：</strong>数据中心能耗双控政策趋严，电价上涨可能压缩利润空间</li>
                             <li><strong>技术迭代风险：</strong>液冷、储能等新技术投入成本高，技术路线选择错误可能导致竞争劣势</li>
                             <li><strong>免责声明：</strong>本分析仅供参考，不构成任何投资建议。投资有风险，决策需谨慎。</li>
@@ -5952,7 +5960,7 @@
                 <div class="analysis-section ai-summary">
                     <h5>🤖 AI参谋分析摘要</h5>
                     <div class="ai-thinking-box">
-                        <p class="ai-thinking-text">基于声通科技最新财报数据及市场公开信息，我已完成全面财务风险评估。该公司当前面临一定的流动性压力，但核心业务毛利率保持稳定，股价处于历史相对低位，具备中长期关注价值。建议密切跟踪应收账款回收情况及下一季度财报表现。</p>
+                        <p class="ai-thinking-text">基于声通科技最新财报及公开信息：流动比率1.2（行业均值1.8），资产负债率68.5%（行业均值55%），毛利率32.6%（行业均值28%）；当前PE 15.2倍（行业均值22倍）。建议跟踪应收账款周转天数（95天）及下季度财报。</p>
                     </div>
                 </div>
                 <div class="analysis-section">
@@ -5964,19 +5972,17 @@
                     <div class="viewpoint-box">
                         <p class="viewpoint-title">1. 财务风险识别</p>
                         <ul class="risk-list">
-                            <li><span class="risk-tag high">高风险</span> 资产负债率68.5%，高于行业均值55%，杠杆水平偏高</li>
-                            <li><span class="risk-tag medium">中风险</span> 流动比率1.2，低于行业均值1.8，短期偿债能力承压</li>
-                            <li><span class="risk-tag medium">中风险</span> 应收账款周转天数延长至95天，现金流压力增大</li>
+                            <li><span class="risk-tag high">高风险</span> 资产负债率68.5%，高于行业均值55%，高出13.5个百分点</li>
+                            <li><span class="risk-tag medium">中风险</span> 流动比率1.2，低于行业均值1.8，差值0.6</li>
+                            <li><span class="risk-tag medium">中风险</span> 应收账款周转天数95天，需核对同比变动天数</li>
                             <li><span class="risk-tag low">低风险</span> 存货周转率下降15%，存在轻微库存积压</li>
                         </ul>
                     </div>
                     <div class="viewpoint-box">
-                        <p class="viewpoint-title">2. 股价走势判断</p>
+                        <p class="viewpoint-title">2. 市场价格对比</p>
                         <ul class="trend-list">
-                            <li><span class="trend-tag">估值偏低</span> 当前股价¥12.85，PE仅15.2倍，低于行业均值22倍</li>
-                            <li><span class="trend-tag">技术支撑</span> 股价在¥9.20附近形成强支撑，下行空间有限</li>
-                            <li><span class="trend-tag">量能不足</span> 近期成交量萎缩，需关注放量反弹信号</li>
-                            <li><span class="trend-tag">情绪谨慎</span> 机构持仓比例下降，市场情绪偏向观望</li>
+                            <li><span class="trend-tag">PE低于同业</span> 当前股价¥12.85，PE 15.2倍，低于行业均值22倍</li>
+                            <li><span class="trend-tag">持仓下降</span> 机构持仓比例下降（请核对最新季报%）</li>
                         </ul>
                     </div>
                 </div>
@@ -6031,7 +6037,7 @@
                                 <li>下季度财报应收账款周转天数变化</li>
                                 <li>存货去化进度及毛利率稳定性</li>
                                 <li>重大合同签订及客户回款情况</li>
-                                <li>行业政策变化及竞争格局演变</li>
+                                <li>行业政策变化及同业对比维度变化</li>
                             </ul>
                         </div>
                     </div>
@@ -6041,8 +6047,8 @@
                     <div class="risk-warning-box">
                         <ul class="warning-list">
                             <li><strong>市场风险：</strong>宏观经济波动可能影响下游需求，导致业绩不及预期</li>
-                            <li><strong>竞争风险：</strong>行业竞争加剧，可能导致毛利率进一步承压</li>
-                            <li><strong>流动性风险：</strong>债务水平偏高，如融资环境恶化可能影响正常经营</li>
+                            <li><strong>竞争风险：</strong>行业毛利率同比变动待核对（请补充%）</li>
+                            <li><strong>流动性风险：</strong>资产负债率68.5%，高于行业均值55%</li>
                             <li><strong>模型局限：</strong>本分析基于历史数据和公开信息，无法预测突发事件影响</li>
                             <li><strong>免责声明：</strong>本分析仅供参考，不构成任何投资建议。投资有风险，决策需谨慎。</li>
                         </ul>
@@ -6072,12 +6078,12 @@
                     <h5>🔍 核心观点</h5>
                     <div class="viewpoint-box">
                         <p class="viewpoint-title">初步评估</p>
-                        <p>基于当前市场环境和企业基本面，建议关注以下关键因素：</p>
+                        <p>基于资产负债、现金流及同业对比，建议关注以下关键因素：</p>
                         <ul class="risk-list">
                             <li>宏观经济环境对行业的影响</li>
                             <li>公司核心竞争力与市场地位</li>
                             <li>财务健康状况与盈利质量</li>
-                            <li>估值水平与历史分位</li>
+                            <li>资产负债率、现金流与同业对比</li>
                         </ul>
                     </div>
                 </div>
@@ -6087,8 +6093,8 @@
                         <p>AI参谋将从以下维度进行深入分析：</p>
                         <ul class="framework-list">
                             <li>📈 财务指标分析（盈利能力、偿债能力、运营效率）</li>
-                            <li>🏭 行业对比分析（竞争格局、市场份额、增长空间）</li>
-                            <li>📉 历史趋势分析（股价走势、估值变化、量价关系）</li>
+                            <li>🏭 同业对比分析（对比对象、比较维度、市场份额）</li>
+                            <li>📉 历史趋势分析（股价走势、资产负债变化、量价关系）</li>
                             <li>🔮 未来展望（业绩预测、催化剂、风险因素）</li>
                         </ul>
                     </div>
@@ -6099,7 +6105,7 @@
                         <p>投资决策需综合考虑以下风险因素：</p>
                         <ul class="warning-list">
                             <li>市场风险：宏观经济波动、政策变化等系统性风险</li>
-                            <li>个股风险：公司经营、竞争格局、技术变革等特异性风险</li>
+                            <li>个股风险：公司经营、同业对比维度变化、技术变革等特异性风险</li>
                             <li>模型风险：AI分析基于历史数据，无法完全预测未来</li>
                             <li>信息风险：分析结果仅供参考，不构成投资建议</li>
                         </ul>
@@ -6181,13 +6187,13 @@
                                 <div class="analysis-section">
                                     <h5>🔍 核心观点</h5>
                                     <p><strong>1. 财务风险识别：</strong></p>
-                                    <p>• 资产负债率偏高，流动比率低于行业平均水平<br>
-                                    • 应收账款周转天数延长，现金流压力增大<br>
-                                    • 存货周转率下降，存在库存积压风险</p>
-                                    <p style="margin-top: 12px;"><strong>2. 股价走势判断：</strong></p>
-                                    <p>• 当前股价处于相对低位，市盈率低于行业均值<br>
-                                    • 技术面显示存在反弹空间，但需关注量能配合<br>
-                                    • 市场情绪偏向谨慎，短期内震荡整理概率较大</p>
+                                    <p>• 资产负债率68.5%（行业均值55%）<br>
+                                    • 应收账款周转天数95天，需核对同比变动<br>
+                                    • 存货周转率同比下降15%</p>
+                                    <p style="margin-top: 12px;"><strong>2. 市场价格对比：</strong></p>
+                                    <p>• 当前股价¥12.85，PE 15.2倍（行业均值22倍）<br>
+                                    • 52周区间¥9.20–¥18.60，当前价位于区间中下部<br>
+                                    • 近20日成交量较60日均量下降18%（请核对最新数据）</p>
                                 </div>
                                 <div class="analysis-section">
                                     <h5>📊 数据支撑</h5>
@@ -6210,9 +6216,8 @@
                                 </div>
                                 <div class="analysis-section">
                                     <h5>⚠️ 风险提示</h5>
-                                    <p>• 宏观经济波动可能影响下游需求<br>
-                                    • 行业竞争加剧导致毛利率承压<br>
-                                    • 债务风险需持续关注，如融资环境恶化可能影响经营<br>
+                                    <p>• 行业毛利率同比变动待核对（请补充%）<br>
+                                    • 资产负债率68.5%，高于行业均值55%<br>
                                     • 本分析仅供参考，不构成投资建议</p>
                                 </div>
                                 <div class="analysis-section document-reference">
@@ -6276,16 +6281,93 @@
         
         // ========== 今日任务 / 工作日志功能 ==========
         const EMPLOYEE_DAILY_TASKS_KEY = 'employeeDailyTasks';
-        const EMPLOYEE_DAILY_TASKS_SEED_VERSION = 2;
+        const EMPLOYEE_DAILY_TASKS_SEED_VERSION = 6;
         let pendingDeleteEmployeeTaskId = null;
         let selectedEmployeeTaskId = null;
+
+        const TAO_LANGUAGE_REPLACEMENTS = [
+            [/\[高净值\]\s*/g, ''],
+            [/高净值客户/g, '客户（账户资产待补录万元）'],
+            [/高净值/g, ''],
+            [/客户画像/g, '客户分析'],
+            [/需求偏好/g, '待确认需求项'],
+            [/产品偏好/g, '已购产品/持仓结构'],
+            [/风险偏好/g, '风险测评结果'],
+            [/竞争格局/g, '同业对比维度'],
+            [/行业景气度/g, '可验证行业指标'],
+            [/景气度/g, '可验证指标'],
+            [/企业基本面/g, '资产负债与现金流'],
+            [/基本面/g, '资产负债与现金流'],
+            [/行业研究/g, '对比分析'],
+            [/估值水平/g, '资产负债与现金流对比'],
+            [/估值偏低/g, 'PE低于同业均值'],
+            [/商业模式/g, '资产负债与资产配置'],
+            [/行业龙头/g, '可比公司客观数据'],
+            [/区域龙头/g, '可比公司客观数据'],
+            [/资产波动较大/g, '资产变动约15%'],
+            [/近3月资产波动较大/g, '近3月资产变动约15%'],
+            [/波动较大/g, '变动幅度约15%'],
+            [/持仓中权益类占比偏高/g, '权益类占比62%（超C2建议上限40%）'],
+            [/权益类占比偏高/g, '权益类占比超阈值（请核对%）'],
+            [/占比偏高/g, '占比超阈值（请核对%与基准）'],
+            [/账户资产规模较高客户/g, '账户资产500万以上客户'],
+            [/账户资产规模较高的/g, '账户资产500万以上的'],
+            [/账户资产规模较高/g, '账户资产500万以上'],
+            [/杠杆水平偏高/g, '资产负债率高于行业均值（请核对%）'],
+            [/债务水平偏高/g, '资产负债率高于行业均值（请核对%）'],
+            [/资产负债率偏高/g, '资产负债率高于行业均值（请核对%）'],
+            [/概率较高/g, '近6个月同类签约率28%'],
+            [/概率较大/g, '概率待测算（请补充%）'],
+            [/已有一定认知/g, '近12个月有权益类交易记录'],
+            [/重点维护客户/g, '营业部清单客户'],
+            [/活跃客户/g, '近30日有交易记录客户'],
+            [/客户集中度较高/g, '单一客户占比超50%'],
+            [/相对低位/g, 'PE低于行业均值'],
+            [/一定的流动性压力/g, '流动比率低于行业均值'],
+            [/压力增大/g, '周转天数同比增加（请核对天）'],
+            [/市场情绪偏向谨慎/g, '机构持仓比例下降（请核对%）'],
+            [/情绪谨慎/g, '机构持仓比例下降'],
+            [/需主动触达/g, '待外呼确认'],
+            [/合格投资者认定/g, '投资者准入认定（金融资产≥300万元）'],
+            [/合格投资者/g, '投资者准入（金融资产≥300万元）'],
+            [/偏股型持仓客户/g, '权益类持仓≥60%且未开通定投客户'],
+            [/持仓偏股型客户/g, '权益类持仓≥60%客户'],
+            [/偏股型基金/g, '权益仓位≥60%的基金'],
+            [/偏股型/g, '权益仓位≥60%'],
+            [/适当性匹配异常/g, '风险测评等级与持仓产品风险等级不匹配（如C1持有R4）'],
+            [/适当性异常/g, '风险测评C1且持仓产品≥R4'],
+            [/大额资金到账/g, '单笔银证转入≥100万元到账'],
+            [/大额资金/g, '单笔银证转入≥100万元'],
+            [/短期理财产品/g, '期限≤90天且风险等级R1–R2的理财产品'],
+            [/短期理财/g, '期限≤90天理财（R1–R2）'],
+            [/重点触达/g, '待外呼']
+        ];
+
+        function sanitizeTaoLanguageText(text) {
+            if (typeof text !== 'string') return text;
+            let out = text;
+            TAO_LANGUAGE_REPLACEMENTS.forEach(([pattern, replacement]) => {
+                out = out.replace(pattern, replacement);
+            });
+            return out;
+        }
+
+        function sanitizeEmployeeDailyTask(task) {
+            if (!task || typeof task !== 'object') return task;
+            return {
+                ...task,
+                title: sanitizeTaoLanguageText(task.title),
+                summary: sanitizeTaoLanguageText(task.summary),
+                content: sanitizeTaoLanguageText(task.content)
+            };
+        }
 
         const defaultEmployeeDailyTasks = [
             {
                 id: 'seed-1',
-                title: '高净值客户张三季度回访待完成，客户资产近3月波动较大需主动触达',
+                title: '客户张某（账户资产888万）季度回访待完成，近3月资产变动约15%，待外呼确认',
                 summary: '张三（资产规模888万），近3月资产变动约15%，需了解持仓变动原因并推荐固收类产品进行仓位调整',
-                content: '该客户为营业部重点维护的高净值客户，账户资产规模约888万元，近三个月账户资产出现约15%的波动，主要系持仓的权益类产品净值调整所致。客户此前风险偏好为稳健型，目前持仓中权益类占比偏高，需在本次回访中了解客户对近期市场波动的反馈，评估其风险承受能力是否有变化，并根据客户反馈推荐合适的固收类或固收+产品进行仓位再平衡，回访记录需在CRM系统中完整留痕。',
+                content: '该客户为营业部清单客户，账户资产规模888万元，近三个月账户资产变动约15%，主要系持仓的权益类产品净值调整所致。客户此前风险测评为稳健型（C2），目前权益类持仓占比62%（超C2建议上限40%），需在本次回访中核对客户对近期市场波动的反馈、风险测评结果是否有变化，并根据客户反馈推荐合适的固收类或固收+产品进行仓位再平衡，回访记录需在CRM系统中完整留痕。',
                 source: '投资业务助理',
                 sourceType: 'agent',
                 date: '2026-06-16',
@@ -6306,8 +6388,8 @@
             {
                 id: 'seed-3',
                 title: '私募基金双录视频待完成，客户已签署风险揭示书',
-                summary: '李四（合格投资者）已签署"测试一号"私募基金风险揭示书，需在系统中完成双录视频上传及合规提交',
-                content: '客户李四已完成合格投资者认定，风险测评结果为进取型，符合"测试一号"私募基金(R4风险等级)的投资者适当性要求。客户已线下签署基金合同及风险揭示书，根据监管要求，需在签约过程中完成录音录像双录。目前双录视频尚未上传至合规系统，需尽快预约客户完成双录环节，确保签约流程符合合规要求并归档备查。',
+                summary: '李四（投资者准入已认定，金融资产≥300万元）已签署"测试一号"私募基金风险揭示书，需在系统中完成双录视频上传及合规提交',
+                content: '客户李四已完成投资者准入认定（金融资产≥300万元），风险测评结果为进取型（C5），符合"测试一号"私募基金（R4风险等级）的适当性匹配规则。客户已线下签署基金合同及风险揭示书，根据监管要求，需在签约过程中完成录音录像双录。目前双录视频尚未上传至合规系统，需尽快预约客户完成双录环节，确保签约流程符合合规要求并归档备查。',
                 source: '资管业务助理',
                 sourceType: 'agent',
                 date: '2026-06-16',
@@ -6316,9 +6398,9 @@
             },
             {
                 id: 'seed-4',
-                title: '本月基金定投任务缺口8户，需重点触达偏股型持仓客户',
-                summary: '当前完成率73% (22/30户)，需对持仓偏股型客户进行定投转化营销',
-                content: '本月营业部下达的基金定投新增签约任务目标为30户，截至目前已完成22户，缺口8户，完成率73%。经分析，存量客户中持有偏股型基金但未开通定投功能的客户约35人，该群体对权益市场已有一定认知，转化为定投客户的概率较高。建议重点针对该客户群体进行外呼营销，介绍定投分散风险、平摊成本的优势，争取在本月20日前补齐缺口。',
+                title: '基金定投缺口8户，待外呼权益类持仓≥60%且未开定投客户35人',
+                summary: '完成率73%（22/30户），筛选条件：权益类持仓≥60%、未开通定投',
+                content: '本月营业部基金定投新增签约目标30户，已完成22户，缺口8户，完成率73%。筛选存量客户：持有权益仓位≥60%的基金且未开通定投功能，共35人；该群体近12个月有权益类交易记录，近6个月同类客户定投签约率28%。建议按名单外呼，说明定投规则与操作步骤，于本月20日前补齐缺口8户。',
                 source: '员工工作台',
                 sourceType: 'workbench',
                 date: '2026-06-16',
@@ -6327,9 +6409,9 @@
             },
             {
                 id: 'seed-5',
-                title: '适当性匹配异常客户待处理，需出具不匹配警示书',
-                summary: '客户周八风险等级C1却持有R4产品，需出具风险不匹配警示书并系统留痕',
-                content: '客户周八于两年前开户时风险测评结果为保守型(C1)，期间未进行风险测评更新。系统监测发现该客户目前持仓中持有"测试一号"私募基金(R4风险等级)，与其当前风险承受能力存在不匹配情况。根据适当性管理要求，需对该客户进行风险承受能力重测，如果测评结果仍为C1，需向客户出具风险不匹配警示书，由客户签字确认已知悉风险，相关文件需扫描上传至系统留痕备查。',
+                title: '客户周八（风险测评C1）持有R4产品，待出具不匹配警示书',
+                summary: '不匹配规则：C1客户持仓R4产品；需重测并出具警示书、系统留痕',
+                content: '客户周八两年前风险测评结果为保守型（C1），期间未更新测评。系统监测：当前持仓含「测试一号」私募基金（产品风险等级R4），触发规则「客户风险等级C1–C2不得持有R4及以上产品」。处理步骤：1）重新测评；2）若仍为C1，出具风险不匹配警示书并客户签字；3）扫描上传CRM留痕。',
                 source: '交叉验证助理',
                 sourceType: 'agent',
                 date: '2026-06-16',
@@ -6338,9 +6420,9 @@
             },
             {
                 id: 'seed-6',
-                title: '大额资金到账客户3日内无持仓变动，需主动推荐短期理财',
-                summary: '客户吴九银证转账转入566万，3日内未做持仓配置，需主动触达推荐短期理财产品',
-                content: '客户吴九为营业部活跃客户，历史交易以股票为主，账户日均资产约120万元。系统监测到该客户于6月12日通过银证转账转入资金566万元，截至今日(6月15日)该笔资金尚未进行任何证券或理财产品配置，处于闲置状态。考虑到客户可能有短期理财需求，建议主动联系客户了解资金安排计划，推荐短期理财产品或货币基金，帮助客户。',
+                title: '单笔银证转入≥100万且3日零持仓变动，待推荐期限≤90天产品',
+                summary: '客户吴九转入566万，6/12–6/15持仓变动0笔，待确认资金用途',
+                content: '客户吴九近30日交易8笔，账户日均资产120万元。6月12日银证转账转入566万元（触发阈值：单笔≥100万元）。截至6月15日连续3个交易日持仓变动0笔，转入资金未配置。处理：外呼确认资金用途；若选择理财，仅推荐期限≤90天、风险等级R1–R2的货币基金或银行理财产品，并记录CRM。',
                 source: '投资业务助理',
                 sourceType: 'agent',
                 date: '2026-06-16',
@@ -6354,7 +6436,8 @@
                 const raw = localStorage.getItem(EMPLOYEE_DAILY_TASKS_KEY);
                 if (!raw) return null;
                 const parsed = JSON.parse(raw);
-                return Array.isArray(parsed) ? parsed : null;
+                if (!Array.isArray(parsed)) return null;
+                return parsed.map(sanitizeEmployeeDailyTask);
             } catch (e) {
                 return null;
             }
@@ -6366,13 +6449,25 @@
 
         function initEmployeeDailyTasks() {
             const seedVersion = localStorage.getItem(EMPLOYEE_DAILY_TASKS_KEY + '_seed');
-            if (!getEmployeeDailyTasks() || seedVersion !== String(EMPLOYEE_DAILY_TASKS_SEED_VERSION)) {
+            const needsReseed = seedVersion !== String(EMPLOYEE_DAILY_TASKS_SEED_VERSION);
+            const existing = getEmployeeDailyTasks();
+
+            if (!existing || needsReseed) {
                 saveEmployeeDailyTasks(defaultEmployeeDailyTasks);
                 localStorage.setItem(EMPLOYEE_DAILY_TASKS_KEY + '_seed', String(EMPLOYEE_DAILY_TASKS_SEED_VERSION));
+            } else {
+                const sanitized = existing.map(sanitizeEmployeeDailyTask);
+                if (JSON.stringify(existing) !== JSON.stringify(sanitized)) {
+                    saveEmployeeDailyTasks(sanitized);
+                }
             }
             bindOverlayScrollbar(document.getElementById('employee-daily-tasks-scroll'));
             renderEmployeeDailyTasks();
             bindEmployeeDailyTaskEvents();
+        }
+
+        function canDeleteEmployeeTask(task) {
+            return task?.sourceType === 'workbench' || task?.source === '员工工作台';
         }
 
         function bindEmployeeDailyTaskEvents() {
@@ -6426,10 +6521,12 @@
                     <span class="tip-number">${index + 1}</span>
                     <p class="tip-content tip-content-title">${escapeHtmlText(task.title)}</p>
                     <div class="employee-task-item-actions">
+                        ${canDeleteEmployeeTask(task) ? `<button type="button" class="employee-task-delete-btn" data-task-id="${escapeHtmlAttr(task.id)}" aria-label="删除" title="删除">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                        </button>` : ''}
                         <button type="button" class="employee-task-send-btn" data-task-id="${escapeHtmlAttr(task.id)}" aria-label="发送到对话" title="发送到对话">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                         </button>
-                        <button type="button" class="employee-task-delete-btn" data-task-id="${escapeHtmlAttr(task.id)}">删除</button>
                     </div>
                 </li>
             `).join('');
@@ -6470,6 +6567,10 @@
         }
 
         function openEmployeeTaskDeleteModal(taskId) {
+            const tasks = getEmployeeDailyTasks() || [];
+            const task = tasks.find(item => item.id === taskId);
+            if (!task || !canDeleteEmployeeTask(task)) return;
+
             pendingDeleteEmployeeTaskId = taskId;
             const modal = document.getElementById('employee-task-delete-modal');
             if (modal) modal.hidden = false;
@@ -6483,8 +6584,14 @@
 
         function confirmDeleteEmployeeTask() {
             if (!pendingDeleteEmployeeTaskId) return;
-            const tasks = (getEmployeeDailyTasks() || []).filter(item => item.id !== pendingDeleteEmployeeTaskId);
-            saveEmployeeDailyTasks(tasks);
+            const tasks = getEmployeeDailyTasks() || [];
+            const task = tasks.find(item => item.id === pendingDeleteEmployeeTaskId);
+            if (!task || !canDeleteEmployeeTask(task)) {
+                closeEmployeeTaskDeleteModal();
+                return;
+            }
+            const nextTasks = tasks.filter(item => item.id !== pendingDeleteEmployeeTaskId);
+            saveEmployeeDailyTasks(nextTasks);
             if (selectedEmployeeTaskId === pendingDeleteEmployeeTaskId) {
                 closeEmployeeTaskDetail();
             }
@@ -6519,7 +6626,7 @@
 
         function getTaskAssistantReply(task, index) {
             const assistant = aiAssistants[index] || aiAssistants[0];
-            return `您好！收到您的任务「${task.title}」。\n\n我是${assistant.name}，可协助您：\n• 梳理任务背景与关键节点\n• 生成执行建议与协作清单\n• 跟进任务进展并同步相关事项\n\n请告诉我您希望从哪一步开始？`;
+            return `**${assistant.name}**\n\n任务：${task.title}\n\n梳理背景与节点、生成执行建议、跟进进展。\n\n输入：指定起始步骤或补充材料。`;
         }
 
         function sendEmployeeTaskToChat(taskId) {
@@ -6569,7 +6676,6 @@
             document.getElementById('log-summary').value = '';
             document.getElementById('log-content').value = '';
             resetEmployeeTaskFormCounters();
-            document.getElementById('import-preview').style.display = 'none';
 
             workLogPage.style.display = 'block';
             document.body.style.overflow = 'hidden';
@@ -6579,61 +6685,6 @@
             const workLogPage = document.getElementById('work-log-page');
             workLogPage.style.display = 'none';
             document.body.style.overflow = '';
-            document.getElementById('import-preview').style.display = 'none';
-        }
-
-        function importDocument() {
-            document.getElementById('document-input')?.click();
-        }
-
-        function importVoice() {
-            document.getElementById('voice-input')?.click();
-        }
-
-        function handleDocumentImport(input) {
-            const file = input.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const content = e.target.result;
-                showImportPreview('文档导入成功：\n文件名：' + file.name + '\n大小：' + (file.size / 1024).toFixed(2) + 'KB\n\n内容预览：\n' + String(content).substring(0, 200) + '...');
-            };
-
-            if (file.type === 'text/plain') {
-                reader.readAsText(file);
-            } else {
-                showImportPreview('📄 ' + file.name + '\n\n已识别到以下工作事项：\n\n1. 【客户拜访】与协和医院赵主任沟通两融费率调整事宜\n2. 【材料准备】海南农商行机构准入路演PPT制作\n3. 【方案讨论】ST沐邦共益债出资金额确定\n4. 【研究对接】中银金租新能源领域研究服务安排');
-            }
-            input.value = '';
-        }
-
-        function handleVoiceImport(input) {
-            const file = input.files[0];
-            if (!file) return;
-            showImportPreview('🎙️ 语音文件：' + file.name + '\n时长：' + (file.size / 16000).toFixed(1) + '秒\n\n🔄 正在转换为文字...\n\n✅ 转换完成！\n\n识别内容：\n"今天联系了晋商银行的黄亮副行长，讨论了机构准入的事项。他建议本周安排与金融市场部赵翔鹏总经理进行面谈，需要准备路演材料。另外，ST沐邦的共益债方案需要在本周内确定出资金额。"');
-            input.value = '';
-        }
-
-        function showImportPreview(text) {
-            document.getElementById('preview-text').textContent = text;
-            document.getElementById('import-preview').style.display = 'block';
-            document.getElementById('import-preview').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function cancelImport() {
-            document.getElementById('import-preview').style.display = 'none';
-        }
-
-        function confirmImport() {
-            const previewText = document.getElementById('preview-text').textContent;
-            const imported = previewText.replace(/.*识别内容：\n/, '').replace(/^["']|["']$/g, '').trim();
-            if (imported) {
-                document.getElementById('log-content').value = imported;
-                updateEmployeeTaskCharCount('log-content', 'log-content-count', 2000);
-            }
-            document.getElementById('import-preview').style.display = 'none';
-            alert('内容已导入到事项输入框，请编辑后保存！');
         }
 
         function saveWorkLog(event) {
