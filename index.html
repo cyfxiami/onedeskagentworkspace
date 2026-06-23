@@ -82,7 +82,7 @@
                     <div class="nav-brand">
                         <span class="nav-logo">📊</span>
                         <div class="nav-brand-main">
-                            <span class="nav-title" id="nav-page-title">业务团队工作台</span>
+                            <span class="nav-title nav-title-multiline" id="nav-page-title"><span class="nav-title-line-main">业务团队</span><span class="nav-title-line-sub">工作台</span></span>
                         </div>
                     </div>
                     <button type="button" class="workbench-logout-btn" onclick="logoutWorkbench()" aria-label="退出登录">
@@ -2170,9 +2170,9 @@
                 brandEl?.classList.add('nav-brand-support-title');
                 titleEl.innerHTML = '<span class="nav-title-line-main">业务支持中心</span><span class="nav-title-line-sub">工作台</span>';
             } else {
-                titleEl.classList.remove('nav-title-multiline');
+                titleEl.classList.add('nav-title-multiline');
                 brandEl?.classList.remove('nav-brand-support-title');
-                titleEl.textContent = '业务团队工作台';
+                titleEl.innerHTML = '<span class="nav-title-line-main">业务团队</span><span class="nav-title-line-sub">工作台</span>';
             }
         }
 
