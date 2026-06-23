@@ -2294,8 +2294,10 @@
         }
 
         function scrollChatElementToTop(panel, element, padding = 12) {
+            if (!element) return;
+
             const scrollEl = getWorkbenchChatScrollEl(panel);
-            if (!scrollEl || !element) return;
+            if (!scrollEl) return;
 
             const align = () => {
                 const containerRect = scrollEl.getBoundingClientRect();

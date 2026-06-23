@@ -4234,59 +4234,70 @@ body.support-tab-active .top-nav-avatars-host.is-support-mode .support-category-
 
 /* ========== AI聊天模式 ========== */
 body.employee-chat-mode {
-    overflow: hidden;
-    height: 100vh;
+    overflow-y: auto;
+    min-height: 100vh;
 }
 
 body.employee-chat-mode .main-content {
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow: visible;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     padding-bottom: 0;
 }
 
+body.employee-chat-mode .top-nav-section {
+    flex-shrink: 0;
+}
+
 body.employee-chat-mode .workbench-panels {
     flex: 1;
-    min-height: 0;
+    min-height: auto;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: visible;
 }
 
 body.employee-chat-mode .workbench-panel[data-panel="employee"] {
     flex: 1;
-    min-height: 0;
+    min-height: auto;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: visible;
+    padding-bottom: 0;
+    box-sizing: border-box;
 }
 
 body.employee-chat-mode .workbench-panel[data-panel="employee"] .ai-workbench-section.chat-mode {
-    flex: 1;
-    min-height: 0;
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-height: auto;
     margin-bottom: 0;
-    padding-bottom: 140px;
-    overflow: hidden;
+    padding-bottom: 0;
+    overflow: visible;
     border-radius: 16px 16px 0 0;
 }
 
 body.employee-chat-mode .workbench-panel[data-panel="employee"] .ai-workbench-section.chat-mode .ai-chat-view {
     flex: 1;
-    min-height: 0;
-    max-height: none;
+    min-height: 240px;
+    max-height: 450px;
     margin-bottom: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     padding-top: 4px;
-    padding-bottom: 180px;
+    padding-bottom: 0;
 }
 
 body.employee-chat-mode .workbench-panel[data-panel="employee"] .ai-chat-messages {
     padding-top: 4px;
+}
+
+body.employee-chat-mode .workbench-panel[data-panel="employee"] .work-tips-section,
+body.employee-chat-mode .workbench-panel[data-panel="employee"] .performance-section {
+    flex-shrink: 0;
 }
 
 body.employee-chat-mode .workbench-panel[data-panel="employee"] .work-tips-section.collapsed,
@@ -4296,18 +4307,17 @@ body.employee-chat-mode .workbench-panel[data-panel="employee"] .performance-sec
 }
 
 body.employee-chat-mode .workbench-panel[data-panel="employee"] .input-section.chat-mode {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 40px);
-    max-width: 1200px;
+    position: static;
+    flex-shrink: 0;
+    width: auto;
+    max-width: none;
     margin: 0;
-    padding: 16px 25px 20px;
+    padding: 12px 0 20px;
     background: transparent;
-    z-index: 1500;
+    z-index: auto;
     border: none;
     box-shadow: none;
+    transform: none;
 }
 
 .ai-workbench-section.chat-mode {
@@ -6090,8 +6100,9 @@ body.support-tab-active .workbench-panel[data-panel="support"] .input-section {
     }
 
     body.employee-chat-mode .workbench-panel[data-panel="employee"] .ai-workbench-section.chat-mode .ai-chat-view {
-        min-height: 0;
-        max-height: none;
+        min-height: 180px;
+        max-height: 450px;
+        overflow-y: auto;
     }
 
     .chat-bubble {
