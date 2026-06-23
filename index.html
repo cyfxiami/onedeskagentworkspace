@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>员工工作台</title>
+    <title>业务团队工作台</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
             <section class="login-panel">
                 <div class="login-card">
                     <div class="login-welcome">
-                        <h1 class="login-welcome-sys">员工工作台</h1>
+                        <h1 class="login-welcome-sys">业务团队工作台</h1>
                         <p class="login-welcome-desc">智能办公助手，让工作更高效</p>
                     </div>
                     <form class="login-form" id="login-form" onsubmit="handleLoginSubmit(event)">
@@ -53,7 +53,7 @@
                                 <label class="login-role-option">
                                     <input type="radio" name="workbench-role" value="employee" class="login-role-input" checked>
                                     <span class="login-role-card">
-                                        <span class="login-role-name">员工</span>
+                                        <span class="login-role-name">业务团队</span>
                                     </span>
                                 </label>
                                 <label class="login-role-option">
@@ -82,7 +82,7 @@
                     <div class="nav-brand">
                         <span class="nav-logo">📊</span>
                         <div class="nav-brand-main">
-                            <span class="nav-title" id="nav-page-title">员工工作台</span>
+                            <span class="nav-title" id="nav-page-title">业务团队工作台</span>
                         </div>
                     </div>
                     <button type="button" class="workbench-logout-btn" onclick="logoutWorkbench()" aria-label="退出登录">
@@ -2172,7 +2172,7 @@
             } else {
                 titleEl.classList.remove('nav-title-multiline');
                 brandEl?.classList.remove('nav-brand-support-title');
-                titleEl.textContent = '员工工作台';
+                titleEl.textContent = '业务团队工作台';
             }
         }
 
@@ -6401,7 +6401,7 @@
                 title: '基金定投缺口8户，待外呼权益类持仓≥60%且未开定投客户35人',
                 summary: '完成率73%（22/30户），筛选条件：权益类持仓≥60%、未开通定投',
                 content: '本月营业部基金定投新增签约目标30户，已完成22户，缺口8户，完成率73%。筛选存量客户：持有权益仓位≥60%的基金且未开通定投功能，共35人；该群体近12个月有权益类交易记录，近6个月同类客户定投签约率28%。建议按名单外呼，说明定投规则与操作步骤，于本月20日前补齐缺口8户。',
-                source: '员工工作台',
+                source: '业务团队工作台',
                 sourceType: 'workbench',
                 date: '2026-06-16',
                 time: '11:15',
@@ -6467,7 +6467,7 @@
         }
 
         function canDeleteEmployeeTask(task) {
-            return task?.sourceType === 'workbench' || task?.source === '员工工作台';
+            return task?.sourceType === 'workbench' || task?.source === '业务团队工作台' || task?.source === '员工工作台';
         }
 
         function bindEmployeeDailyTaskEvents() {
@@ -6550,7 +6550,7 @@
             document.getElementById('employee-task-detail-title').textContent = task.title;
             document.getElementById('employee-task-detail-summary').textContent = task.summary || '暂无摘要';
             document.getElementById('employee-task-detail-content').textContent = task.content || '暂无事项内容';
-            document.getElementById('employee-task-detail-source').textContent = `来源：${task.source || '员工工作台'}`;
+            document.getElementById('employee-task-detail-source').textContent = `来源：${task.source || '业务团队工作台'}`;
             document.getElementById('employee-task-detail-time').textContent = `创建时间：${formatEmployeeTaskDateTime(task)}`;
 
             drawer.hidden = false;
@@ -6706,7 +6706,7 @@
                 title,
                 summary,
                 content,
-                source: '员工工作台',
+                source: '业务团队工作台',
                 sourceType: 'workbench',
                 date,
                 time,
