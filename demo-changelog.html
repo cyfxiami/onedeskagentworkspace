@@ -75,13 +75,61 @@
         .sidebar-nav {
             flex: 1;
             overflow-y: auto;
-            padding: 16px 0;
+            padding: 12px 0 16px;
+        }
+        .nav-group {
+            margin-bottom: 14px;
+        }
+        .nav-group:last-child {
+            margin-bottom: 0;
+        }
+        .nav-group-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            margin: 0;
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--muted);
+            font-family: inherit;
+            cursor: pointer;
+            text-align: left;
+            transition: color 0.15s, background 0.15s;
+        }
+        .nav-group-title:hover {
+            color: var(--text);
+            background: rgba(74, 144, 226, 0.06);
+        }
+        .nav-group-chevron {
+            width: 12px;
+            height: 12px;
+            flex-shrink: 0;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.2s ease;
+        }
+        .nav-group.is-collapsed .nav-group-chevron {
+            transform: rotate(-90deg);
+        }
+        .nav-group-items {
+            overflow: hidden;
+        }
+        .nav-group.is-collapsed .nav-group-items {
+            display: none;
         }
         .nav-item {
             display: block;
             width: 100%;
             text-align: left;
-            padding: 12px 20px;
+            padding: 10px 20px 10px 28px;
             border: none;
             background: transparent;
             color: var(--muted);
@@ -562,7 +610,9 @@
                 width: 100%;
             }
             .sidebar { width: 100%; height: auto; flex-direction: column; }
-            .sidebar-nav { display: flex; flex-direction: row; padding: 8px; gap: 4px; overflow-x: auto; flex: none; }
+            .sidebar-nav { display: flex; flex-direction: row; flex-wrap: wrap; align-items: flex-start; padding: 8px; gap: 8px 12px; overflow-x: auto; flex: none; }
+            .nav-group { margin-bottom: 0; flex-shrink: 0; }
+            .nav-group-title { padding: 4px 8px 4px; font-size: 0.7rem; }
             .nav-item { width: auto; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; border-radius: 6px; padding: 8px 14px; }
             .nav-item.active { border-left: none; border-bottom-color: var(--now); }
             .main-area { height: auto; overflow: visible; }
@@ -582,8 +632,24 @@
                     </button>
                 </div>
                 <nav class="sidebar-nav" aria-label="版本导航">
-                    <button type="button" class="nav-item active" data-panel="v20260624">20260624版本</button>
-                    <button type="button" class="nav-item" data-panel="v20260604">20260604版本</button>
+                    <div class="nav-group">
+                        <button type="button" class="nav-group-title" aria-expanded="true" aria-label="收起 PC端 目录">
+                            <svg class="nav-group-chevron" viewBox="0 0 16 16" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
+                            <span>PC端</span>
+                        </button>
+                        <div class="nav-group-items">
+                            <button type="button" class="nav-item" data-panel="v20260604">20260604版本</button>
+                        </div>
+                    </div>
+                    <div class="nav-group">
+                        <button type="button" class="nav-group-title" aria-expanded="true" aria-label="收起 APP端 目录">
+                            <svg class="nav-group-chevron" viewBox="0 0 16 16" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
+                            <span>APP端</span>
+                        </button>
+                        <div class="nav-group-items">
+                            <button type="button" class="nav-item active" data-panel="v20260624">20260624版本</button>
+                        </div>
+                    </div>
                 </nav>
             </aside>
         </div>
@@ -974,6 +1040,18 @@
             if (defaultBtn) {
                 switchPanel(defaultBtn.dataset.panel);
             }
+
+            document.querySelectorAll('.nav-group-title').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var group = btn.closest('.nav-group');
+                    if (!group) return;
+                    var collapsed = group.classList.toggle('is-collapsed');
+                    var label = group.querySelector('.nav-group-title span:last-child');
+                    var name = label ? label.textContent : '';
+                    btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+                    btn.setAttribute('aria-label', (collapsed ? '展开' : '收起') + ' ' + name + ' 目录');
+                });
+            });
 
             document.querySelectorAll('.change-point-toggle').forEach(function (btn) {
                 btn.addEventListener('click', function () {
