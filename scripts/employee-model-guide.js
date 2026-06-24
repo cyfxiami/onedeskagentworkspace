@@ -640,6 +640,7 @@
     }
 
     function deliverResult(panel, assistantIndex, payload, userMessage, options) {
+        window.collapseTopSections?.(panel);
         const guide = getEmployeeGuideState(panel);
         guide.lastPayload = { ...payload };
         guide.pendingUserMessage = userMessage;
@@ -756,6 +757,7 @@
 
         sendPromptChip(text) {
             const panel = window.getActiveWorkbenchPanel?.();
+            window.collapseTopSections?.(panel);
             window.appendChatMessage?.(text, 'user', panel);
             const state = window.getPanelState?.(panel);
             const assistantIndex = state?.currentCardIndex ?? 0;

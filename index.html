@@ -3888,6 +3888,8 @@
             });
         }
 
+        window.collapseTopSections = collapseTopSections;
+
         function selectAssistant(index, panel) {
             const p = panel || getActiveWorkbenchPanel();
             const state = getPanelState(p);
@@ -3895,6 +3897,9 @@
 
             state.currentCardIndex = index;
             updateMiniAvatarActive(index, p);
+            if (getPanelKey(p) === 'employee') {
+                collapseTopSections(p);
+            }
             appendAssistantConversation(index, p);
         }
 
@@ -3956,6 +3961,9 @@
 
             if (role === 'user') {
                 row.innerHTML = `<div class="chat-bubble chat-bubble-user">${escapeHtml(text)}</div>`;
+                if (getPanelKey(p) === 'employee') {
+                    collapseTopSections(p);
+                }
             } else {
                 const index = getPanelState(p).currentCardIndex ?? 0;
                 row.innerHTML = `
@@ -4017,6 +4025,9 @@
 
         function bringToFront(clickedCard) {
             const panel = clickedCard.closest('.workbench-panel');
+            if (getPanelKey(panel) === 'employee') {
+                collapseTopSections(panel);
+            }
             const state = getPanelState(panel);
             const clickedIndex = parseInt(clickedCard.dataset.index);
             const allCards = panel.querySelectorAll('.ai-card-fan');
@@ -6645,12 +6656,6 @@
                 appendChatMessage(getTaskAssistantReply(task, getPanelState(panel).currentCardIndex ?? assistantIndex), 'assistant', panel);
             }, 400);
 
-            const workTipsSection = panel.querySelector('#work-tips-section');
-            const workTipsToggle = panel.querySelector('#work-tips-toggle');
-            if (workTipsSection) {
-                workTipsSection.classList.add('collapsed');
-                if (workTipsToggle) workTipsToggle.textContent = '展开';
-            }
             syncEmployeeChatModeLayout();
         }
 

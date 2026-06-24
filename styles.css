@@ -4252,16 +4252,16 @@ body.employee-chat-mode .top-nav-section {
 }
 
 body.employee-chat-mode .workbench-panels {
-    flex: 1;
-    min-height: auto;
+    flex: 1 1 0;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     overflow: visible;
 }
 
 body.employee-chat-mode .workbench-panel[data-panel="employee"] {
-    flex: 1;
-    min-height: auto;
+    flex: 1 1 0;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     overflow: visible;
@@ -4269,26 +4269,64 @@ body.employee-chat-mode .workbench-panel[data-panel="employee"] {
     box-sizing: border-box;
 }
 
+/* 顶部模块任一展开：面板按内容撑开，页面整体可滚动 */
+body.employee-chat-mode .workbench-panels:has(
+    .workbench-panel[data-panel="employee"] .work-tips-section:not(.collapsed),
+    .workbench-panel[data-panel="employee"] .performance-section:not(.collapsed)
+) {
+    flex: 0 0 auto;
+    min-height: auto;
+}
+
+body.employee-chat-mode .workbench-panel[data-panel="employee"]:has(
+    .work-tips-section:not(.collapsed),
+    .performance-section:not(.collapsed)
+) {
+    flex: 0 0 auto;
+    min-height: auto;
+}
+
 body.employee-chat-mode .workbench-panel[data-panel="employee"] .ai-workbench-section.chat-mode {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 1 1 0;
+    min-height: 0;
+    margin-bottom: 20px;
+    padding-bottom: 25px;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+body.employee-chat-mode .workbench-panel[data-panel="employee"]:has(
+    .work-tips-section:not(.collapsed),
+    .performance-section:not(.collapsed)
+) .ai-workbench-section.chat-mode {
+    flex: 0 0 auto;
     min-height: auto;
-    margin-bottom: 0;
-    padding-bottom: 0;
     overflow: visible;
-    border-radius: 16px 16px 0 0;
 }
 
 body.employee-chat-mode .workbench-panel[data-panel="employee"] .ai-workbench-section.chat-mode .ai-chat-view {
-    flex: 1;
+    flex: 1 1 0;
     min-height: 240px;
     max-height: 450px;
     margin-bottom: 0;
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     padding-top: 4px;
     padding-bottom: 0;
+}
+
+/* 顶部模块展开时：聊天列表固定高度区间，不再被 flex 压缩 */
+body.employee-chat-mode .workbench-panel[data-panel="employee"]:has(
+    .work-tips-section:not(.collapsed),
+    .performance-section:not(.collapsed)
+) .ai-workbench-section.chat-mode .ai-chat-view {
+    flex: 0 0 auto;
+    height: 450px;
+    min-height: 240px;
+    max-height: 450px;
 }
 
 body.employee-chat-mode .workbench-panel[data-panel="employee"] .ai-chat-messages {
@@ -4312,7 +4350,7 @@ body.employee-chat-mode .workbench-panel[data-panel="employee"] .input-section.c
     width: auto;
     max-width: none;
     margin: 0;
-    padding: 12px 0 20px;
+    padding: 16px 0 0;
     background: transparent;
     z-index: auto;
     border: none;
@@ -6100,9 +6138,21 @@ body.support-tab-active .workbench-panel[data-panel="support"] .input-section {
     }
 
     body.employee-chat-mode .workbench-panel[data-panel="employee"] .ai-workbench-section.chat-mode .ai-chat-view {
+        flex: 1 1 0;
         min-height: 180px;
         max-height: 450px;
         overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    body.employee-chat-mode .workbench-panel[data-panel="employee"]:has(
+        .work-tips-section:not(.collapsed),
+        .performance-section:not(.collapsed)
+    ) .ai-workbench-section.chat-mode .ai-chat-view {
+        flex: 0 0 auto;
+        height: 360px;
+        min-height: 180px;
+        max-height: 360px;
     }
 
     .chat-bubble {
