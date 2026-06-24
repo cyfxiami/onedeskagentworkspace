@@ -582,7 +582,8 @@
                     </button>
                 </div>
                 <nav class="sidebar-nav" aria-label="版本导航">
-                    <button type="button" class="nav-item active" data-panel="v20260604">20260604版本</button>
+                    <button type="button" class="nav-item active" data-panel="v20260624">20260624版本</button>
+                    <button type="button" class="nav-item" data-panel="v20260604">20260604版本</button>
                 </nav>
             </aside>
         </div>
@@ -596,8 +597,84 @@
             </button>
             <div class="main-area-layout">
                 <div class="main-area-content">
+                <!-- 20260624版本 -->
+                <div class="content-panel active" id="panel-v20260624" role="tabpanel">
+                    <div class="panel-header">
+                        <h2>20260624版本</h2>
+                        <p class="panel-summary-heading">主要优化内容</p>
+                        <ol class="panel-summary-list">
+                            <li>新增员工工作台移动端 App；</li>
+                            <li>业务团队端完成移动端首页与对话二级页改造；</li>
+                            <li>业务支持中心端完成移动端顶栏与对话区适配；</li>
+                            <li>补充历史对话侧栏、今日任务左滑删除等 App 交互。</li>
+                        </ol>
+                        <div class="path-note">
+                            App 原型demo地址：<a href="https://workapp-igj2601lh.maozi.io/" target="_blank" rel="noopener noreferrer">https://workapp-igj2601lh.maozi.io/</a><br>
+                            GitHub地址：<code>git@github.com:cyfxiami/apponedeskagentworkspace.git</code>
+                        </div>
+                    </div>
+
+                    <div class="conclusion">
+                        <strong>最大变化：</strong>在 20260604 Web 双端原型基础上，新增<strong>员工工作台手机 App 版本</strong>，支持 iOS / Android 使用。保留业务团队与业务支持中心双角色，核心页面与交互按手机场景重新设计。
+                    </div>
+
+                    <div class="change-points">
+                        <section class="change-point">
+                            <div class="change-point-header">
+                                <p class="change-point-main-title">登录页面</p>
+                                <button type="button" class="change-point-toggle" aria-expanded="true" aria-label="收起登录页面内容">收起</button>
+                            </div>
+                            <div class="change-point-collapse">
+                                <h3 class="change-point-title">移动端登录与角色选择</h3>
+                                <div class="change-point-body">
+                                    <ul>
+                                        <li>登录页适配全面屏，卡片宽度与按钮触控区域针对手机优化。</li>
+                                        <li>角色选项改为「图标 + 名称 + 描述」卡片式单选：员工（业绩看板、今日任务与 AI 团队）、业务支持中心（业务助理对话与协同支持）。</li>
+                                        <li>保留 OA 账号 / 用户名登录切换、退出登录返回登录页等能力。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="change-point">
+                            <div class="change-point-header">
+                                <p class="change-point-main-title">业务团队端 App</p>
+                                <button type="button" class="change-point-toggle" aria-expanded="true" aria-label="收起业务团队端 App 内容">收起</button>
+                            </div>
+                            <div class="change-point-collapse">
+                                <h3 class="change-point-title">首页布局与对话二级页</h3>
+                                <div class="change-point-body">
+                                    <ul>
+                                        <li>顶栏固定悬浮，标题两行排布；左上角 Logo 按钮打开<strong>历史对话侧栏</strong>（搜索、会话列表、底部用户信息与退出）。</li>
+                                        <li>今日任务、业绩与绩效、AI 团队区块改为移动端卡片间距与字号；业绩看板三列紧凑排布，绩效日期选择与计算按钮适配窄屏。</li>
+                                        <li>今日任务支持<strong>左滑删除</strong>；AI 助手卡片改为两列展示，更适合手机屏幕浏览。</li>
+                                        <li>点击助手卡片或发送消息后进入<strong>对话二级全屏页</strong>：顶栏返回、消息列表独立滚动、底部输入条与迷你助手头像横滑切换。</li>
+                                        <li>输入框改为 App 风格：圆角输入条、附件 / 语音 / 发送按钮，底部留出足够操作空间。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="change-point">
+                            <div class="change-point-header">
+                                <p class="change-point-main-title">业务支持中心端 App</p>
+                                <button type="button" class="change-point-toggle" aria-expanded="true" aria-label="收起业务支持中心端 App 内容">收起</button>
+                            </div>
+                            <div class="change-point-collapse">
+                                <h3 class="change-point-title">业务助理移动端对话体验</h3>
+                                <div class="change-point-body">
+                                    <ul>
+                                        <li>顶栏业务助理头像横向滑动展示，头像下两行截断名称；任务角标与 Web 端一致。</li>
+                                        <li>今日任务面板、对话区、底部输入框按手机单列布局重排；输入框左侧助理选择器保留圆形头像与下拉列表。</li>
+                                        <li>对话列表在页面内独立滚动，输入框固定在底部，避免被手机底部手势条遮挡。</li>
+                                        <li>日期选择改为手机自带日期选择器，操作更符合移动端习惯。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
                 <!-- 20260604版本 -->
-                <div class="content-panel active" id="panel-v20260604" role="tabpanel">
+                <div class="content-panel" id="panel-v20260604" role="tabpanel" hidden>
                     <div class="panel-header">
                         <h2>20260604版本</h2>
                         <p class="panel-summary-heading">主要优化内容</p>
@@ -697,11 +774,11 @@
         (function () {
             /** 内置首条日志；time 为北京时间 YYYY-MM-DD HH:mm，展示按时间降序 */
             const PAGE_CHANGELOG = [
-                { time: '2026-06-04 09:00', text: '· 新建 20260604 版本说明页（含登录页面、业务团队端、业务支持中心端）' }
+                { time: '2026-06-24 09:00', text: '· 新建 20260624 版本说明页（员工工作台 App、业务团队/业务支持中心移动端）' }
             ];
 
-            const STORAGE_KEY = 'demo-changelog-page-state-v20260604';
-            const LOG_STORE_VERSION = 6;
+            const STORAGE_KEY = 'demo-changelog-page-state-v20260624';
+            const LOG_STORE_VERSION = 7;
             let pageLogs = [];
 
             function loadPageState() {
